@@ -1,0 +1,12 @@
+body {
+  box-sizing: border-box;
+  padding: 0;
+  margin: 0;
+  font-family: sans-serif;
+  color: var(--dark-color);
+}
+
+:root {
+  --dark-color: #333;
+  --red-color: #f53f60;
+}

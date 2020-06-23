@@ -1,0 +1,29 @@
+.navigation {
+  display: flex;
+  justify-content: space-between;
+  padding: 0.5rem 1rem;
+  background: #fff;
+}
+.navigation__logo a {
+  text-decoration: none;
+  color: var(--red-color);
+  font-family: cursive;
+  font-size: 2rem;
+  font-weight: bold;
+}
+.navigation__items ul {
+  list-style: none;
+  display: flex;
+}
+.navigation__items ul li {
+  padding: 0 0.5rem;
+}
+.navigation__items ul li a {
+  text-decoration: none;
+  color: inherit;
+  font-weight: 300;
+  transition: 0.2s all ease-in;
+}
+.navigation__items ul li a:hover {
+  color: var(--red-color);
+}

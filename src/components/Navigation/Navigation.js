@@ -4,9 +4,11 @@ import './Navigation.css'
 
 const navigation = props => {
   return (
-    <header>
-      <div>Meetups</div>
-      <nav>
+    <header className="navigation">
+      <div className="navigation__logo">
+        <NavLink to="/">Meetups</NavLink>
+      </div>
+      <nav className="navigation__items">
         <ul>
           <li>
             <NavLink to="/events">Events</NavLink>

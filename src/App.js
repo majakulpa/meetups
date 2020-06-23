@@ -14,7 +14,7 @@ class App extends Component {
     return (
       <BrowserRouter>
         <Navigation />
-        <main>
+        <main className="main">
           <Switch>
             <Redirect path="/" to="/events" exact />
             <Route path="/events" component={Events} />
