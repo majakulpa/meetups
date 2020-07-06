@@ -1,31 +1,65 @@
-import React, { Component } from 'react'
+import React, { useState, useEffect } from 'react'
 import axios from 'axios'
-const baseUrl = 'http://localhost:3001/api/events'
+import Event from './../../components/Event/Event'
+import eventService from './../../services/events'
 
-class Events extends Component {
-  state = {
-    events: []
-  }
+const Events = () => {
+  const [events, setEvents] = useState([])
+  const [newEvent, setNewEvent] = useState('')
+  const [showAllEvents, setShowAllEvents] = useState(true)
 
-  componentDidMount() {
-    const request = axios.get(baseUrl)
-    request.then(res => {
-      const events = res.data
-      this.setState({ events })
+  useEffect(() => {
+    console.log('effect')
+    eventService.getAll().then(initialEvents => {
+      console.log('done')
+      setEvents(initialEvents)
+    })
+  }, [])
+
+  const addEvent = e => {
+    e.preventDefault()
+    const newEvent = {
+      title: '',
+      date: '',
+      price: '',
+      capacity: '',
+      description: '',
+      place: ''
+    }
+
+    eventService.create(newEvent).then(returnedEvent => {
+      setEvents(events.concat(returnedEvent))
+      setNewEvent('')
     })
   }
 
-  render() {
-    return (
-      <div>
-        <ul>
-          {this.state.events.map(event => (
-            <li key={event.id}>{event.title}</li>
-          ))}
-        </ul>
-      </div>
-    )
+  const handleEventChange = event => {
+    setNewEvent(event.target.value)
   }
+
+  const eventsToShow = showAllEvents
+    ? events
+    : events.filter(event => event.price === 0)
+
+  return (
+    <div>
+      <h1>Events</h1>
+      <div>
+        <button onClick={() => setShowAllEvents(!showAllEvents)}>
+          Show {showAllEvents ? 'free events' : 'all events'}
+        </button>
+      </div>
+      <ul>
+        {eventsToShow.map(event => (
+          <Event key={event.id} event={event} />
+        ))}
+      </ul>
+      <form onSubmit={addEvent}>
+        <input value={newEvent} onChange={handleEventChange} />
+        <button type="submit">save</button>
+      </form>
+    </div>
+  )
 }
 
 export default Events
