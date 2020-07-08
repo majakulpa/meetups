@@ -2,14 +2,23 @@ import axios from 'axios'
 
 const eventsUrl = 'http://localhost:3001/api/events'
 
+let token = null
+
+const setToken = newToken => {
+  token = `bearer ${newToken}`
+}
+
 const getAll = () => {
   const req = axios.get(eventsUrl)
   return req.then(res => res.data)
 }
 
-const create = newEvent => {
-  const req = axios.post(eventsUrl, newEvent)
-  return req.then(res => res.data)
+const create = async newEvent => {
+  const config = {
+    headers: { Authorization: token }
+  }
+  const res = await axios.post(eventsUrl, newEvent, config)
+  return res.data
 }
 
 const update = (id, newEvent) => {
@@ -17,4 +26,4 @@ const update = (id, newEvent) => {
   return req.then(res => res.data)
 }
 
-export default { getAll, create, update }
+export default { getAll, create, update, setToken }
