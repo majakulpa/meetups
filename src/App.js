@@ -6,7 +6,6 @@ import Account from './pages/Account/Account'
 import Login from './pages/Login/Login'
 import Groups from './pages/Groups/Groups'
 import Navigation from './components/Navigation/Navigation'
-import './App.css'
 
 class App extends Component {
   state = {}

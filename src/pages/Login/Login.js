@@ -16,7 +16,6 @@ const Login = () => {
     if (loggedUserJSON) {
       const user = JSON.parse(loggedUserJSON)
       setUser(user)
-      console.log(user)
       eventService.setToken(user.token)
     }
   }, [])
@@ -47,34 +46,63 @@ const Login = () => {
     }
   }
 
+  const handleLogout = () => {
+    localStorage.clear()
+  }
+
   return (
     <div>
       <ErrorMessage message={errorMessage} />
       <SuccessMessage message={successMessage} />
-      <form onSubmit={handleLogin}>
-        <div>
-          username
+      <form onSubmit={handleLogin} className="w-full max-w-xs ">
+        <div className="mb-4">
+          <label
+            className="block text-gray-700 text-sm font-bold mb-2"
+            htmlFor="username"
+          >
+            Username
+          </label>
           <input
             type="text"
             value={username}
-            name="Username"
+            name="username"
+            id="username"
             autoComplete="current-username"
             onChange={({ target }) => setUsername(target.value)}
+            className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
           />
         </div>
         <div>
-          password
+          <label
+            className="block text-gray-700 text-sm font-bold mb-2"
+            htmlFor="password"
+          >
+            Password
+          </label>
           <input
             type="password"
             value={password}
-            name="Password"
+            name="password"
+            id="password"
             autoComplete="current-password"
             onChange={({ target }) => setPassword(target.value)}
+            className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
           />
         </div>
-        <button type="submit">Login</button>
+        <div className="mt-6 flex items-center justify-between">
+          <button
+            className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
+            type="submit"
+          >
+            Login
+          </button>
+          <p className="inline-block align-baseline font-bold text-sm text-blue-500 hover:text-blue-800">
+            Signup
+          </p>
+        </div>
       </form>
       {user && <p>{user.name} is logged in</p>}
+      <button onClick={handleLogout}>Logout</button>
     </div>
   )
 }
