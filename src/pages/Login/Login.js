@@ -51,7 +51,7 @@ const Login = () => {
   }
 
   return (
-    <div>
+    <div className="container mx-auto">
       <ErrorMessage message={errorMessage} />
       <SuccessMessage message={successMessage} />
       <form onSubmit={handleLogin} className="w-full max-w-xs ">

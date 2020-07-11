@@ -2,7 +2,7 @@ import React from 'react'
 
 const Event = ({ event }) => {
   return (
-    <li>
+    <li className="flex items-center bg-gray-100 mb-10 shadow">
       <p>Title: {event.title}</p>
       <p>What is this about: {event.description}</p>
       <p>
