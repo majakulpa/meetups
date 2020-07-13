@@ -9,11 +9,20 @@ const Events = () => {
   const [showAllEvents, setShowAllEvents] = useState(true)
 
   useEffect(() => {
+    const abortController = new window.AbortController()
+    const signal = abortController.signal
+
     eventService.getAll().then(initialEvents => {
       console.log('eff', initialEvents)
-      dispatch({ type: 'SET_EVENTS', payload: initialEvents })
+      dispatch(
+        { type: 'SET_EVENTS', payload: initialEvents },
+        { signal: signal }
+      )
       console.log('done')
     })
+    return function cleanup() {
+      abortController.abort()
+    }
   }, [])
 
   const eventsToShow = showAllEvents
@@ -34,7 +43,7 @@ const Events = () => {
         </button>
       </div>
       <div className="flex-grow text-right px-4 py-2 m-2">
-        <Link to="/events/create">
+        <Link to="/create">
           <button className="bg-green-400 hover:bg-green-500 text-white font-semibold py-2 px-4 rounded inline-flex items-center">
             <span className="pl-2">Create Event</span>
           </button>
@@ -42,7 +51,9 @@ const Events = () => {
       </div>
       <ul>
         {eventsToShow.map(event => (
-          <Event key={event.id} event={event} />
+          <Link key={event.id} to={`events/${event.id}`}>
+            <Event event={event} />
+          </Link>
         ))}
       </ul>
     </div>

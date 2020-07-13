@@ -21,9 +21,14 @@ const create = async newEvent => {
   return res.data
 }
 
+const getone = id => {
+  const req = axios.get(`${eventsUrl}/${id}`)
+  return req.then(res => res.data)
+}
+
 const update = (id, newEvent) => {
   const req = axios.patch(`${eventsUrl}/${id}`, newEvent)
   return req.then(res => res.data)
 }
 
-export default { getAll, create, update, setToken }
+export default { getAll, create, update, setToken, getone }

@@ -10,6 +10,11 @@ export default (state, action) => {
         ...state,
         events: [...state.events, action.payload]
       }
+    case 'GET_EVENT':
+      return {
+        ...state,
+        event: action.payload
+      }
     case 'DELETE_EVENT':
       return {
         ...state,
@@ -28,6 +33,10 @@ export default (state, action) => {
       return {
         ...state,
         events: updatedEvents
+      }
+    case 'SET_TOKEN':
+      return {
+        token: action.payload
       }
     case 'SET_ERROR':
       return {

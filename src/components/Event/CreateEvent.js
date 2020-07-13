@@ -19,6 +19,7 @@ const CreateEvent = () => {
 
   const addEvent = async e => {
     e.preventDefault()
+
     try {
       const eventObject = {
         title: title,

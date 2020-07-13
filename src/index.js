@@ -7,10 +7,10 @@ import * as serviceWorker from './serviceWorker'
 
 import axios from 'axios'
 
-axios.get('http://localhost:3001/api/users').then(res => {
-  const users = res.data
-  //console.log(users)
-})
+// axios.get('http://localhost:3001/api/users').then(res => {
+//   const users = res.data
+//   //console.log(users)
+// })
 
 ReactDOM.render(
   <React.StrictMode>

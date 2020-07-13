@@ -1,4 +1,5 @@
-import React, { useState, useEffect } from 'react'
+import React, { useState, useEffect, useContext } from 'react'
+import { GlobalContext } from './../../context/GlobalState'
 import loginService from './../../services/login'
 import eventService from './../../services/events'
 import ErrorMessage from '../../components/Notifications/ErrorMessage'
@@ -12,11 +13,19 @@ const Login = () => {
   const [successMessage, setSuccessMessage] = useState(null)
 
   useEffect(() => {
+    const abortController = new window.AbortController()
+    const signal = abortController.signal
+
     const loggedUserJSON = window.localStorage.getItem('loggedUser')
     if (loggedUserJSON) {
       const user = JSON.parse(loggedUserJSON)
       setUser(user)
-      eventService.setToken(user.token)
+      eventService.setToken(user.token, {
+        signal: signal
+      })
+    }
+    return function cleanup() {
+      abortController.abort()
     }
   }, [])
 
@@ -52,6 +61,7 @@ const Login = () => {
 
   return (
     <div className="container mx-auto">
+      login
       <ErrorMessage message={errorMessage} />
       <SuccessMessage message={successMessage} />
       <form onSubmit={handleLogin} className="w-full max-w-xs ">
