@@ -2,7 +2,10 @@ import React, { createContext, useReducer } from 'react'
 import GlobalReducer from './GlobalReducer'
 
 const initialState = {
-  events: []
+  events: [],
+  isAuthenticated: false,
+  user: null,
+  token: null
 }
 
 export const GlobalContext = createContext(initialState)

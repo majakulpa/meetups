@@ -6,6 +6,7 @@ import ErrorMessage from '../../components/Notifications/ErrorMessage'
 import SuccessMessage from '../../components/Notifications/SuccessMessage'
 
 const Login = () => {
+  const [state, dispatch] = useContext(GlobalContext)
   const [username, setUsername] = useState('')
   const [password, setPassword] = useState('')
   const [user, setUser] = useState(null)
@@ -17,6 +18,7 @@ const Login = () => {
     const signal = abortController.signal
 
     const loggedUserJSON = window.localStorage.getItem('loggedUser')
+
     if (loggedUserJSON) {
       const user = JSON.parse(loggedUserJSON)
       setUser(user)
@@ -32,10 +34,7 @@ const Login = () => {
   const handleLogin = async e => {
     e.preventDefault()
     try {
-      const user = await loginService.login({
-        username,
-        password
-      })
+      const user = await loginService.login(username, password)
 
       window.localStorage.setItem('loggedUser', JSON.stringify(user))
 
@@ -56,7 +55,7 @@ const Login = () => {
   }
 
   const handleLogout = () => {
-    localStorage.clear()
+    dispatch({ type: 'LOGUT', payload: {} })
   }
 
   return (

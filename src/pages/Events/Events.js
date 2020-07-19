@@ -6,6 +6,7 @@ import eventService from './../../services/events'
 
 const Events = () => {
   const [state, dispatch] = useContext(GlobalContext)
+
   const [showAllEvents, setShowAllEvents] = useState(true)
 
   useEffect(() => {
