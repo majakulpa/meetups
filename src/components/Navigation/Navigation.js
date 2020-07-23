@@ -2,9 +2,13 @@ import React, { useContext } from 'react'
 import { GlobalContext } from './../../context/GlobalState'
 import { NavLink } from 'react-router-dom'
 
-const navigation = props => {
+const navigation = () => {
   const [state, dispatch] = useContext(GlobalContext)
   console.log(state, 'st')
+
+  const handleLogout = () => {
+    dispatch({ type: 'LOGOUT' })
+  }
 
   return (
     <header className="flex">
@@ -29,7 +33,12 @@ const navigation = props => {
                 <NavLink to="/bookings">Bookings</NavLink>
               </li>
               <li className="mr-6">
-                <NavLink to="/account">Profile</NavLink>
+                <NavLink to="/account">Hi {state.user.name}!</NavLink>
+              </li>
+              <li>
+                <p className="text-2xl cursor-pointer" onClick={handleLogout}>
+                  &#9758;
+                </p>
               </li>
             </React.Fragment>
           )}

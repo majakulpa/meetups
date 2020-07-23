@@ -4,8 +4,7 @@ import GlobalReducer from './GlobalReducer'
 const initialState = {
   events: [],
   isAuthenticated: false,
-  user: null,
-  token: null
+  user: null
 }
 
 export const GlobalContext = createContext(initialState)

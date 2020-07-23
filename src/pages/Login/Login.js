@@ -1,17 +1,16 @@
-import React, { useState, useEffect, useContext } from 'react'
-import { GlobalContext } from './../../context/GlobalState'
+import React, { useState, useEffect } from 'react'
+import { useHistory } from 'react-router-dom'
 import loginService from './../../services/login'
 import eventService from './../../services/events'
 import ErrorMessage from '../../components/Notifications/ErrorMessage'
-import SuccessMessage from '../../components/Notifications/SuccessMessage'
 
 const Login = () => {
-  const [state, dispatch] = useContext(GlobalContext)
   const [username, setUsername] = useState('')
   const [password, setPassword] = useState('')
   const [user, setUser] = useState(null)
   const [errorMessage, setErrorMessage] = useState(null)
-  const [successMessage, setSuccessMessage] = useState(null)
+
+  let history = useHistory()
 
   useEffect(() => {
     const abortController = new window.AbortController()
@@ -26,6 +25,7 @@ const Login = () => {
         signal: signal
       })
     }
+
     return function cleanup() {
       abortController.abort()
     }
@@ -34,7 +34,7 @@ const Login = () => {
   const handleLogin = async e => {
     e.preventDefault()
     try {
-      const user = await loginService.login(username, password)
+      const user = await loginService.login({ username, password })
 
       window.localStorage.setItem('loggedUser', JSON.stringify(user))
 
@@ -42,10 +42,7 @@ const Login = () => {
       setUser(user)
       setUsername('')
       setPassword('')
-      setSuccessMessage(`${user.name} is successfuly logged in!`)
-      setTimeout(() => {
-        setSuccessMessage(null)
-      }, 5000)
+      history.push('/')
     } catch (exception) {
       setErrorMessage('Incorrect password or username')
       setTimeout(() => {
@@ -54,15 +51,10 @@ const Login = () => {
     }
   }
 
-  const handleLogout = () => {
-    dispatch({ type: 'LOGUT', payload: {} })
-  }
-
   return (
     <div className="container mx-auto">
       login
       <ErrorMessage message={errorMessage} />
-      <SuccessMessage message={successMessage} />
       <form onSubmit={handleLogin} className="w-full max-w-xs ">
         <div className="mb-4">
           <label
@@ -110,8 +102,6 @@ const Login = () => {
           </p>
         </div>
       </form>
-      {user && <p>{user.name} is logged in</p>}
-      <button onClick={handleLogout}>Logout</button>
     </div>
   )
 }
