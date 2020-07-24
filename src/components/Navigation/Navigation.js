@@ -4,7 +4,6 @@ import { NavLink } from 'react-router-dom'
 
 const navigation = () => {
   const [state, dispatch] = useContext(GlobalContext)
-  console.log(state, 'st')
 
   const handleLogout = () => {
     dispatch({ type: 'LOGOUT' })
@@ -18,7 +17,7 @@ const navigation = () => {
       <nav>
         <ul className="flex">
           <li className="mr-6">
-            <NavLink to="/events">Events</NavLink>
+            <NavLink to="/">Events</NavLink>
           </li>
           <li className="mr-6">
             <NavLink to="/groups">Groups</NavLink>
@@ -33,7 +32,9 @@ const navigation = () => {
                 <NavLink to="/bookings">Bookings</NavLink>
               </li>
               <li className="mr-6">
-                <NavLink to="/account">Hi {state.user.name}!</NavLink>
+                <NavLink to={`/users/${state.user.id}`}>
+                  Hi {state.user.name}!
+                </NavLink>
               </li>
               <li>
                 <p className="text-2xl cursor-pointer" onClick={handleLogout}>

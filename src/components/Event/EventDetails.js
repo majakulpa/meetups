@@ -1,17 +1,18 @@
 import React, { useContext, useEffect } from 'react'
 import { GlobalContext } from './../../context/GlobalState'
 import eventService from './../../services/events'
-import { Link } from 'react-router-dom'
+import { useHistory } from 'react-router-dom'
 
 const EventDetails = ({ match }) => {
   const [state, dispatch] = useContext(GlobalContext)
+  let history = useHistory()
 
   const id = match.params.id
   useEffect(() => {
     const abortController = new window.AbortController()
     const signal = abortController.signal
     eventService
-      .getone(id)
+      .getOneEvent(id)
       .then(eventsData => {
         dispatch({ type: 'GET_EVENT', payload: eventsData }, { signal: signal })
       })
@@ -49,7 +50,7 @@ const EventDetails = ({ match }) => {
         </p>
         <p>Max capacity: {state.event.capacity}</p>
         <div className="text-center mt-4 text-gray-500">
-          <Link to="/">Go back</Link>
+          <button onClick={() => history.goBack()}>Go back</button>
         </div>
       </div>
     )

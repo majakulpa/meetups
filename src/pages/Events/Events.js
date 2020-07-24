@@ -28,7 +28,6 @@ const Events = () => {
     }
 
     eventService.getAll().then(initialEvents => {
-      console.log('eff', initialEvents)
       dispatch(
         { type: 'SET_EVENTS', payload: initialEvents },
         { signal: signal }

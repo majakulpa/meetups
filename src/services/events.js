@@ -21,7 +21,7 @@ const create = async newEvent => {
   return res.data
 }
 
-const getone = id => {
+const getOneEvent = id => {
   const req = axios.get(`${eventsUrl}/${id}`)
   return req.then(res => res.data)
 }
@@ -31,4 +31,4 @@ const update = (id, newEvent) => {
   return req.then(res => res.data)
 }
 
-export default { getAll, create, update, setToken, getone }
+export default { getAll, create, update, setToken, getOneEvent }

@@ -16,12 +16,12 @@ const App = () => {
       <Navigation />
       <main className="main">
         <Switch>
-          <Redirect path="/" to="/events" exact />
-          <Route path="/events" exact component={Events} />
+          <Route path="/" exact component={Events} />
+          <Redirect path="/events" to="/" exact />
           <Route path="/events/:id" exact component={EventDetails} />
           <Route path="/create" exact component={CreateEvent} />
           <Route path="/bookings" exact component={Bookings} />
-          <Route path="/account" exact component={Account} />
+          <Route path="/users/:id" exact component={Account} />
           <Route path="/login" exact component={Login} />
           <Route path="/groups" exact component={Groups} />
         </Switch>
