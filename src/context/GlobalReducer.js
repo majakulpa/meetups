@@ -25,7 +25,7 @@ export default (state, action) => {
     case 'GET_EVENT':
       return {
         ...state,
-        event: action.payload
+        events: action.payload
       }
     case 'DELETE_EVENT':
       return {
@@ -33,18 +33,9 @@ export default (state, action) => {
         events: [...state.events, action.payload]
       }
     case 'EDIT_EVENT':
-      const updatedEvent = action.payload
-
-      const updatedEvents = state.events.map(event => {
-        if (event.id === updatedEvent.id) {
-          return updatedEvent
-        }
-        return event
-      })
-
       return {
         ...state,
-        events: updatedEvents
+        events: [...state.events, action.payload]
       }
     case 'SET_TOKEN':
       return {
