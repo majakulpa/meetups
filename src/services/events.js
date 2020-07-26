@@ -34,4 +34,12 @@ const update = async (id, newEvent) => {
   return res.data
 }
 
-export default { getAll, create, update, setToken, getOneEvent }
+const deleteEvent = async id => {
+  const config = {
+    headers: { Authorization: token }
+  }
+  const res = await axios.delete(`${eventsUrl}/${id}`, config)
+  return res.data
+}
+
+export default { getAll, create, update, setToken, getOneEvent, deleteEvent }

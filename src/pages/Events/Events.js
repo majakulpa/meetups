@@ -11,8 +11,8 @@ const Events = () => {
   const [showAllEvents, setShowAllEvents] = useState(true)
 
   useEffect(() => {
-    const abortController = new window.AbortController()
-    const signal = abortController.signal
+    // const abortController = new window.AbortController()
+    // const signal = abortController.signal
 
     const loggedUserJSON = window.localStorage.getItem('loggedUser')
     if (loggedUserJSON) {
@@ -29,13 +29,13 @@ const Events = () => {
 
     eventService.getAll().then(initialEvents => {
       dispatch(
-        { type: 'SET_EVENTS', payload: initialEvents },
-        { signal: signal }
+        { type: 'SET_EVENTS', payload: initialEvents }
+        //{ signal: signal }
       )
     })
-    return function cleanup() {
-      abortController.abort()
-    }
+    // return function cleanup() {
+    //   abortController.abort()
+    // }
   }, [])
 
   const eventsToShow = showAllEvents

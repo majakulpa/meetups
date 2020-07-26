@@ -13,22 +13,23 @@ const Login = () => {
   let history = useHistory()
 
   useEffect(() => {
-    const abortController = new window.AbortController()
-    const signal = abortController.signal
+    // const abortController = new window.AbortController()
+    // const signal = abortController.signal
 
     const loggedUserJSON = window.localStorage.getItem('loggedUser')
 
     if (loggedUserJSON) {
       const user = JSON.parse(loggedUserJSON)
       setUser(user)
-      eventService.setToken(user.token, {
-        signal: signal
-      })
+      eventService.setToken(
+        user.token
+        //{signal: signal}
+      )
     }
 
-    return function cleanup() {
-      abortController.abort()
-    }
+    // return function cleanup() {
+    //   abortController.abort()
+    // }
   }, [])
 
   const handleLogin = async e => {

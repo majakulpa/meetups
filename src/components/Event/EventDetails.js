@@ -34,12 +34,20 @@ const EventDetails = ({ match }) => {
 
   const onSubmit = async e => {
     e.preventDefault()
-    await eventService.update(id, oneEvent)
+    await eventService.setToken(user.token)
+    eventService.update(id, oneEvent)
     history.goBack()
   }
 
   const handleOnChange = (eventKey, value) =>
     setOneEvent({ ...oneEvent, [eventKey]: value })
+
+  const handleDeleteEvent = async e => {
+    e.preventDefault()
+    await eventService.setToken(user.token)
+    eventService.deleteEvent(id)
+    history.goBack()
+  }
 
   let event = <p>Loading...</p>
   if (error) {
@@ -183,6 +191,14 @@ const EventDetails = ({ match }) => {
               </button>
             </div>
           </form>
+          <div className="flex items-center justify-between">
+            <button
+              onClick={handleDeleteEvent}
+              className="block mt-5 bg-red-400 w-full hover:bg-red-500 text-white font-bold py-2 px-4 rounded focus:text-gray-600 focus:shadow-outline"
+            >
+              Delete Event
+            </button>
+          </div>
         </div>
       </div>
     )

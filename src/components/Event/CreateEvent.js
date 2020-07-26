@@ -17,6 +17,9 @@ const CreateEvent = () => {
   const [date, setDate] = useState('')
   let history = useHistory()
 
+  const loggedUserJSON = window.localStorage.getItem('loggedUser')
+  const user = JSON.parse(loggedUserJSON)
+
   const addEvent = async e => {
     e.preventDefault()
 
@@ -29,7 +32,7 @@ const CreateEvent = () => {
         description: description,
         place: place
       }
-
+      eventService.setToken(user.token)
       await eventService.create(eventObject).then(returnedEvent => {
         dispatch({ type: 'ADD_EVENT', payload: returnedEvent })
         // setEvents(events.concat(returnedEvent))
