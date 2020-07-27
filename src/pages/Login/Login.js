@@ -2,13 +2,12 @@ import React, { useState, useEffect } from 'react'
 import { useHistory } from 'react-router-dom'
 import loginService from './../../services/login'
 import eventService from './../../services/events'
-import ErrorMessage from '../../components/Notifications/ErrorMessage'
+import Swal from 'sweetalert2'
 
 const Login = () => {
   const [username, setUsername] = useState('')
   const [password, setPassword] = useState('')
   const [user, setUser] = useState(null)
-  const [errorMessage, setErrorMessage] = useState(null)
 
   let history = useHistory()
 
@@ -45,17 +44,17 @@ const Login = () => {
       setPassword('')
       history.push('/')
     } catch (exception) {
-      setErrorMessage('Incorrect password or username')
-      setTimeout(() => {
-        setErrorMessage(null)
-      }, 5000)
+      Swal.fire({
+        icon: 'error',
+        title: 'Oops...',
+        text: 'Incorrect password or username'
+      })
     }
   }
 
   return (
     <div className="container mx-auto">
       login
-      <ErrorMessage message={errorMessage} />
       <form onSubmit={handleLogin} className="w-full max-w-xs ">
         <div className="mb-4">
           <label

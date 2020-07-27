@@ -2,13 +2,10 @@ import React, { useState, useContext } from 'react'
 import { GlobalContext } from './../../context/GlobalState'
 import { Link, useHistory } from 'react-router-dom'
 import eventService from './../../services/events'
-import ErrorMessage from './../Notifications/ErrorMessage'
-import SuccessMessage from './../Notifications/SuccessMessage'
+import Swal from 'sweetalert2'
 
 const CreateEvent = () => {
   const [state, dispatch] = useContext(GlobalContext)
-  const [errorMessage, setErrorMessage] = useState(null)
-  const [successMessage, setSuccessMessage] = useState(null)
   const [title, setTitle] = useState('')
   const [capacity, setCapacity] = useState('')
   const [description, setDescription] = useState('')
@@ -44,22 +41,23 @@ const CreateEvent = () => {
         setPlace('')
       })
       history.push('/')
-      setSuccessMessage(`${eventObject.title} event was created!`)
-      setTimeout(() => {
-        setSuccessMessage(null)
-      }, 5000)
+      Swal.fire({
+        icon: 'success',
+        title: 'Your event has been created!',
+        showConfirmButton: false,
+        timer: 1500
+      })
     } catch (exception) {
-      setErrorMessage('Please fill all the fields')
-      setTimeout(() => {
-        setErrorMessage(null)
-      }, 5000)
+      Swal.fire({
+        icon: 'error',
+        title: 'Oops...',
+        text: 'Please fill all the fields!'
+      })
     }
   }
 
   return (
     <div className="w-full max-w-sm container mt-20 mx-auto">
-      <ErrorMessage message={errorMessage} />
-      <SuccessMessage message={successMessage} />
       <form onSubmit={addEvent}>
         <div className="w-full mb-5">
           <label

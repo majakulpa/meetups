@@ -29,7 +29,14 @@ const account = ({ match }) => {
           My Events:
           {userEvents.map(event => (
             <Link key={event.id} to={`/events/${event.id}`}>
-              <li>
+              <li
+                className={`${
+                  new Date(event.date).toDateString() <=
+                  new Date().toDateString()
+                    ? 'text-gray-400'
+                    : ''
+                }`}
+              >
                 {event.title} - {new Date(event.date).toDateString()}
               </li>
             </Link>

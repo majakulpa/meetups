@@ -1,12 +1,19 @@
 import React, { useContext } from 'react'
 import { GlobalContext } from './../../context/GlobalState'
 import { NavLink } from 'react-router-dom'
+import Swal from 'sweetalert2'
 
 const navigation = () => {
   const [state, dispatch] = useContext(GlobalContext)
 
   const handleLogout = () => {
     dispatch({ type: 'LOGOUT' })
+    Swal.fire({
+      icon: 'info',
+      title: `You are logged out!`,
+      showConfirmButton: false,
+      timer: 1500
+    })
   }
 
   return (

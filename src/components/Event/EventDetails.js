@@ -1,7 +1,7 @@
-import React, { useState, useEffect, useContext } from 'react'
-import { GlobalContext } from './../../context/GlobalState'
+import React, { useState, useEffect } from 'react'
 import eventService from './../../services/events'
 import { useHistory } from 'react-router-dom'
+import Swal from 'sweetalert2'
 
 const EventDetails = ({ match }) => {
   const [oneEvent, setOneEvent] = useState({
@@ -37,13 +37,18 @@ const EventDetails = ({ match }) => {
     await eventService.setToken(user.token)
     eventService.update(id, oneEvent)
     history.goBack()
+    Swal.fire({
+      icon: 'success',
+      title: 'Your event has been edited!',
+      showConfirmButton: false,
+      timer: 1500
+    })
   }
 
   const handleOnChange = (eventKey, value) =>
     setOneEvent({ ...oneEvent, [eventKey]: value })
 
   const handleDeleteEvent = async e => {
-    e.preventDefault()
     await eventService.setToken(user.token)
     eventService.deleteEvent(id)
     history.goBack()
@@ -193,7 +198,30 @@ const EventDetails = ({ match }) => {
           </form>
           <div className="flex items-center justify-between">
             <button
-              onClick={handleDeleteEvent}
+              onClick={e =>
+                Swal.fire({
+                  title: 'Are you sure?',
+                  text: 'This event will be deleted permanently.',
+                  icon: 'warning',
+                  showCancelButton: true,
+                  confirmButtonColor: '#3085d6',
+                  cancelButtonColor: '#d33',
+                  confirmButtonText: 'Yes, delete it!',
+                  reverseButtons: true
+                }).then(result => {
+                  if (result.value) {
+                    e.persist()
+                    handleDeleteEvent(e)
+                    Swal.fire(
+                      'Deleted!',
+                      'Your event has been deleted.',
+                      'success'
+                    )
+                  } else if (result.dismiss === Swal.DismissReason.cancel) {
+                    Swal.fire('Cancelled', 'Your event is safe :)', 'error')
+                  }
+                })
+              }
               className="block mt-5 bg-red-400 w-full hover:bg-red-500 text-white font-bold py-2 px-4 rounded focus:text-gray-600 focus:shadow-outline"
             >
               Delete Event

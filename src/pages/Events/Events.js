@@ -3,12 +3,18 @@ import { GlobalContext } from './../../context/GlobalState'
 import { Link } from 'react-router-dom'
 import Event from './../../components/Event/Event'
 import eventService from './../../services/events'
-import SuccessMessage from '../../components/Notifications/SuccessMessage'
+import Swal from 'sweetalert2'
 
 const Events = () => {
   const [state, dispatch] = useContext(GlobalContext)
-  const [successMessage, setSuccessMessage] = useState(null)
   const [showAllEvents, setShowAllEvents] = useState(true)
+  const [showOldEvents, setShowOldEvents] = useState(false)
+
+  const todayDate = new Date()
+    .toISOString()
+    .split('')
+    .slice(0, 16)
+    .join('')
 
   useEffect(() => {
     // const abortController = new window.AbortController()
@@ -19,12 +25,14 @@ const Events = () => {
       const user = JSON.parse(loggedUserJSON)
       dispatch({ type: 'LOGIN', payload: user })
       if (!window.localStorage.getItem('loggedInMsg')) {
-        setSuccessMessage(`${user.name} is successfuly logged in!`)
+        Swal.fire({
+          icon: 'success',
+          title: `Welcome ${user.name}!`,
+          showConfirmButton: false,
+          timer: 1500
+        })
       }
       window.localStorage.setItem('loggedInMsg', 'loggedIn')
-      setTimeout(() => {
-        setSuccessMessage(null)
-      }, 5000)
     }
 
     eventService.getAll().then(initialEvents => {
@@ -39,12 +47,11 @@ const Events = () => {
   }, [])
 
   const eventsToShow = showAllEvents
-    ? state.events
-    : state.events.filter(event => event.price === 0)
+    ? state.events.filter(event => event.date >= todayDate)
+    : state.events.filter(event => event.price === 0 && event.date >= todayDate)
 
   return (
     <div className="container mx-auto">
-      <SuccessMessage message={successMessage} />
       <h1 className="text-center text-3xl mt-20 text-base leading-8 text-black font-bold tracking-wide uppercase">
         Events
       </h1>
