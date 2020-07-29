@@ -16,10 +16,18 @@ const account = ({ match }) => {
       .catch(error => console.log(error))
   }, [])
 
+  const todayDate = new Date()
+    .toISOString()
+    .split('')
+    .slice(0, 16)
+    .join('')
+
   let user = <p>Loading...</p>
 
   if (userData) {
-    let userEvents = userData.events
+    let userEvents = userData.events.sort(
+      (a, b) => new Date(a.date) - new Date(b.date)
+    )
     user = (
       <div>
         <p>Name: {userData.name}</p>
@@ -30,12 +38,7 @@ const account = ({ match }) => {
           {userEvents.map(event => (
             <Link key={event.id} to={`/events/${event.id}`}>
               <li
-                className={`${
-                  new Date(event.date).toDateString() <=
-                  new Date().toDateString()
-                    ? 'text-gray-400'
-                    : ''
-                }`}
+                className={`${event.date <= todayDate ? 'text-gray-400' : ''}`}
               >
                 {event.title} - {new Date(event.date).toDateString()}
               </li>

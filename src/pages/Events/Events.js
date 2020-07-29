@@ -1,14 +1,16 @@
 import React, { useState, useEffect, useContext } from 'react'
 import { GlobalContext } from './../../context/GlobalState'
 import { Link } from 'react-router-dom'
-import Event from './../../components/Event/Event'
+import EventsList from './../../components/Event/EventsList'
 import eventService from './../../services/events'
+import Search from './../../components/Search/Search'
 import Swal from 'sweetalert2'
 
 const Events = () => {
   const [state, dispatch] = useContext(GlobalContext)
   const [showAllEvents, setShowAllEvents] = useState(true)
-  const [showOldEvents, setShowOldEvents] = useState(false)
+  const [searchResult, setSearchResult] = useState('')
+  const [searchDisplay, setSearchDisplay] = useState([])
 
   const todayDate = new Date()
     .toISOString()
@@ -47,14 +49,49 @@ const Events = () => {
   }, [])
 
   const eventsToShow = showAllEvents
-    ? state.events.filter(event => event.date >= todayDate)
-    : state.events.filter(event => event.price === 0 && event.date >= todayDate)
+    ? state.events
+        .filter(event => event.date >= todayDate)
+        .sort((a, b) => new Date(a.date) - new Date(b.date))
+    : state.events
+        .filter(event => event.price === 0 && event.date >= todayDate)
+        .sort((a, b) => new Date(a.date) - new Date(b.date))
+
+  const searchHandleChange = e => {
+    setSearchResult(e)
+    let oldList = eventsToShow
+
+    if (searchResult !== '') {
+      let newList = []
+
+      newList = oldList.filter(
+        event =>
+          event.title.toLowerCase().includes(searchResult.toLowerCase()) ||
+          event.place.toLowerCase().includes(searchResult.toLowerCase())
+      )
+
+      setSearchDisplay(newList)
+    } else {
+      setSearchDisplay(eventsToShow)
+    }
+  }
 
   return (
     <div className="container mx-auto">
       <h1 className="text-center text-3xl mt-20 text-base leading-8 text-black font-bold tracking-wide uppercase">
         Events
       </h1>
+      <div className="flex items-center">
+        <Search
+          value={searchResult}
+          searchHandleChange={e => searchHandleChange(e.target.value)}
+        />
+        <button
+          onClick={() => setSearchResult('')}
+          className="bg-gray-500 hover:bg-gray-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
+        >
+          Clear
+        </button>
+      </div>
       <div>
         <button
           onClick={() => setShowAllEvents(!showAllEvents)}
@@ -71,11 +108,9 @@ const Events = () => {
         </Link>
       </div>
       <ul>
-        {eventsToShow.map(event => (
-          <Link key={event.id} to={`events/${event.id}`}>
-            <Event event={event} />
-          </Link>
-        ))}
+        <EventsList
+          events={searchResult.length < 1 ? eventsToShow : searchDisplay}
+        />
       </ul>
     </div>
   )
