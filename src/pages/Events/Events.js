@@ -4,13 +4,16 @@ import { Link } from 'react-router-dom'
 import EventsList from './../../components/Event/EventsList'
 import eventService from './../../services/events'
 import Search from './../../components/Search/Search'
+import SearchDate from './../../components/Search/SearchDate'
 import Swal from 'sweetalert2'
 
 const Events = () => {
   const [state, dispatch] = useContext(GlobalContext)
   const [showAllEvents, setShowAllEvents] = useState(true)
   const [searchResult, setSearchResult] = useState('')
+  const [dateSearchResult, setDateSearchResult] = useState('')
   const [searchDisplay, setSearchDisplay] = useState([])
+  const [dateSearchDisplay, setDateSearchDisplay] = useState([])
 
   const todayDate = new Date()
     .toISOString()
@@ -62,7 +65,6 @@ const Events = () => {
 
     if (searchResult !== '') {
       let newList = []
-
       newList = oldList.filter(
         event =>
           event.title.toLowerCase().includes(searchResult.toLowerCase()) ||
@@ -75,11 +77,28 @@ const Events = () => {
     }
   }
 
+  const searchDateHandleChange = e => {
+    setDateSearchResult(e)
+    let oldDateList = eventsToShow
+
+    if (dateSearchResult !== '') {
+      let newDateList = []
+      newDateList = oldDateList.filter(event =>
+        event.date.includes(dateSearchResult)
+      )
+      console.log(newDateList)
+      setDateSearchDisplay(newDateList)
+    } else {
+      setDateSearchDisplay(eventsToShow)
+    }
+  }
+
   return (
     <div className="container mx-auto">
       <h1 className="text-center text-3xl mt-20 text-base leading-8 text-black font-bold tracking-wide uppercase">
         Events
       </h1>
+      <div>Search:</div>
       <div className="flex items-center">
         <Search
           value={searchResult}
@@ -107,9 +126,27 @@ const Events = () => {
           </button>
         </Link>
       </div>
+      <SearchDate
+        value={dateSearchResult}
+        searchDateHandleChange={e => searchDateHandleChange(e.target.value)}
+      />
+      <button
+        onClick={() => setSearchResult('')}
+        className="bg-gray-500 hover:bg-gray-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
+      >
+        Clear
+      </button>
       <ul>
         <EventsList
-          events={searchResult.length < 1 ? eventsToShow : searchDisplay}
+          events={
+            searchResult.length < 1 && dateSearchResult.length < 1
+              ? eventsToShow
+              : searchResult.length >= 1
+              ? searchDisplay
+              : dateSearchResult.length >= 1 && dateSearchDisplay.length > 0
+              ? dateSearchDisplay
+              : eventsToShow
+          }
         />
       </ul>
     </div>
