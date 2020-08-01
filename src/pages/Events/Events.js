@@ -4,7 +4,6 @@ import { Link } from 'react-router-dom'
 import EventsList from './../../components/Event/EventsList'
 import eventService from './../../services/events'
 import Search from './../../components/Search/Search'
-import SearchDate from './../../components/Search/SearchDate'
 import Swal from 'sweetalert2'
 
 const Events = () => {
@@ -13,7 +12,6 @@ const Events = () => {
   const [searchResult, setSearchResult] = useState('')
   const [dateSearchResult, setDateSearchResult] = useState('')
   const [searchDisplay, setSearchDisplay] = useState([])
-  const [dateSearchDisplay, setDateSearchDisplay] = useState([])
 
   const todayDate = new Date()
     .toISOString()
@@ -60,37 +58,42 @@ const Events = () => {
         .sort((a, b) => new Date(a.date) - new Date(b.date))
 
   const searchHandleChange = e => {
-    setSearchResult(e)
-    let oldList = eventsToShow
+    setSearchResult(e.target.value)
+  }
 
-    if (searchResult !== '') {
-      let newList = []
+  const searchDateHandleChange = e => {
+    setDateSearchResult(e.target.value)
+  }
+
+  useEffect(() => {
+    let oldList = eventsToShow
+    let newList = []
+    if (searchResult !== '' && dateSearchResult === '') {
       newList = oldList.filter(
         event =>
           event.title.toLowerCase().includes(searchResult.toLowerCase()) ||
           event.place.toLowerCase().includes(searchResult.toLowerCase())
       )
-
+      setSearchDisplay(newList)
+    } else if (dateSearchResult !== '' && searchResult === '') {
+      newList = oldList.filter(event => event.date.includes(dateSearchResult))
+      setSearchDisplay(newList)
+    } else if (searchResult !== '' && dateSearchResult !== '') {
+      newList = oldList.filter(
+        event =>
+          (event.title.toLowerCase().includes(searchResult.toLowerCase()) ||
+            event.place.toLowerCase().includes(searchResult.toLowerCase())) &&
+          event.date.includes(dateSearchResult)
+      )
       setSearchDisplay(newList)
     } else {
       setSearchDisplay(eventsToShow)
     }
-  }
+  }, [dateSearchResult, searchResult])
 
-  const searchDateHandleChange = e => {
-    setDateSearchResult(e)
-    let oldDateList = eventsToShow
-
-    if (dateSearchResult !== '') {
-      let newDateList = []
-      newDateList = oldDateList.filter(event =>
-        event.date.includes(dateSearchResult)
-      )
-      console.log(newDateList)
-      setDateSearchDisplay(newDateList)
-    } else {
-      setDateSearchDisplay(eventsToShow)
-    }
+  const handleClearSearch = () => {
+    setSearchResult('')
+    setDateSearchResult('')
   }
 
   return (
@@ -102,10 +105,12 @@ const Events = () => {
       <div className="flex items-center">
         <Search
           value={searchResult}
-          searchHandleChange={e => searchHandleChange(e.target.value)}
+          searchHandleChange={searchHandleChange}
+          date={dateSearchResult}
+          searchDateHandleChange={searchDateHandleChange}
         />
         <button
-          onClick={() => setSearchResult('')}
+          onClick={handleClearSearch}
           className="bg-gray-500 hover:bg-gray-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
         >
           Clear
@@ -126,26 +131,12 @@ const Events = () => {
           </button>
         </Link>
       </div>
-      <SearchDate
-        value={dateSearchResult}
-        searchDateHandleChange={e => searchDateHandleChange(e.target.value)}
-      />
-      <button
-        onClick={() => setSearchResult('')}
-        className="bg-gray-500 hover:bg-gray-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
-      >
-        Clear
-      </button>
       <ul>
         <EventsList
           events={
             searchResult.length < 1 && dateSearchResult.length < 1
               ? eventsToShow
-              : searchResult.length >= 1
-              ? searchDisplay
-              : dateSearchResult.length >= 1 && dateSearchDisplay.length > 0
-              ? dateSearchDisplay
-              : eventsToShow
+              : searchDisplay
           }
         />
       </ul>

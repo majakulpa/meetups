@@ -4,6 +4,7 @@ import Events from './pages/Events/Events'
 import Bookings from './pages/Bookings/Bookings'
 import Account from './pages/Account/Account'
 import Login from './pages/Login/Login'
+import Signup from './pages/Login/Signup'
 import Groups from './pages/Groups/Groups'
 import CreateEvent from './components/Event/CreateEvent'
 import EventDetails from './components/Event/EventDetails'
@@ -23,6 +24,7 @@ const App = () => {
           <Route path="/bookings" exact component={Bookings} />
           <Route path="/users/:id" exact component={Account} />
           <Route path="/login" exact component={Login} />
+          <Route path="/signup" exact component={Signup} />
           <Route path="/groups" exact component={Groups} />
         </Switch>
       </main>

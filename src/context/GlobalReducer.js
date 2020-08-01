@@ -6,6 +6,12 @@ export default (state, action) => {
         isAuthenticated: true,
         user: action.payload
       }
+    case 'SIGNUP':
+      return {
+        ...state,
+        isAuthenticated: true,
+        user: action.payload
+      }
     case 'LOGOUT':
       localStorage.clear()
       return {

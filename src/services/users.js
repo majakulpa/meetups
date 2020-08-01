@@ -12,4 +12,9 @@ const getOneUser = id => {
   return req.then(res => res.data)
 }
 
-export default { getOneUser, getAllUsers }
+const createUser = async credentials => {
+  const res = await axios.post(usersUrl, credentials)
+  return res.data
+}
+
+export default { getOneUser, getAllUsers, createUser }
