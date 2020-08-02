@@ -103,6 +103,12 @@ const Login = () => {
             Don't have an account? Signup
           </Link>
         </div>
+        <Link
+          to="/password-reset"
+          className="inline-block align-baseline font-bold text-sm text-blue-500 hover:text-blue-800"
+        >
+          Forgot password?
+        </Link>
       </form>
     </div>
   )

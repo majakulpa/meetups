@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react'
+import React, { useState } from 'react'
 import { Link, useHistory } from 'react-router-dom'
 import usersService from './../../services/users'
 import loginService from './../../services/login'
@@ -7,11 +7,11 @@ import Swal from 'sweetalert2'
 
 const Signup = () => {
   const [newUser, setNewUser] = useState({
-    id: null,
     name: '',
     username: '',
     password: '',
-    email: ''
+    email: '',
+    description: ''
   })
   const [user, setUser] = useState(null)
 
@@ -20,7 +20,7 @@ const Signup = () => {
   const handleSignup = async e => {
     e.preventDefault()
     try {
-      usersService.createUser({ ...newUser })
+      await usersService.createUser({ ...newUser })
 
       let username = newUser.username
       let password = newUser.password
@@ -30,10 +30,10 @@ const Signup = () => {
         password
       })
 
-      window.localStorage.setItem('loggedUser', JSON.stringify(user))
+      await window.localStorage.setItem('loggedUser', JSON.stringify(user))
 
-      eventService.setToken(user.token)
-      setUser(user)
+      await eventService.setToken(user.token)
+      await setUser(user)
 
       history.push('/')
     } catch (exception) {
@@ -117,6 +117,21 @@ const Signup = () => {
             id="password"
             autoComplete="current-password"
             className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+          />
+        </div>
+        <div>
+          <label
+            className="block text-gray-700 text-sm font-bold mb-2"
+            htmlFor="description"
+          >
+            About:
+          </label>
+          <textarea
+            className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:text-gray-600 focus:shadow-outline"
+            value={newUser.description}
+            onChange={e => handleOnChange('description', e.target.value)}
+            type="text"
+            placeholder="Enter description"
           />
         </div>
         <div className="mt-6 flex items-center justify-between">

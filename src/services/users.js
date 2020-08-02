@@ -17,4 +17,9 @@ const createUser = async credentials => {
   return res.data
 }
 
-export default { getOneUser, getAllUsers, createUser }
+const updateUser = async (id, newUser) => {
+  const res = await axios.patch(`${usersUrl}/${id}`, newUser)
+  return res.data
+}
+
+export default { getOneUser, getAllUsers, createUser, updateUser }

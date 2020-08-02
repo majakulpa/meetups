@@ -6,10 +6,10 @@ export default (state, action) => {
         isAuthenticated: true,
         user: action.payload
       }
-    case 'SIGNUP':
+
+    case 'GET_USER':
       return {
         ...state,
-        isAuthenticated: true,
         user: action.payload
       }
     case 'LOGOUT':
