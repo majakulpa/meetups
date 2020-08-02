@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react'
 import { Link, useHistory } from 'react-router-dom'
 import usersService from './../../services/users'
+import loginService from './../../services/login'
 import eventService from './../../services/events'
 import Swal from 'sweetalert2'
 
@@ -15,9 +16,41 @@ const Signup = () => {
   const [user, setUser] = useState(null)
 
   let history = useHistory()
+
+  const handleSignup = async e => {
+    e.preventDefault()
+    try {
+      usersService.createUser({ ...newUser })
+
+      let username = newUser.username
+      let password = newUser.password
+
+      const user = await loginService.login({
+        username,
+        password
+      })
+
+      window.localStorage.setItem('loggedUser', JSON.stringify(user))
+
+      eventService.setToken(user.token)
+      setUser(user)
+
+      history.push('/')
+    } catch (exception) {
+      Swal.fire({
+        icon: 'error',
+        title: 'Oops...',
+        text: 'Incorrect data'
+      })
+    }
+  }
+
+  const handleOnChange = (eventKey, value) =>
+    setNewUser({ ...newUser, [eventKey]: value })
+
   return (
     <div className="container mx-auto">
-      <form className="w-full max-w-xs ">
+      <form onSubmit={handleSignup} className="w-full max-w-xs ">
         <div className="mb-4">
           <label
             className="block text-gray-700 text-sm font-bold mb-2"
@@ -27,6 +60,8 @@ const Signup = () => {
           </label>
           <input
             type="text"
+            value={newUser.username}
+            onChange={e => handleOnChange('username', e.target.value)}
             name="username"
             id="username"
             autoComplete="current-username"
@@ -43,6 +78,8 @@ const Signup = () => {
           <input
             type="text"
             name="name"
+            value={newUser.name}
+            onChange={e => handleOnChange('name', e.target.value)}
             id="name"
             autoComplete="current-name"
             className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
@@ -57,6 +94,8 @@ const Signup = () => {
           </label>
           <input
             type="email"
+            value={newUser.email}
+            onChange={e => handleOnChange('email', e.target.value)}
             name="email"
             id="email"
             autoComplete="current-email"
@@ -73,6 +112,8 @@ const Signup = () => {
           <input
             type="password"
             name="password"
+            value={newUser.password}
+            onChange={e => handleOnChange('password', e.target.value)}
             id="password"
             autoComplete="current-password"
             className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
