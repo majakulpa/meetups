@@ -1,17 +1,11 @@
-import React, { useState, useEffect } from 'react'
+import React, { useState, useEffect, useContext } from 'react'
+import { GlobalContext } from './../../context/GlobalState'
 import userService from './../../services/users'
 import { Link, useHistory } from 'react-router-dom'
 import Swal from 'sweetalert2'
 
 const account = ({ match }) => {
-  const [userData, setUserData] = useState({
-    id: null,
-    username: '',
-    name: '',
-    email: '',
-    description: '',
-    events: []
-  })
+  const { user, setUser } = useContext(GlobalContext)
   const [error, setError] = useState('')
   let history = useHistory()
 
@@ -20,7 +14,7 @@ const account = ({ match }) => {
     userService
       .getOneUser(id)
       .then(data => {
-        setUserData(data)
+        setUser(data)
       })
       .catch(error => {
         setError(error)
@@ -35,15 +29,8 @@ const account = ({ match }) => {
 
   const onSubmit = async e => {
     e.preventDefault()
-    await userService.updateUser(id, userData)
-
-    const loggedUserJSON = window.localStorage.getItem('loggedUser')
-    const user = JSON.parse(loggedUserJSON)
-    const token = user.token
-    await window.localStorage.setItem(
-      'loggedUser',
-      JSON.stringify({ ...userData, token })
-    )
+    await userService.updateUser(id, user)
+    await setUser(user)
 
     history.goBack()
     Swal.fire({
@@ -55,27 +42,27 @@ const account = ({ match }) => {
   }
 
   const handleOnChange = (eventKey, value) =>
-    setUserData({ ...userData, [eventKey]: value })
+    setUser({ ...user, [eventKey]: value })
 
-  let user = <p>Loading...</p>
+  let userDetails = <p>Loading...</p>
 
   if (error) {
-    user = (
+    userDetails = (
       <p>
         Something went wrong: <span>{error}</span>
       </p>
     )
   }
 
-  if (userData) {
+  if (user) {
     let userEvents
-    if (userData.events) {
-      userEvents = userData.events.sort(
+    if (user.events) {
+      userEvents = user.events.sort(
         (a, b) => new Date(a.date) - new Date(b.date)
       )
     }
 
-    user = (
+    userDetails = (
       <div className="w-full max-w-sm container mt-20 mx-auto">
         <form onSubmit={onSubmit}>
           <div className="w-full mb-5">
@@ -87,7 +74,7 @@ const account = ({ match }) => {
             </label>
             <input
               className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:text-gray-600 focus:shadow-outline"
-              value={userData.username}
+              value={user.username}
               onChange={e => handleOnChange('username', e.target.value)}
               type="text"
               placeholder="Edit username"
@@ -102,7 +89,7 @@ const account = ({ match }) => {
             </label>
             <input
               className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:text-gray-600 focus:shadow-outline"
-              value={userData.name}
+              value={user.name}
               onChange={e => handleOnChange('name', e.target.value)}
               type="text"
               placeholder="Edit name"
@@ -117,7 +104,7 @@ const account = ({ match }) => {
             </label>
             <input
               className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:text-gray-600 focus:shadow-outline"
-              value={userData.email}
+              value={user.email}
               onChange={e => handleOnChange('email', e.target.value)}
               type="email"
               placeholder="Edit email"
@@ -132,7 +119,7 @@ const account = ({ match }) => {
             </label>
             <textarea
               className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:text-gray-600 focus:shadow-outline"
-              value={userData.description}
+              value={user.description}
               onChange={e => handleOnChange('description', e.target.value)}
               type="text"
               placeholder="Enter description"
@@ -162,7 +149,7 @@ const account = ({ match }) => {
 
   return (
     <div>
-      {user}
+      {userDetails}
       <div className="text-center mt-4 text-gray-500">
         <button onClick={() => history.goBack()}>Go back</button>
       </div>

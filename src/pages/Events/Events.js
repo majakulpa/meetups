@@ -3,11 +3,14 @@ import { GlobalContext } from './../../context/GlobalState'
 import { Link } from 'react-router-dom'
 import EventsList from './../../components/Event/EventsList'
 import eventService from './../../services/events'
+import loginService from './../../services/login'
 import Search from './../../components/Search/Search'
-import Swal from 'sweetalert2'
+//import Swal from 'sweetalert2'
 
 const Events = () => {
-  const [state, dispatch] = useContext(GlobalContext)
+  // const [state, dispatch] = useContext(GlobalContext)
+  const [events, setEvents] = useState([])
+  const { user, setUser } = useContext(GlobalContext)
   const [showAllEvents, setShowAllEvents] = useState(true)
   const [searchResult, setSearchResult] = useState('')
   const [dateSearchResult, setDateSearchResult] = useState('')
@@ -23,26 +26,22 @@ const Events = () => {
     // const abortController = new window.AbortController()
     // const signal = abortController.signal
 
-    const loggedUserJSON = window.localStorage.getItem('loggedUser')
-    if (loggedUserJSON) {
-      const user = JSON.parse(loggedUserJSON)
-      dispatch({ type: 'LOGIN', payload: user })
-      if (!window.localStorage.getItem('loggedInMsg')) {
-        Swal.fire({
-          icon: 'success',
-          title: `Welcome ${user.name}!`,
-          showConfirmButton: false,
-          timer: 1500
-        })
-      }
-      window.localStorage.setItem('loggedInMsg', 'loggedIn')
+    // const loggedUserJSON = window.localStorage.getItem('loggedUser')
+    // if (loggedUserJSON) {
+    if (user) {
+      //  const user = JSON.parse(loggedUserJSON)
+      //   dispatch({ type: 'LOGIN', payload: user })
+      //  if (!window.localStorage.getItem('loggedInMsg')) {
+      //   }
+      //   window.localStorage.setItem('loggedInMsg', 'loggedIn')
     }
 
     eventService.getAll().then(initialEvents => {
-      dispatch(
-        { type: 'SET_EVENTS', payload: initialEvents }
-        //{ signal: signal }
-      )
+      setEvents(initialEvents)
+      // dispatch(
+      //   { type: 'SET_EVENTS', payload: initialEvents }
+      //   //{ signal: signal }
+      // )
     })
     // return function cleanup() {
     //   abortController.abort()
@@ -50,10 +49,10 @@ const Events = () => {
   }, [])
 
   const eventsToShow = showAllEvents
-    ? state.events
+    ? events
         .filter(event => event.date >= todayDate)
         .sort((a, b) => new Date(a.date) - new Date(b.date))
-    : state.events
+    : events
         .filter(event => event.price === 0 && event.date >= todayDate)
         .sort((a, b) => new Date(a.date) - new Date(b.date))
 
@@ -124,13 +123,15 @@ const Events = () => {
           Show {showAllEvents ? 'free events' : 'all events'}
         </button>
       </div>
-      <div className="flex-grow text-right px-4 py-2 m-2">
-        <Link to="/create">
-          <button className="bg-green-400 hover:bg-green-500 text-white font-semibold py-2 px-4 rounded inline-flex items-center">
-            <span className="pl-2">Create Event</span>
-          </button>
-        </Link>
-      </div>
+      {user && (
+        <div className="flex-grow text-right px-4 py-2 m-2">
+          <Link to="/create">
+            <button className="bg-green-400 hover:bg-green-500 text-white font-semibold py-2 px-4 rounded inline-flex items-center">
+              <span className="pl-2">Create Event</span>
+            </button>
+          </Link>
+        </div>
+      )}
       <ul>
         <EventsList
           events={

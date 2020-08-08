@@ -5,7 +5,8 @@ import eventService from './../../services/events'
 import Swal from 'sweetalert2'
 
 const CreateEvent = () => {
-  const [state, dispatch] = useContext(GlobalContext)
+  const { user } = useContext(GlobalContext)
+  const [events, setEvents] = useState([])
   const [title, setTitle] = useState('')
   const [capacity, setCapacity] = useState('')
   const [description, setDescription] = useState('')
@@ -14,8 +15,8 @@ const CreateEvent = () => {
   const [date, setDate] = useState('')
   let history = useHistory()
 
-  const loggedUserJSON = window.localStorage.getItem('loggedUser')
-  const user = JSON.parse(loggedUserJSON)
+  // const loggedUserJSON = window.localStorage.getItem('loggedUser')
+  // const user = JSON.parse(loggedUserJSON)
 
   const addEvent = async e => {
     e.preventDefault()
@@ -31,8 +32,7 @@ const CreateEvent = () => {
       }
       eventService.setToken(user.token)
       await eventService.create(eventObject).then(returnedEvent => {
-        dispatch({ type: 'ADD_EVENT', payload: returnedEvent })
-        // setEvents(events.concat(returnedEvent))
+        setEvents(events.concat(returnedEvent))
         setTitle('')
         setDate('')
         setPrice('')

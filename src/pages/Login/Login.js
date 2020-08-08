@@ -1,31 +1,31 @@
-import React, { useState, useEffect } from 'react'
+import React, { useState, useEffect, useContext } from 'react'
+import { GlobalContext } from './../../context/GlobalState'
 import { Link, useHistory } from 'react-router-dom'
 import loginService from './../../services/login'
 import eventService from './../../services/events'
 import Swal from 'sweetalert2'
 
 const Login = () => {
+  const { user, setUser } = useContext(GlobalContext)
   const [username, setUsername] = useState('')
   const [password, setPassword] = useState('')
-  const [user, setUser] = useState(null)
+  //const [user, setUser] = useState(null)
 
   let history = useHistory()
 
   useEffect(() => {
     // const abortController = new window.AbortController()
     // const signal = abortController.signal
-
-    const loggedUserJSON = window.localStorage.getItem('loggedUser')
-
+    const loggedUserJSON = window.localStorage.getItem('token')
     if (loggedUserJSON) {
-      const user = JSON.parse(loggedUserJSON)
+      //  const user = JSON.parse(loggedUserJSON)
       setUser(user)
       eventService.setToken(
-        user.token
+        loggedUserJSON
+        // user.token
         //{signal: signal}
       )
     }
-
     // return function cleanup() {
     //   abortController.abort()
     // }
@@ -36,12 +36,18 @@ const Login = () => {
     try {
       const user = await loginService.login({ username, password })
 
-      window.localStorage.setItem('loggedUser', JSON.stringify(user))
+      window.localStorage.setItem('token', user.token)
 
       eventService.setToken(user.token)
       setUser(user)
       setUsername('')
       setPassword('')
+      Swal.fire({
+        icon: 'success',
+        title: `Welcome ${user.name}!`,
+        showConfirmButton: false,
+        timer: 1500
+      })
       history.push('/')
     } catch (exception) {
       Swal.fire({

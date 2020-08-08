@@ -4,11 +4,14 @@ import { NavLink, useHistory } from 'react-router-dom'
 import Swal from 'sweetalert2'
 
 const navigation = () => {
-  const [state, dispatch] = useContext(GlobalContext)
+  const { user, setUser } = useContext(GlobalContext)
   let history = useHistory()
 
+  const userLogged = window.localStorage.getItem('token')
+
   const handleLogout = () => {
-    dispatch({ type: 'LOGOUT' })
+    localStorage.clear()
+    setUser(null)
     history.push('/')
     Swal.fire({
       icon: 'info',
@@ -31,7 +34,7 @@ const navigation = () => {
           <li className="mr-6">
             <NavLink to="/groups">Groups</NavLink>
           </li>
-          {!state.isAuthenticated ? (
+          {!user ? (
             <li className="mr-6">
               <NavLink to="/login">Login</NavLink>
             </li>
@@ -41,9 +44,7 @@ const navigation = () => {
                 <NavLink to="/bookings">Bookings</NavLink>
               </li>
               <li className="mr-6">
-                <NavLink to={`/users/${state.user.id}`}>
-                  Hi {state.user.name}!
-                </NavLink>
+                <NavLink to={`/users/${user.id}`}>Hi {user.name}!</NavLink>
               </li>
               <li>
                 <p className="text-2xl cursor-pointer" onClick={handleLogout}>

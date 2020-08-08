@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useState, useMemo } from 'react'
 import { Route, Redirect, Switch } from 'react-router-dom'
 import Events from './pages/Events/Events'
 import Bookings from './pages/Bookings/Bookings'
@@ -10,11 +10,15 @@ import Groups from './pages/Groups/Groups'
 import CreateEvent from './components/Event/CreateEvent'
 import EventDetails from './components/Event/EventDetails'
 import Navigation from './components/Navigation/Navigation'
-import { GlobalProvider } from './context/GlobalState'
+//import { GlobalProvider } from './context/GlobalState'
+import { GlobalContext } from './context/GlobalState'
 
 const App = () => {
+  const [user, setUser] = useState(null)
+  const providerValue = useMemo(() => ({ user, setUser }), [user, setUser])
+
   return (
-    <GlobalProvider>
+    <GlobalContext.Provider value={providerValue}>
       <Navigation />
       <main className="main">
         <Switch>
@@ -30,7 +34,7 @@ const App = () => {
           <Route path="/groups" exact component={Groups} />
         </Switch>
       </main>
-    </GlobalProvider>
+    </GlobalContext.Provider>
   )
 }
 

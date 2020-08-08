@@ -1,9 +1,11 @@
-import React, { useState, useEffect } from 'react'
+import React, { useState, useEffect, useContext } from 'react'
+import { GlobalContext } from './../../context/GlobalState'
 import eventService from './../../services/events'
 import { useHistory } from 'react-router-dom'
 import Swal from 'sweetalert2'
 
 const EventDetails = ({ match }) => {
+  const { user } = useContext(GlobalContext)
   const [oneEvent, setOneEvent] = useState({
     id: null,
     date: '',
@@ -29,8 +31,8 @@ const EventDetails = ({ match }) => {
       })
   }, [])
 
-  const loggedUserJSON = window.localStorage.getItem('loggedUser')
-  const user = JSON.parse(loggedUserJSON)
+  // const loggedUserJSON = window.localStorage.getItem('loggedUser')
+  // const user = JSON.parse(loggedUserJSON)
 
   const onSubmit = async e => {
     e.preventDefault()
@@ -63,7 +65,7 @@ const EventDetails = ({ match }) => {
     )
   }
 
-  if (!error && oneEvent && user.name !== oneEvent.user.name) {
+  if (!error && oneEvent && (!user || user.name !== oneEvent.user.name)) {
     event = (
       <div>
         <h2>{oneEvent.title} details</h2>
@@ -86,7 +88,7 @@ const EventDetails = ({ match }) => {
     )
   }
 
-  if (!error && oneEvent && user.name === oneEvent.user.name) {
+  if (!error && oneEvent && user && user.name === oneEvent.user.name) {
     event = (
       <div>
         <div className="w-full max-w-sm container mt-20 mx-auto">

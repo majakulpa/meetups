@@ -1,4 +1,5 @@
-import React, { useState } from 'react'
+import React, { useState, useContext } from 'react'
+import { GlobalContext } from './../../context/GlobalState'
 import { Link, useHistory } from 'react-router-dom'
 import usersService from './../../services/users'
 import loginService from './../../services/login'
@@ -13,7 +14,7 @@ const Signup = () => {
     email: '',
     description: ''
   })
-  const [user, setUser] = useState(null)
+  const { user, setUser } = useContext(GlobalContext)
 
   let history = useHistory()
 
@@ -30,7 +31,7 @@ const Signup = () => {
         password
       })
 
-      await window.localStorage.setItem('loggedUser', JSON.stringify(user))
+      //  await window.localStorage.setItem('loggedUser', JSON.stringify(user))
 
       await eventService.setToken(user.token)
       await setUser(user)
