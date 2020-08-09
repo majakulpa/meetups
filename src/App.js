@@ -10,8 +10,7 @@ import Groups from './pages/Groups/Groups'
 import CreateEvent from './components/Event/CreateEvent'
 import EventDetails from './components/Event/EventDetails'
 import Navigation from './components/Navigation/Navigation'
-//import { GlobalProvider } from './context/GlobalState'
-import { GlobalContext } from './context/GlobalState'
+import { GlobalContext } from './context/Context'
 
 const App = () => {
   const [user, setUser] = useState(null)

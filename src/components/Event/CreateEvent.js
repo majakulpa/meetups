@@ -1,11 +1,9 @@
-import React, { useState, useContext } from 'react'
-import { GlobalContext } from './../../context/GlobalState'
+import React, { useState } from 'react'
 import { Link, useHistory } from 'react-router-dom'
 import eventService from './../../services/events'
 import Swal from 'sweetalert2'
 
 const CreateEvent = () => {
-  const { user } = useContext(GlobalContext)
   const [events, setEvents] = useState([])
   const [title, setTitle] = useState('')
   const [capacity, setCapacity] = useState('')
@@ -15,8 +13,9 @@ const CreateEvent = () => {
   const [date, setDate] = useState('')
   let history = useHistory()
 
-  // const loggedUserJSON = window.localStorage.getItem('loggedUser')
-  // const user = JSON.parse(loggedUserJSON)
+  const loggedUser = window.localStorage.getItem('loggedUser')
+  const loggedUserJSON = JSON.parse(loggedUser)
+  const loggedUserToken = loggedUserJSON.userToken
 
   const addEvent = async e => {
     e.preventDefault()
@@ -30,7 +29,7 @@ const CreateEvent = () => {
         description: description,
         place: place
       }
-      eventService.setToken(user.token)
+      eventService.setToken(loggedUserToken)
       await eventService.create(eventObject).then(returnedEvent => {
         setEvents(events.concat(returnedEvent))
         setTitle('')

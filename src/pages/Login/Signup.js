@@ -1,5 +1,4 @@
-import React, { useState, useContext } from 'react'
-import { GlobalContext } from './../../context/GlobalState'
+import React, { useState } from 'react'
 import { Link, useHistory } from 'react-router-dom'
 import usersService from './../../services/users'
 import loginService from './../../services/login'
@@ -14,7 +13,6 @@ const Signup = () => {
     email: '',
     description: ''
   })
-  const { user, setUser } = useContext(GlobalContext)
 
   let history = useHistory()
 
@@ -26,16 +24,25 @@ const Signup = () => {
       let username = newUser.username
       let password = newUser.password
 
-      const user = await loginService.login({
+      const loggedUser = await loginService.login({
         username,
         password
       })
 
-      //  await window.localStorage.setItem('loggedUser', JSON.stringify(user))
-
-      await eventService.setToken(user.token)
-      await setUser(user)
-
+      let userToken = loggedUser.token
+      let userId = loggedUser.id
+      window.localStorage.setItem(
+        'loggedUser',
+        JSON.stringify({ userToken, userId })
+      )
+      eventService.setToken(userToken)
+      await setNewUser(newUser)
+      Swal.fire({
+        icon: 'success',
+        title: `Welcome ${loggedUser.name}!`,
+        showConfirmButton: false,
+        timer: 1500
+      })
       history.push('/')
     } catch (exception) {
       Swal.fire({

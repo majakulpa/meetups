@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useContext } from 'react'
-import { GlobalContext } from './../../context/GlobalState'
+import { GlobalContext } from '../../context/Context'
 import { Link } from 'react-router-dom'
 import EventsList from './../../components/Event/EventsList'
 import eventService from './../../services/events'

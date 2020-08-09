@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useContext } from 'react'
-import { GlobalContext } from './../../context/GlobalState'
+import { GlobalContext } from '../../context/Context'
 import eventService from './../../services/events'
 import { useHistory } from 'react-router-dom'
 import Swal from 'sweetalert2'
@@ -31,12 +31,13 @@ const EventDetails = ({ match }) => {
       })
   }, [])
 
-  // const loggedUserJSON = window.localStorage.getItem('loggedUser')
-  // const user = JSON.parse(loggedUserJSON)
+  const loggedUser = window.localStorage.getItem('loggedUser')
+  const loggedUserJSON = JSON.parse(loggedUser)
+  const loggedUserToken = loggedUserJSON.userToken
 
   const onSubmit = async e => {
     e.preventDefault()
-    await eventService.setToken(user.token)
+    await eventService.setToken(loggedUserToken)
     eventService.update(id, oneEvent)
     history.goBack()
     Swal.fire({
@@ -51,7 +52,7 @@ const EventDetails = ({ match }) => {
     setOneEvent({ ...oneEvent, [eventKey]: value })
 
   const handleDeleteEvent = async e => {
-    await eventService.setToken(user.token)
+    await eventService.setToken(loggedUserToken)
     eventService.deleteEvent(id)
     history.goBack()
   }

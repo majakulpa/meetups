@@ -1,5 +1,5 @@
 import React, { useContext } from 'react'
-import { GlobalContext } from './../../context/GlobalState'
+import { GlobalContext } from '../../context/Context'
 import { NavLink, useHistory } from 'react-router-dom'
 import Swal from 'sweetalert2'
 

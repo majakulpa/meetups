@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useContext } from 'react'
-import { GlobalContext } from './../../context/GlobalState'
+import { GlobalContext } from './../../context/Context'
 import userService from './../../services/users'
 import { Link, useHistory } from 'react-router-dom'
 import Swal from 'sweetalert2'
