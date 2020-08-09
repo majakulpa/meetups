@@ -42,4 +42,20 @@ const deleteEvent = async id => {
   return res.data
 }
 
-export default { getAll, create, update, setToken, getOneEvent, deleteEvent }
+const bookEvent = async id => {
+  const config = {
+    headers: { Authorization: token }
+  }
+  const res = await axios.post(`${eventsUrl}/${id}`, config)
+  return res.data
+}
+
+export default {
+  getAll,
+  create,
+  update,
+  setToken,
+  getOneEvent,
+  deleteEvent,
+  bookEvent
+}

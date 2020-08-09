@@ -132,7 +132,7 @@ const account = ({ match }) => {
           </div>
         </form>
         <ul>
-          My Events:
+          Created Events:
           {userEvents.map(event => (
             <Link key={event.id} to={`/events/${event.id}`}>
               <li
@@ -140,6 +140,14 @@ const account = ({ match }) => {
               >
                 {event.title} - {new Date(event.date).toDateString()}
               </li>
+            </Link>
+          ))}
+        </ul>
+        <ul>
+          Booked Events:
+          {user.bookedEvents.map(booking => (
+            <Link key={booking.id} to={`/bookings/${booking.id}`}>
+              <li>{booking.id}</li>
             </Link>
           ))}
         </ul>

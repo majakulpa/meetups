@@ -14,6 +14,7 @@ const EventDetails = ({ match }) => {
     capacity: '',
     description: '',
     place: '',
+    attendees: {},
     user: {}
   })
   const [error, setError] = useState('')
@@ -57,6 +58,25 @@ const EventDetails = ({ match }) => {
     history.goBack()
   }
 
+  const handleBookEvent = async e => {
+    try {
+      await eventService.setToken(loggedUserToken)
+      eventService.bookEvent(id)
+      Swal.fire({
+        icon: 'success',
+        title: `${oneEvent.title} has been booked!`,
+        showConfirmButton: false,
+        timer: 1500
+      })
+    } catch (exception) {
+      Swal.fire({
+        icon: 'error',
+        title: 'Oops...',
+        text: 'Something went wrong!'
+      })
+    }
+  }
+
   let event = <p>Loading...</p>
   if (error) {
     event = (
@@ -83,7 +103,9 @@ const EventDetails = ({ match }) => {
           {oneEvent.user.name}
         </p>
         <button className="bg-green-400 hover:bg-green-500 text-white font-semibold py-2 px-4 rounded inline-flex items-center">
-          <span className="pl-2">Book Event</span>
+          <span className="pl-2" onClick={e => handleBookEvent(e)}>
+            Book Event
+          </span>
         </button>
       </div>
     )
