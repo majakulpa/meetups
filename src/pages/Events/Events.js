@@ -3,12 +3,10 @@ import { GlobalContext } from './../../context/GlobalState'
 import { Link } from 'react-router-dom'
 import EventsList from './../../components/Event/EventsList'
 import eventService from './../../services/events'
-import loginService from './../../services/login'
+import userService from './../../services/users'
 import Search from './../../components/Search/Search'
-//import Swal from 'sweetalert2'
 
 const Events = () => {
-  // const [state, dispatch] = useContext(GlobalContext)
   const [events, setEvents] = useState([])
   const { user, setUser } = useContext(GlobalContext)
   const [showAllEvents, setShowAllEvents] = useState(true)
@@ -23,29 +21,19 @@ const Events = () => {
     .join('')
 
   useEffect(() => {
-    // const abortController = new window.AbortController()
-    // const signal = abortController.signal
+    const loggedUser = window.localStorage.getItem('loggedUser')
 
-    // const loggedUserJSON = window.localStorage.getItem('loggedUser')
-    // if (loggedUserJSON) {
-    if (user) {
-      //  const user = JSON.parse(loggedUserJSON)
-      //   dispatch({ type: 'LOGIN', payload: user })
-      //  if (!window.localStorage.getItem('loggedInMsg')) {
-      //   }
-      //   window.localStorage.setItem('loggedInMsg', 'loggedIn')
+    if (loggedUser) {
+      const loggedUserJSON = JSON.parse(loggedUser)
+      const loggedUserId = loggedUserJSON.userId
+      userService.getOneUser(loggedUserId).then(data => {
+        setUser(data)
+      })
     }
 
     eventService.getAll().then(initialEvents => {
       setEvents(initialEvents)
-      // dispatch(
-      //   { type: 'SET_EVENTS', payload: initialEvents }
-      //   //{ signal: signal }
-      // )
     })
-    // return function cleanup() {
-    //   abortController.abort()
-    // }
   }, [])
 
   const eventsToShow = showAllEvents

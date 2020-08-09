@@ -7,8 +7,6 @@ const navigation = () => {
   const { user, setUser } = useContext(GlobalContext)
   let history = useHistory()
 
-  const userLogged = window.localStorage.getItem('token')
-
   const handleLogout = () => {
     localStorage.clear()
     setUser(null)
