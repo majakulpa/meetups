@@ -46,7 +46,7 @@ const bookEvent = async id => {
   const config = {
     headers: { Authorization: token }
   }
-  const res = await axios.post(`${eventsUrl}/${id}`, config)
+  const res = await axios.post(`${eventsUrl}/${id}`, id, config)
   return res.data
 }
 

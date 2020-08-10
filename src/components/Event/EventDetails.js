@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useContext } from 'react'
 import { GlobalContext } from '../../context/Context'
 import eventService from './../../services/events'
-import { useHistory } from 'react-router-dom'
+import { useHistory, Link } from 'react-router-dom'
 import Swal from 'sweetalert2'
 
 const EventDetails = ({ match }) => {
@@ -14,13 +14,14 @@ const EventDetails = ({ match }) => {
     capacity: '',
     description: '',
     place: '',
-    attendees: {},
+    attendees: [],
     user: {}
   })
   const [error, setError] = useState('')
   let history = useHistory()
 
   const id = match.params.id
+
   useEffect(() => {
     eventService
       .getOneEvent(id)
@@ -36,6 +37,19 @@ const EventDetails = ({ match }) => {
   const loggedUserJSON = JSON.parse(loggedUser)
   const loggedUserToken = loggedUserJSON.userToken
 
+  const handleBookEvent = async e => {
+    e.preventDefault()
+    await eventService.setToken(loggedUserToken)
+    eventService.bookEvent(id)
+    history.goBack()
+    Swal.fire({
+      icon: 'success',
+      title: `${oneEvent.title} has been booked!`,
+      showConfirmButton: false,
+      timer: 1500
+    })
+  }
+
   const onSubmit = async e => {
     e.preventDefault()
     await eventService.setToken(loggedUserToken)
@@ -43,7 +57,7 @@ const EventDetails = ({ match }) => {
     history.goBack()
     Swal.fire({
       icon: 'success',
-      title: 'Your event has been edited!',
+      title: `${oneEvent.title} has been updated!`,
       showConfirmButton: false,
       timer: 1500
     })
@@ -56,25 +70,6 @@ const EventDetails = ({ match }) => {
     await eventService.setToken(loggedUserToken)
     eventService.deleteEvent(id)
     history.goBack()
-  }
-
-  const handleBookEvent = async e => {
-    try {
-      await eventService.setToken(loggedUserToken)
-      eventService.bookEvent(id)
-      Swal.fire({
-        icon: 'success',
-        title: `${oneEvent.title} has been booked!`,
-        showConfirmButton: false,
-        timer: 1500
-      })
-    } catch (exception) {
-      Swal.fire({
-        icon: 'error',
-        title: 'Oops...',
-        text: 'Something went wrong!'
-      })
-    }
   }
 
   let event = <p>Loading...</p>
@@ -102,11 +97,34 @@ const EventDetails = ({ match }) => {
           Organizer:
           {oneEvent.user.name}
         </p>
-        <button className="bg-green-400 hover:bg-green-500 text-white font-semibold py-2 px-4 rounded inline-flex items-center">
-          <span className="pl-2" onClick={e => handleBookEvent(e)}>
-            Book Event
-          </span>
-        </button>
+        <ul>
+          Attendees:
+          {oneEvent.attendees.map(attendee => (
+            <li key={attendee.id}>{attendee.name}</li>
+          ))}
+        </ul>
+        {!oneEvent.attendees.map(attendee => attendee.id).includes(user.id) ? (
+          <button
+            className="bg-green-400 hover:bg-green-500 text-white font-semibold py-2 px-4 rounded inline-flex items-center"
+            onClick={handleBookEvent}
+          >
+            <span className="pl-2">Book Event</span>
+          </button>
+        ) : (
+          <div>
+            {user.bookedEvents.map(booking => (
+              <div key={booking.id}>
+                {booking.event === oneEvent.id && (
+                  <Link to={`/bookings/${booking.id}`}>
+                    <button className="bg-green-400 hover:bg-green-500 text-white font-semibold py-2 px-4 rounded inline-flex items-center">
+                      <span className="pl-2">See my booking</span>
+                    </button>
+                  </Link>
+                )}
+              </div>
+            ))}
+          </div>
+        )}
       </div>
     )
   }
