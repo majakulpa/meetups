@@ -33,45 +33,6 @@ const EventDetails = ({ match }) => {
       })
   }, [])
 
-  const loggedUser = window.localStorage.getItem('loggedUser')
-  const loggedUserJSON = JSON.parse(loggedUser)
-  const loggedUserToken = loggedUserJSON.userToken
-
-  const handleBookEvent = async e => {
-    e.preventDefault()
-    await eventService.setToken(loggedUserToken)
-    eventService.bookEvent(id)
-    history.goBack()
-    Swal.fire({
-      icon: 'success',
-      title: `${oneEvent.title} has been booked!`,
-      showConfirmButton: false,
-      timer: 1500
-    })
-  }
-
-  const onSubmit = async e => {
-    e.preventDefault()
-    await eventService.setToken(loggedUserToken)
-    eventService.update(id, oneEvent)
-    history.goBack()
-    Swal.fire({
-      icon: 'success',
-      title: `${oneEvent.title} has been updated!`,
-      showConfirmButton: false,
-      timer: 1500
-    })
-  }
-
-  const handleOnChange = (eventKey, value) =>
-    setOneEvent({ ...oneEvent, [eventKey]: value })
-
-  const handleDeleteEvent = async e => {
-    await eventService.setToken(loggedUserToken)
-    eventService.deleteEvent(id)
-    history.goBack()
-  }
-
   let event = <p>Loading...</p>
   if (error) {
     event = (
@@ -81,28 +42,55 @@ const EventDetails = ({ match }) => {
     )
   }
 
-  if (!error && oneEvent && (!user || user.name !== oneEvent.user.name)) {
+  let eventData = (
+    <div>
+      <h2>{oneEvent.title} details</h2>
+      <p>Info: {oneEvent.description}</p>
+      <p>Location: {oneEvent.place}</p>
+      <p>Price: {oneEvent.price === 0 ? 'Free' : '$' + oneEvent.price}</p>
+      <p>
+        When: {new Date(oneEvent.date).toDateString()},{' '}
+        {new Date(oneEvent.date).toLocaleTimeString('en-US')}
+      </p>
+      <p>Max capacity: {oneEvent.capacity}</p>
+      <p>
+        Organizer:
+        {oneEvent.user.name}
+      </p>
+      <ul>
+        Attendees:
+        {oneEvent.attendees.map(attendee => (
+          <li key={attendee.id}>{attendee.name}</li>
+        ))}
+      </ul>
+    </div>
+  )
+
+  if (!error && oneEvent && !user) {
+    event = eventData
+  }
+
+  if (!error && oneEvent && user && user.name !== oneEvent.user.name) {
+    const loggedUser = window.localStorage.getItem('loggedUser')
+    const loggedUserJSON = JSON.parse(loggedUser)
+    const loggedUserToken = loggedUserJSON.userToken
+
+    const handleBookEvent = async e => {
+      e.preventDefault()
+      await eventService.setToken(loggedUserToken)
+      eventService.bookEvent(id)
+      history.goBack()
+      Swal.fire({
+        icon: 'success',
+        title: `${oneEvent.title} has been booked!`,
+        showConfirmButton: false,
+        timer: 1500
+      })
+    }
+
     event = (
       <div>
-        <h2>{oneEvent.title} details</h2>
-        <p>Info: {oneEvent.description}</p>
-        <p>Location: {oneEvent.place}</p>
-        <p>Price: {oneEvent.price === 0 ? 'Free' : '$' + oneEvent.price}</p>
-        <p>
-          When: {new Date(oneEvent.date).toDateString()},{' '}
-          {new Date(oneEvent.date).toLocaleTimeString('en-US')}
-        </p>
-        <p>Max capacity: {oneEvent.capacity}</p>
-        <p>
-          Organizer:
-          {oneEvent.user.name}
-        </p>
-        <ul>
-          Attendees:
-          {oneEvent.attendees.map(attendee => (
-            <li key={attendee.id}>{attendee.name}</li>
-          ))}
-        </ul>
+        {eventData}
         {!oneEvent.attendees.map(attendee => attendee.id).includes(user.id) ? (
           <button
             className="bg-green-400 hover:bg-green-500 text-white font-semibold py-2 px-4 rounded inline-flex items-center"
@@ -130,6 +118,32 @@ const EventDetails = ({ match }) => {
   }
 
   if (!error && oneEvent && user && user.name === oneEvent.user.name) {
+    const loggedUser = window.localStorage.getItem('loggedUser')
+    const loggedUserJSON = JSON.parse(loggedUser)
+    const loggedUserToken = loggedUserJSON.userToken
+
+    const onSubmit = async e => {
+      e.preventDefault()
+      await eventService.setToken(loggedUserToken)
+      eventService.update(id, oneEvent)
+      history.goBack()
+      Swal.fire({
+        icon: 'success',
+        title: `${oneEvent.title} has been updated!`,
+        showConfirmButton: false,
+        timer: 1500
+      })
+    }
+
+    const handleOnChange = (eventKey, value) =>
+      setOneEvent({ ...oneEvent, [eventKey]: value })
+
+    const handleDeleteEvent = async e => {
+      await eventService.setToken(loggedUserToken)
+      eventService.deleteEvent(id)
+      history.goBack()
+    }
+
     event = (
       <div>
         <div className="w-full max-w-sm container mt-20 mx-auto">

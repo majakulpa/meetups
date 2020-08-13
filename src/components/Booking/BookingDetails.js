@@ -30,7 +30,13 @@ const Booking = ({ match }) => {
   const handleDeleteBooking = async e => {
     await bookingService.setToken(loggedUserToken)
     bookingService.deleteBooking(id)
-    history.goBack()
+    Swal.fire({
+      icon: 'success',
+      title: 'Your booking has been cancelled!',
+      showConfirmButton: false,
+      timer: 1500
+    })
+    history.push('/')
   }
 
   let booking = <p>Loading...</p>
@@ -57,7 +63,14 @@ const Booking = ({ match }) => {
     )
   }
 
-  return <div>{booking}</div>
+  return (
+    <React.Fragment>
+      {booking}
+      <div className="text-center mt-4 text-gray-500">
+        <button onClick={() => history.goBack()}>Go back</button>
+      </div>
+    </React.Fragment>
+  )
 }
 
 export default Booking

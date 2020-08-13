@@ -39,7 +39,7 @@ const navigation = () => {
           ) : (
             <React.Fragment>
               <li className="mr-6">
-                <NavLink to="/bookings">Bookings</NavLink>
+                <NavLink to="/bookings">My bookings</NavLink>
               </li>
               <li className="mr-6">
                 <NavLink to={`/users/${user.id}`}>Hi {user.name}!</NavLink>

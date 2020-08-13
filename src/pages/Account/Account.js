@@ -143,14 +143,6 @@ const account = ({ match }) => {
             </Link>
           ))}
         </ul>
-        <ul>
-          Booked Events:
-          {user.bookedEvents.map(booking => (
-            <Link key={booking.id} to={`/bookings/${booking.id}`}>
-              <li>{booking.id}</li>
-            </Link>
-          ))}
-        </ul>
       </div>
     )
   }
