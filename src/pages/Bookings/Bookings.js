@@ -1,10 +1,9 @@
-import React, { useState, useEffect, useContext } from 'react'
+import React, { useContext } from 'react'
 import { GlobalContext } from './../../context/Context'
 import { Link, useHistory } from 'react-router-dom'
 
 const bookings = () => {
-  const { user, setUser } = useContext(GlobalContext)
-  const [error, setError] = useState('')
+  const { user } = useContext(GlobalContext)
   let history = useHistory()
 
   return (
@@ -12,8 +11,10 @@ const bookings = () => {
       <ul>
         Booked Events:
         {user.bookedEvents.map(booking => (
-          <Link key={booking.id} to={`/events/${booking.event}`}>
-            <li>{booking.id}</li>
+          <Link key={booking.id} to={`/events/${booking.event.id}`}>
+            <li>
+              {booking.event.title} - {booking.event.date}
+            </li>
           </Link>
         ))}
       </ul>

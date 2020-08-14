@@ -1,11 +1,9 @@
-import React, { useState, useEffect, useContext } from 'react'
-import { GlobalContext } from '../../context/Context'
+import React, { useState, useEffect } from 'react'
 import bookingService from './../../services/bookings'
-import { useHistory, Link } from 'react-router-dom'
+import { useHistory } from 'react-router-dom'
 import Swal from 'sweetalert2'
 
 const Booking = ({ match }) => {
-  const { user } = useContext(GlobalContext)
   const [oneBooking, setOneBooking] = useState(null)
   const [error, setError] = useState('')
   let history = useHistory()
@@ -51,8 +49,10 @@ const Booking = ({ match }) => {
   if (!error && oneBooking) {
     booking = (
       <div>
-        <p>{oneBooking.event.title}</p>
-        <p>{oneBooking.event.date}</p>
+        <p>
+          Are you sure that you want to delete booking for{' '}
+          {oneBooking.event.title} - {oneBooking.event.date}
+        </p>
         <button
           className="bg-green-400 hover:bg-green-500 text-white font-semibold py-2 px-4 rounded inline-flex items-center"
           onClick={handleDeleteBooking}

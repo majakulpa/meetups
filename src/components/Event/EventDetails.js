@@ -57,12 +57,14 @@ const EventDetails = ({ match }) => {
         Organizer:
         {oneEvent.user.name}
       </p>
-      <ul>
-        Attendees:
-        {oneEvent.attendees.map(attendee => (
-          <li key={attendee.id}>{attendee.name}</li>
-        ))}
-      </ul>
+      {oneEvent.attendees.length > 0 && (
+        <ul>
+          Attendees:
+          {oneEvent.attendees.map(attendee => (
+            <li key={attendee.id}>{attendee.name}</li>
+          ))}
+        </ul>
+      )}
     </div>
   )
 
@@ -102,10 +104,10 @@ const EventDetails = ({ match }) => {
           <div>
             {user.bookedEvents.map(booking => (
               <div key={booking.id}>
-                {booking.event === oneEvent.id && (
+                {booking.event.id === oneEvent.id && (
                   <Link to={`/bookings/${booking.id}`}>
                     <button className="bg-green-400 hover:bg-green-500 text-white font-semibold py-2 px-4 rounded inline-flex items-center">
-                      <span className="pl-2">See my booking</span>
+                      <span className="pl-2">Delete booking</span>
                     </button>
                   </Link>
                 )}
