@@ -1,11 +1,12 @@
 import React, { useState, useEffect, useContext } from 'react'
 import { GlobalContext } from '../../context/Context'
 import eventService from './../../services/events'
+import userService from './../../services/users'
 import { useHistory, Link } from 'react-router-dom'
 import Swal from 'sweetalert2'
 
 const EventDetails = ({ match }) => {
-  const { user } = useContext(GlobalContext)
+  const { user, setUser } = useContext(GlobalContext)
   const [oneEvent, setOneEvent] = useState({
     id: null,
     date: '',
@@ -23,6 +24,16 @@ const EventDetails = ({ match }) => {
   const id = match.params.id
 
   useEffect(() => {
+    const loggedUser = window.localStorage.getItem('loggedUser')
+
+    if (loggedUser) {
+      const loggedUserJSON = JSON.parse(loggedUser)
+      const loggedUserId = loggedUserJSON.userId
+      userService.getOneUser(loggedUserId).then(data => {
+        setUser(data)
+      })
+    }
+
     eventService
       .getOneEvent(id)
       .then(data => {
