@@ -143,6 +143,22 @@ const account = ({ match }) => {
             </Link>
           ))}
         </ul>
+        <ul>
+          Created groups:
+          {user.createdGroups.map(group => (
+            <Link key={group.id} to={`/groups/${group.id}`}>
+              <li>{group.name}</li>
+            </Link>
+          ))}
+        </ul>
+        <ul>
+          Member in:
+          {user.groups.map(group => (
+            <Link key={group.id} to={`/groups/${group.id}`}>
+              <li>{group.name}</li>
+            </Link>
+          ))}
+        </ul>
       </div>
     )
   }

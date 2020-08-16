@@ -1,31 +1,24 @@
-import React, { useState, useEffect, useContext } from 'react'
-import { GlobalContext } from './../../context/Context'
+import React, { useState, useEffect } from 'react'
 import { useHistory } from 'react-router-dom'
 import groupService from './../../services/groups'
-import userService from './../../services/users'
 import GroupList from './../../components/Group/GroupList'
 
 const groups = () => {
-  const { user, setUser } = useContext(GlobalContext)
   const [groups, setGroups] = useState([])
   const [error, setError] = useState('')
   let history = useHistory()
 
   useEffect(() => {
-    const loggedUser = window.localStorage.getItem('loggedUser')
-
-    if (loggedUser) {
-      const loggedUserJSON = JSON.parse(loggedUser)
-      const loggedUserId = loggedUserJSON.userId
-      userService.getOneUser(loggedUserId).then(data => {
-        setUser(data)
-      })
-    }
-
+    let isActive = true
     groupService.getAllGroups().then(allGroups => {
-      setGroups(allGroups)
+      if (isActive) {
+        setGroups(allGroups)
+      }
     })
-  }, [])
+    return () => {
+      isActive = false
+    }
+  }, [groups])
 
   let allGroups = <p>Loading...</p>
 

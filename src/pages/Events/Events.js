@@ -30,11 +30,19 @@ const Events = () => {
         setUser(data)
       })
     }
-
-    eventService.getAll().then(initialEvents => {
-      setEvents(initialEvents)
-    })
   }, [])
+
+  useEffect(() => {
+    let isActive = true
+    eventService.getAll().then(initialEvents => {
+      if (isActive) {
+        setEvents(initialEvents)
+      }
+    })
+    return () => {
+      isActive = false
+    }
+  }, [events])
 
   const eventsToShow = showAllEvents
     ? events
