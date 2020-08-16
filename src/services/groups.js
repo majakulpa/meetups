@@ -50,6 +50,14 @@ const joinGroup = async id => {
   return res.data
 }
 
+const leaveGroup = async id => {
+  const config = {
+    headers: { Authorization: token }
+  }
+  const res = await axios.delete(`${groupsUrl}/${id}/unsubscribe`, config)
+  return res.data
+}
+
 export default {
   getAllGroups,
   createGroup,
@@ -57,5 +65,6 @@ export default {
   updateGroup,
   deleteGroup,
   joinGroup,
-  setToken
+  setToken,
+  leaveGroup
 }

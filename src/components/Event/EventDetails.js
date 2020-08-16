@@ -16,6 +16,7 @@ const EventDetails = ({ match }) => {
     description: '',
     place: '',
     attendees: [],
+    groups: [],
     user: {}
   })
   const [error, setError] = useState('')
@@ -24,24 +25,38 @@ const EventDetails = ({ match }) => {
   const id = match.params.id
 
   useEffect(() => {
+    let isActive = true
     const loggedUser = window.localStorage.getItem('loggedUser')
 
     if (loggedUser) {
       const loggedUserJSON = JSON.parse(loggedUser)
       const loggedUserId = loggedUserJSON.userId
       userService.getOneUser(loggedUserId).then(data => {
-        setUser(data)
+        if (isActive) {
+          setUser(data)
+        }
       })
     }
+    return () => {
+      isActive = false
+    }
+  }, [])
 
+  useEffect(() => {
+    let isActive = true
     eventService
       .getOneEvent(id)
       .then(data => {
-        setOneEvent(data)
+        if (isActive) {
+          setOneEvent(data)
+        }
       })
       .catch(error => {
         setError(error)
       })
+    return () => {
+      isActive = false
+    }
   }, [])
 
   let event = <p>Loading...</p>
@@ -68,9 +83,17 @@ const EventDetails = ({ match }) => {
         Organizer:
         {oneEvent.user.name}
       </p>
+      {oneEvent.groups.length > 0 && (
+        <ul>
+          Group:
+          {oneEvent.groups.map(group => (
+            <li key={group.id}>{group.name}</li>
+          ))}
+        </ul>
+      )}
       {oneEvent.attendees.length > 0 && (
         <ul>
-          Attendees:
+          Attendees ({oneEvent.attendees.length}):
           {oneEvent.attendees.map(attendee => (
             <li key={attendee.id}>{attendee.name}</li>
           ))}
@@ -92,7 +115,6 @@ const EventDetails = ({ match }) => {
       e.preventDefault()
       await eventService.setToken(loggedUserToken)
       eventService.bookEvent(id)
-      history.goBack()
       Swal.fire({
         icon: 'success',
         title: `${oneEvent.title} has been booked!`,

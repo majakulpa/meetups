@@ -9,6 +9,8 @@ import Signup from './pages/Login/Signup'
 import PasswordReset from './pages/Login/PasswordReset'
 import Groups from './pages/Groups/Groups'
 import GroupDetails from './components/Group/GroupDetails'
+import GroupUnsubscribe from './components/Group/GroupUnsubscribe'
+import CreateGroup from './components/Group/CreateGroup'
 import CreateEvent from './components/Event/CreateEvent'
 import EventDetails from './components/Event/EventDetails'
 import Navigation from './components/Navigation/Navigation'
@@ -26,7 +28,7 @@ const App = () => {
           <Route path="/" exact component={Events} />
           <Redirect path="/events" to="/" exact />
           <Route path="/events/:id" exact component={EventDetails} />
-          <Route path="/create" exact component={CreateEvent} />
+          <Route path="/create-event" exact component={CreateEvent} />
           <Route path="/bookings" exact component={Bookings} />
           <Route path="/bookings/:id" exact component={BookingDelete} />
           <Route path="/users/:id" exact component={Account} />
@@ -35,6 +37,12 @@ const App = () => {
           <Route path="/password-reset" exact component={PasswordReset} />
           <Route path="/groups" exact component={Groups} />
           <Route path="/groups/:id" exact component={GroupDetails} />
+          <Route path="/create-group" exact component={CreateGroup} />
+          <Route
+            path="/groups/:id/unsubscribe"
+            exact
+            component={GroupUnsubscribe}
+          />
         </Switch>
       </main>
     </GlobalContext.Provider>

@@ -9,14 +9,20 @@ const bookings = () => {
   let history = useHistory()
 
   useEffect(() => {
+    let isActive = true
     const loggedUser = window.localStorage.getItem('loggedUser')
 
     if (loggedUser) {
       const loggedUserJSON = JSON.parse(loggedUser)
       const loggedUserId = loggedUserJSON.userId
       userService.getOneUser(loggedUserId).then(data => {
-        setUser(data)
+        if (isActive) {
+          setUser(data)
+        }
       })
+    }
+    return () => {
+      isActive = false
     }
   }, [])
 
@@ -45,7 +51,7 @@ const bookings = () => {
     <div>
       {myBookings}
       <div className="text-center mt-4 text-gray-500">
-        <button onClick={() => history.goBack()}>Go back</button>
+        <button onClick={() => history.push('/')}>Go back</button>
       </div>
     </div>
   )

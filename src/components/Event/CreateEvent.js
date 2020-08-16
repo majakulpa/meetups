@@ -5,12 +5,15 @@ import Swal from 'sweetalert2'
 
 const CreateEvent = () => {
   const [events, setEvents] = useState([])
-  const [title, setTitle] = useState('')
-  const [capacity, setCapacity] = useState('')
-  const [description, setDescription] = useState('')
-  const [price, setPrice] = useState('')
-  const [place, setPlace] = useState('')
-  const [date, setDate] = useState('')
+  const [newEvent, setNewEvent] = useState({
+    date: '',
+    title: '',
+    price: '',
+    capacity: '',
+    description: '',
+    place: '',
+    groups: []
+  })
   let history = useHistory()
 
   const loggedUser = window.localStorage.getItem('loggedUser')
@@ -21,24 +24,9 @@ const CreateEvent = () => {
     e.preventDefault()
 
     try {
-      const eventObject = {
-        title: title,
-        date: date,
-        price: price,
-        capacity: capacity,
-        description: description,
-        place: place
-      }
+      await eventService.create({ ...newEvent })
       eventService.setToken(loggedUserToken)
-      await eventService.create(eventObject).then(returnedEvent => {
-        setEvents(events.concat(returnedEvent))
-        setTitle('')
-        setDate('')
-        setPrice('')
-        setCapacity('')
-        setDescription('')
-        setPlace('')
-      })
+      await setNewEvent(newEvent)
       history.push('/')
       Swal.fire({
         icon: 'success',
@@ -55,6 +43,9 @@ const CreateEvent = () => {
     }
   }
 
+  const handleOnChange = (eventKey, value) =>
+    setNewEvent({ ...newEvent, [eventKey]: value })
+
   return (
     <div className="w-full max-w-sm container mt-20 mx-auto">
       <form onSubmit={addEvent}>
@@ -67,8 +58,8 @@ const CreateEvent = () => {
           </label>
           <input
             className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:text-gray-600"
-            value={title}
-            onChange={e => setTitle(e.target.value)}
+            value={newEvent.title}
+            onChange={e => handleOnChange('title', e.target.value)}
             type="text"
             placeholder="Event title"
           />
@@ -82,8 +73,8 @@ const CreateEvent = () => {
           </label>
           <textarea
             className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:text-gray-600"
-            value={description}
-            onChange={e => setDescription(e.target.value)}
+            value={newEvent.description}
+            onChange={e => handleOnChange('description', e.target.value)}
             placeholder="Event description"
           />
         </div>
@@ -96,8 +87,8 @@ const CreateEvent = () => {
           </label>
           <input
             className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:text-gray-600 focus:shadow-outline"
-            value={place}
-            onChange={e => setPlace(e.target.value)}
+            value={newEvent.place}
+            onChange={e => handleOnChange('place', e.target.value)}
             type="text"
             placeholder="Enter place"
           />
@@ -111,8 +102,8 @@ const CreateEvent = () => {
           </label>
           <input
             className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:text-gray-600"
-            value={date}
-            onChange={e => setDate(e.target.value)}
+            value={newEvent.date}
+            onChange={e => handleOnChange('date', e.target.value)}
             type="datetime-local"
             min={new Date()
               .toISOString()
@@ -131,8 +122,8 @@ const CreateEvent = () => {
           </label>
           <input
             className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:text-gray-600"
-            value={price}
-            onChange={e => setPrice(e.target.value)}
+            value={newEvent.price}
+            onChange={e => handleOnChange('price', e.target.value)}
             type="number"
             step="0.01"
             placeholder="Event price"
@@ -147,10 +138,24 @@ const CreateEvent = () => {
           </label>
           <input
             className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:text-gray-600"
-            value={capacity}
-            onChange={e => setCapacity(e.target.value)}
+            value={newEvent.capacity}
+            onChange={e => handleOnChange('capacity', e.target.value)}
             type="number"
             placeholder="Event Capacity"
+          />
+        </div>
+        <div className="w-full  mb-5">
+          <label
+            className="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2"
+            htmlFor="groups"
+          >
+            Groups:
+          </label>
+          <select
+            className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:text-gray-600"
+            value={newEvent.groups}
+            onChange={e => handleOnChange('groups', e.target.value)}
+            placeholder="Event groups"
           />
         </div>
         <div className="flex items-center justify-between">

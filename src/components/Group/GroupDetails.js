@@ -30,15 +30,23 @@ const groupDetails = ({ match }) => {
         setUser(data)
       })
     }
+  }, [])
 
+  useEffect(() => {
+    let isActive = true
     groupService
       .getOneGroup(id)
       .then(data => {
-        setOneGroup(data)
+        if (isActive) {
+          setOneGroup(data)
+        }
       })
       .catch(error => {
         setError(error)
       })
+    return () => {
+      isActive = false
+    }
   }, [])
 
   let group = <p>Loading...</p>
@@ -82,7 +90,6 @@ const groupDetails = ({ match }) => {
       e.preventDefault()
       await groupService.setToken(loggedUserToken)
       groupService.joinGroup(id)
-      history.goBack()
       Swal.fire({
         icon: 'success',
         title: `You joined ${oneGroup.name}!`,
@@ -106,7 +113,7 @@ const groupDetails = ({ match }) => {
             {user.groups.map(group => (
               <div key={group.id}>
                 {group.id === oneGroup.id && (
-                  <Link to={`/groups/${group.id}`}>
+                  <Link to={`/groups/${group.id}/unsubscribe`}>
                     <button className="bg-green-400 hover:bg-green-500 text-white font-semibold py-2 px-4 rounded inline-flex items-center">
                       <span className="pl-2">Leave group</span>
                     </button>

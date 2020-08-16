@@ -14,6 +14,7 @@ const EventsList = ({ events }) => {
             </p>
             <p>Where: {event.place}</p>
             <p>Price: {event.price === 0 ? 'Free' : '$' + event.price}</p>
+            <p>Going: {event.attendees.length}</p>
           </li>
         </Link>
       ))}

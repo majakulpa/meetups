@@ -42,7 +42,7 @@ const Events = () => {
     return () => {
       isActive = false
     }
-  }, [events])
+  }, [])
 
   const eventsToShow = showAllEvents
     ? events
@@ -121,7 +121,7 @@ const Events = () => {
       </div>
       {user && (
         <div className="flex-grow text-right px-4 py-2 m-2">
-          <Link to="/create">
+          <Link to="/create-event">
             <button className="bg-green-400 hover:bg-green-500 text-white font-semibold py-2 px-4 rounded inline-flex items-center">
               <span className="pl-2">Create Event</span>
             </button>
