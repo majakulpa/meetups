@@ -1,31 +1,38 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import { Link, useHistory } from 'react-router-dom'
 import eventService from './../../services/events'
 import Swal from 'sweetalert2'
+import SelectGroups from './../UI/SelectGroups'
 
 const CreateEvent = () => {
-  const [events, setEvents] = useState([])
   const [newEvent, setNewEvent] = useState({
     date: '',
     title: '',
     price: '',
     capacity: '',
     description: '',
-    place: '',
-    groups: []
+    place: ''
   })
+  const [selectedGroups, setSelectedGroups] = useState([])
   let history = useHistory()
 
-  const loggedUser = window.localStorage.getItem('loggedUser')
-  const loggedUserJSON = JSON.parse(loggedUser)
-  const loggedUserToken = loggedUserJSON.userToken
+  useEffect(() => {
+    const loggedUser = window.localStorage.getItem('loggedUser')
+    const loggedUserJSON = JSON.parse(loggedUser)
+    eventService.setToken(loggedUserJSON.userToken)
+  }, [])
 
   const addEvent = async e => {
     e.preventDefault()
 
     try {
-      await eventService.create({ ...newEvent })
-      eventService.setToken(loggedUserToken)
+      let groups = selectedGroups.map(group => {
+        let properties = {
+          _id: group.value
+        }
+        return properties
+      })
+      await eventService.create({ ...newEvent, groups })
       await setNewEvent(newEvent)
       history.push('/')
       Swal.fire({
@@ -45,6 +52,9 @@ const CreateEvent = () => {
 
   const handleOnChange = (eventKey, value) =>
     setNewEvent({ ...newEvent, [eventKey]: value })
+
+  const handleSelectOnChange = selectedGroups =>
+    setSelectedGroups(selectedGroups)
 
   return (
     <div className="w-full max-w-sm container mt-20 mx-auto">
@@ -129,7 +139,7 @@ const CreateEvent = () => {
             placeholder="Event price"
           />
         </div>
-        <div className="w-full  mb-5">
+        <div className="w-full mb-5">
           <label
             className="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2"
             htmlFor="capacity"
@@ -144,18 +154,16 @@ const CreateEvent = () => {
             placeholder="Event Capacity"
           />
         </div>
-        <div className="w-full  mb-5">
+        <div className="w-full mb-5">
           <label
             className="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2"
-            htmlFor="groups"
+            htmlFor="selectedGroups"
           >
             Groups:
           </label>
-          <select
-            className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:text-gray-600"
-            value={newEvent.groups}
-            onChange={e => handleOnChange('groups', e.target.value)}
-            placeholder="Event groups"
+          <SelectGroups
+            value={selectedGroups}
+            onChange={handleSelectOnChange}
           />
         </div>
         <div className="flex items-center justify-between">

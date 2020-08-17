@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import { Link, useHistory } from 'react-router-dom'
 import groupService from './../../services/groups'
 import Swal from 'sweetalert2'
@@ -10,16 +10,17 @@ const CreateGroup = () => {
   })
   let history = useHistory()
 
-  const loggedUser = window.localStorage.getItem('loggedUser')
-  const loggedUserJSON = JSON.parse(loggedUser)
-  const loggedUserToken = loggedUserJSON.userToken
+  useEffect(() => {
+    const loggedUser = window.localStorage.getItem('loggedUser')
+    const loggedUserJSON = JSON.parse(loggedUser)
+    groupService.setToken(loggedUserJSON.userToken)
+  }, [])
 
   const addGroup = async e => {
     e.preventDefault()
 
     try {
       await groupService.createGroup({ ...newGroup })
-      groupService.setToken(loggedUserToken)
       await setNewGroup(newGroup)
       Swal.fire({
         icon: 'success',

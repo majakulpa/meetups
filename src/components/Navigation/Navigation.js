@@ -42,7 +42,7 @@ const navigation = () => {
                 <NavLink to="/bookings">My bookings</NavLink>
               </li>
               <li className="mr-6">
-                <NavLink to={`/users/${user.id}`}>Hi {user.name}!</NavLink>
+                <NavLink to={`/my-account/${user.id}`}>Hi {user.name}!</NavLink>
               </li>
               <li>
                 <p className="text-2xl cursor-pointer" onClick={handleLogout}>

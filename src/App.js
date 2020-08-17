@@ -31,7 +31,7 @@ const App = () => {
           <Route path="/create-event" exact component={CreateEvent} />
           <Route path="/bookings" exact component={Bookings} />
           <Route path="/bookings/:id" exact component={BookingDelete} />
-          <Route path="/users/:id" exact component={Account} />
+          <Route path="/my-account/:id" exact component={Account} />
           <Route path="/login" exact component={Login} />
           <Route path="/signup" exact component={Signup} />
           <Route path="/password-reset" exact component={PasswordReset} />

@@ -4,7 +4,7 @@ import { Link } from 'react-router-dom'
 import EventsList from './../../components/Event/EventsList'
 import eventService from './../../services/events'
 import userService from './../../services/users'
-import Search from './../../components/Search/Search'
+import Search from '../../components/UI/Search'
 
 const Events = () => {
   const [events, setEvents] = useState([])
