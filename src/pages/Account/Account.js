@@ -3,9 +3,11 @@ import { GlobalContext } from './../../context/Context'
 import userService from './../../services/users'
 import { Link, useHistory } from 'react-router-dom'
 import Swal from 'sweetalert2'
+import SelectGroups from './../../components/UI/SelectGroups'
 
 const account = ({ match }) => {
   const { user, setUser } = useContext(GlobalContext)
+  const [selectedGroups, setSelectedGroups] = useState([])
   const [error, setError] = useState('')
   let history = useHistory()
 
@@ -27,9 +29,20 @@ const account = ({ match }) => {
     .slice(0, 16)
     .join('')
 
+  let groups
+  if (selectedGroups.length > 0) {
+    groups = selectedGroups.map(group => {
+      let properties = {
+        _id: group.value
+      }
+      return properties
+    })
+  } else groups = []
+
   const onSubmit = async e => {
     e.preventDefault()
-    await userService.updateUser(id, user)
+
+    await userService.updateUser(id, { ...user, groups })
     await setUser(user)
 
     history.goBack()
@@ -43,6 +56,9 @@ const account = ({ match }) => {
 
   const handleOnChange = (eventKey, value) =>
     setUser({ ...user, [eventKey]: value })
+
+  const handleSelectOnChange = selectedGroups =>
+    setSelectedGroups(selectedGroups)
 
   let userDetails = <p>Loading...</p>
 
@@ -61,6 +77,14 @@ const account = ({ match }) => {
         (a, b) => new Date(a.date) - new Date(b.date)
       )
     }
+
+    let currentGroups = user.groups.map(group => {
+      let properties = {
+        value: group.id,
+        label: group.name
+      }
+      return properties
+    })
 
     userDetails = (
       <div className="w-full max-w-sm container mt-20 mx-auto">
@@ -125,6 +149,18 @@ const account = ({ match }) => {
               placeholder="Enter description"
             />
           </div>
+          <div className="w-full mb-5">
+            <label
+              className="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2"
+              htmlFor="selectedGroups"
+            >
+              Joined groups:
+            </label>
+            <SelectGroups
+              onChange={handleSelectOnChange}
+              defaultValue={currentGroups}
+            />
+          </div>
           <div className="flex items-center justify-between">
             <button className="block mt-5 bg-green-400 w-full hover:bg-green-500 text-white font-bold py-2 px-4 rounded focus:text-gray-600 focus:shadow-outline">
               Edit
@@ -146,14 +182,6 @@ const account = ({ match }) => {
         <ul>
           Created groups:
           {user.createdGroups.map(group => (
-            <Link key={group.id} to={`/groups/${group.id}`}>
-              <li>{group.name}</li>
-            </Link>
-          ))}
-        </ul>
-        <ul>
-          Member in:
-          {user.groups.map(group => (
             <Link key={group.id} to={`/groups/${group.id}`}>
               <li>{group.name}</li>
             </Link>

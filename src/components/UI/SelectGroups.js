@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react'
 import groupService from '../../services/groups'
 import Select from 'react-select'
 
-const SelectGroups = ({ value, onChange }) => {
+const SelectGroups = ({ value, onChange, defaultValue }) => {
   const [allGroups, setAllGroups] = useState([])
 
   useEffect(() => {
@@ -32,6 +32,7 @@ const SelectGroups = ({ value, onChange }) => {
       options={options}
       key={options.value}
       isMulti
+      defaultValue={defaultValue}
     />
   )
 }

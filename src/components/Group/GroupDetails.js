@@ -66,6 +66,14 @@ const groupDetails = ({ match }) => {
         Organizer:
         {oneGroup.creator.name}
       </p>
+      {oneGroup.events.length > 0 && (
+        <ul>
+          Events:
+          {oneGroup.events.map(event => (
+            <li key={event.id}>{event.title}</li>
+          ))}
+        </ul>
+      )}
       {oneGroup.members.length > 0 && (
         <ul>
           Members:

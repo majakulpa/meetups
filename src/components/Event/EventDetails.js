@@ -4,6 +4,7 @@ import eventService from './../../services/events'
 import userService from './../../services/users'
 import { useHistory, Link } from 'react-router-dom'
 import Swal from 'sweetalert2'
+import SelectGroups from './../UI/SelectGroups'
 
 const EventDetails = ({ match }) => {
   const { user, setUser } = useContext(GlobalContext)
@@ -19,6 +20,7 @@ const EventDetails = ({ match }) => {
     groups: [],
     user: {}
   })
+  const [selectedGroups, setSelectedGroups] = useState([])
   const [error, setError] = useState('')
   let history = useHistory()
 
@@ -159,8 +161,14 @@ const EventDetails = ({ match }) => {
 
     const onSubmit = async e => {
       e.preventDefault()
+      let groups = selectedGroups.map(group => {
+        let properties = {
+          _id: group.value
+        }
+        return properties
+      })
       await eventService.setToken(loggedUserToken)
-      eventService.update(id, oneEvent)
+      eventService.update(id, { ...oneEvent, groups })
       history.goBack()
       Swal.fire({
         icon: 'success',
@@ -170,8 +178,19 @@ const EventDetails = ({ match }) => {
       })
     }
 
+    let currentGroups = oneEvent.groups.map(group => {
+      let properties = {
+        value: group.id,
+        label: group.name
+      }
+      return properties
+    })
+
     const handleOnChange = (eventKey, value) =>
       setOneEvent({ ...oneEvent, [eventKey]: value })
+
+    const handleSelectOnChange = selectedGroups =>
+      setSelectedGroups(selectedGroups)
 
     const handleDeleteEvent = async e => {
       await eventService.setToken(loggedUserToken)
@@ -280,6 +299,18 @@ const EventDetails = ({ match }) => {
                 onChange={e => handleOnChange('capacity', e.target.value)}
                 type="number"
                 placeholder="Enter capacity"
+              />
+            </div>
+            <div className="w-full mb-5">
+              <label
+                className="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2"
+                htmlFor="selectedGroups"
+              >
+                Groups:
+              </label>
+              <SelectGroups
+                onChange={handleSelectOnChange}
+                defaultValue={currentGroups}
               />
             </div>
             <div className="flex items-center justify-between">
