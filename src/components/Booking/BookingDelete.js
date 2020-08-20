@@ -3,6 +3,7 @@ import { GlobalContext } from './../../context/Context'
 import bookingService from '../../services/bookings'
 import userService from '../../services/users'
 import { useHistory } from 'react-router-dom'
+import GoBack from './../UI/GoBack'
 import Swal from 'sweetalert2'
 
 const Booking = ({ match }) => {
@@ -77,9 +78,7 @@ const Booking = ({ match }) => {
   return (
     <React.Fragment>
       {booking}
-      <div className="text-center mt-4 text-gray-500">
-        <button onClick={() => history.goBack()}>Go back</button>
-      </div>
+      <GoBack />
     </React.Fragment>
   )
 }

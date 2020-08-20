@@ -1,15 +1,18 @@
 import React, { useState, useEffect, useContext } from 'react'
 import { GlobalContext } from './../../context/Context'
-import { useHistory, Link } from 'react-router-dom'
+import { Link } from 'react-router-dom'
 import groupService from './../../services/groups'
 import userService from './../../services/users'
 import GroupList from './../../components/Group/GroupList'
+import Search from './../../components/UI/Search'
+import GoBack from './../../components/UI/GoBack'
 
 const groups = () => {
   const [groups, setGroups] = useState([])
   const { user, setUser } = useContext(GlobalContext)
   const [error, setError] = useState('')
-  let history = useHistory()
+  const [searchResult, setSearchResult] = useState('')
+  const [searchDisplay, setSearchDisplay] = useState([])
 
   useEffect(() => {
     const loggedUser = window.localStorage.getItem('loggedUser')
@@ -35,6 +38,27 @@ const groups = () => {
     }
   }, [])
 
+  useEffect(() => {
+    let oldList = groups
+    let newList = []
+    if (searchResult !== '') {
+      newList = oldList.filter(event =>
+        event.name.toLowerCase().includes(searchResult.toLowerCase())
+      )
+      setSearchDisplay(newList)
+    } else {
+      setSearchDisplay(groups)
+    }
+  }, [searchResult])
+
+  const searchHandleChange = e => {
+    setSearchResult(e.target.value)
+  }
+
+  const handleClearSearch = () => {
+    setSearchResult('')
+  }
+
   let allGroups = <p>Loading...</p>
 
   if (error) {
@@ -42,11 +66,26 @@ const groups = () => {
   }
 
   if (groups) {
-    allGroups = <GroupList groups={groups} />
+    allGroups = (
+      <GroupList groups={searchResult.length < 1 ? groups : searchDisplay} />
+    )
   }
 
   return (
     <div className="groups">
+      <div className="flex items-center">
+        <Search
+          value={searchResult}
+          searchHandleChange={searchHandleChange}
+          placeholder="Search by group name"
+        />
+        <button
+          onClick={handleClearSearch}
+          className="bg-gray-500 hover:bg-gray-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
+        >
+          Clear
+        </button>
+      </div>
       {user && (
         <div className="flex-grow text-right px-4 py-2 m-2">
           <Link to="/create-group">
@@ -57,9 +96,7 @@ const groups = () => {
         </div>
       )}
       {allGroups}
-      <div className="text-center mt-4 text-gray-500">
-        <button onClick={() => history.push('/')}>Go back</button>
-      </div>
+      <GoBack />
     </div>
   )
 }

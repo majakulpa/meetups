@@ -4,6 +4,7 @@ import groupService from './../../services/groups'
 import userService from './../../services/users'
 import { useHistory, Link } from 'react-router-dom'
 import Swal from 'sweetalert2'
+import GoBack from './../UI/GoBack'
 
 const groupDetails = ({ match }) => {
   const { user, setUser } = useContext(GlobalContext)
@@ -60,17 +61,13 @@ const groupDetails = ({ match }) => {
 
   let groupData = (
     <div>
-      <h2>{oneGroup.name} details</h2>
-      <p>Info: {oneGroup.description}</p>
-      <p>
-        Organizer:
-        {oneGroup.creator.name}
-      </p>
       {oneGroup.events.length > 0 && (
         <ul>
           Events:
           {oneGroup.events.map(event => (
-            <li key={event.id}>{event.title}</li>
+            <Link key={event.id} to={`/events/${event.id}`}>
+              <li>{event.title}</li>
+            </Link>
           ))}
         </ul>
       )}
@@ -78,16 +75,21 @@ const groupDetails = ({ match }) => {
         <ul>
           Members:
           {oneGroup.members.map(member => (
-            <li key={member.id}>{member.name}</li>
+            <Link
+              key={member.id}
+              to={
+                user && user.id === member.id
+                  ? `/my-account/${member.id}`
+                  : `/users/${member.id}`
+              }
+            >
+              <li>{member.name}</li>
+            </Link>
           ))}
         </ul>
       )}
     </div>
   )
-
-  if (!error && oneGroup && !user) {
-    group = groupData
-  }
 
   if (!error && oneGroup && user && user.name !== oneGroup.creator.name) {
     const loggedUser = window.localStorage.getItem('loggedUser')
@@ -108,6 +110,12 @@ const groupDetails = ({ match }) => {
 
     group = (
       <div>
+        <h2>{oneGroup.name} details</h2>
+        <p>Info: {oneGroup.description}</p>
+        <p>
+          Organizer:
+          {oneGroup.creator.name}
+        </p>
         {groupData}
         {!oneGroup.members.map(member => member.id).includes(user.id) ? (
           <button
@@ -164,6 +172,7 @@ const groupDetails = ({ match }) => {
 
     group = (
       <div>
+        {groupData}
         <div className="w-full max-w-sm container mt-20 mx-auto">
           <form onSubmit={onSubmit}>
             <div className="w-full mb-5">
@@ -186,7 +195,7 @@ const groupDetails = ({ match }) => {
                 className="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2"
                 htmlFor="description"
               >
-                Event description:
+                Group description:
               </label>
               <textarea
                 className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:text-gray-600 focus:shadow-outline"
@@ -198,7 +207,7 @@ const groupDetails = ({ match }) => {
             </div>
             <div className="flex items-center justify-between">
               <button className="block mt-5 bg-green-400 w-full hover:bg-green-500 text-white font-bold py-2 px-4 rounded focus:text-gray-600 focus:shadow-outline">
-                Edit Event
+                Edit Group
               </button>
             </div>
           </form>
@@ -241,9 +250,7 @@ const groupDetails = ({ match }) => {
   return (
     <div>
       {group}
-      <div className="text-center mt-4 text-gray-500">
-        <button onClick={() => history.goBack()}>Go back</button>
-      </div>
+      <GoBack />
     </div>
   )
 }

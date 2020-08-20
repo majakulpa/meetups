@@ -3,7 +3,7 @@ import { GlobalContext } from './../../context/Context'
 import userService from './../../services/users'
 import { Link, useHistory } from 'react-router-dom'
 import Swal from 'sweetalert2'
-import SelectGroups from './../../components/UI/SelectGroups'
+import GoBack from './../../components/UI/GoBack'
 
 const account = ({ match }) => {
   const { user, setUser } = useContext(GlobalContext)
@@ -30,7 +30,7 @@ const account = ({ match }) => {
     .join('')
 
   let groups
-  if (selectedGroups.length > 0) {
+  if (selectedGroups !== null && selectedGroups.length > 0) {
     groups = selectedGroups.map(group => {
       let properties = {
         _id: group.value
@@ -57,9 +57,6 @@ const account = ({ match }) => {
   const handleOnChange = (eventKey, value) =>
     setUser({ ...user, [eventKey]: value })
 
-  const handleSelectOnChange = selectedGroups =>
-    setSelectedGroups(selectedGroups)
-
   let userDetails = <p>Loading...</p>
 
   if (error) {
@@ -77,14 +74,6 @@ const account = ({ match }) => {
         (a, b) => new Date(a.date) - new Date(b.date)
       )
     }
-
-    let currentGroups = user.groups.map(group => {
-      let properties = {
-        value: group.id,
-        label: group.name
-      }
-      return properties
-    })
 
     userDetails = (
       <div className="w-full max-w-sm container mt-20 mx-auto">
@@ -149,18 +138,6 @@ const account = ({ match }) => {
               placeholder="Enter description"
             />
           </div>
-          <div className="w-full mb-5">
-            <label
-              className="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2"
-              htmlFor="selectedGroups"
-            >
-              Joined groups:
-            </label>
-            <SelectGroups
-              onChange={handleSelectOnChange}
-              defaultValue={currentGroups}
-            />
-          </div>
           <div className="flex items-center justify-between">
             <button className="block mt-5 bg-green-400 w-full hover:bg-green-500 text-white font-bold py-2 px-4 rounded focus:text-gray-600 focus:shadow-outline">
               Edit
@@ -187,6 +164,14 @@ const account = ({ match }) => {
             </Link>
           ))}
         </ul>
+        <ul>
+          Joined groups:
+          {user.groups.map(group => (
+            <Link key={group.id} to={`/groups/${group.id}`}>
+              <li>{group.name}</li>
+            </Link>
+          ))}
+        </ul>
       </div>
     )
   }
@@ -194,9 +179,7 @@ const account = ({ match }) => {
   return (
     <div>
       {userDetails}
-      <div className="text-center mt-4 text-gray-500">
-        <button onClick={() => history.goBack()}>Go back</button>
-      </div>
+      <GoBack />
     </div>
   )
 }

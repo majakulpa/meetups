@@ -5,6 +5,7 @@ import userService from './../../services/users'
 import { useHistory, Link } from 'react-router-dom'
 import Swal from 'sweetalert2'
 import SelectGroups from './../UI/SelectGroups'
+import GoBack from './../UI/GoBack'
 
 const EventDetails = ({ match }) => {
   const { user, setUser } = useContext(GlobalContext)
@@ -159,14 +160,19 @@ const EventDetails = ({ match }) => {
     const loggedUserJSON = JSON.parse(loggedUser)
     const loggedUserToken = loggedUserJSON.userToken
 
-    const onSubmit = async e => {
-      e.preventDefault()
-      let groups = selectedGroups.map(group => {
+    let groups = []
+    if (selectedGroups) {
+      groups = selectedGroups.map(group => {
         let properties = {
           _id: group.value
         }
         return properties
       })
+    }
+
+    const onSubmit = async e => {
+      e.preventDefault()
+
       await eventService.setToken(loggedUserToken)
       eventService.update(id, { ...oneEvent, groups })
       history.goBack()
@@ -189,8 +195,16 @@ const EventDetails = ({ match }) => {
     const handleOnChange = (eventKey, value) =>
       setOneEvent({ ...oneEvent, [eventKey]: value })
 
-    const handleSelectOnChange = selectedGroups =>
+    const handleSelectOnChange = selectedGroups => {
+      if (selectedGroups === null) {
+        Swal.fire({
+          icon: 'error',
+          title: 'Oops...',
+          text: 'Please select at least one group'
+        })
+      }
       setSelectedGroups(selectedGroups)
+    }
 
     const handleDeleteEvent = async e => {
       await eventService.setToken(loggedUserToken)
@@ -358,9 +372,7 @@ const EventDetails = ({ match }) => {
   return (
     <div>
       {event}
-      <div className="text-center mt-4 text-gray-500">
-        <button onClick={() => history.goBack()}>Go back</button>
-      </div>
+      <GoBack />
     </div>
   )
 }

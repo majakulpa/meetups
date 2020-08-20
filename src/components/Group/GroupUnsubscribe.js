@@ -4,6 +4,7 @@ import groupService from '../../services/groups'
 import userService from '../../services/users'
 import { useHistory } from 'react-router-dom'
 import Swal from 'sweetalert2'
+import GoBack from './../UI/GoBack'
 
 const GroupUnsubscribe = ({ match }) => {
   const { user, setUser } = useContext(GlobalContext)
@@ -74,9 +75,7 @@ const GroupUnsubscribe = ({ match }) => {
   return (
     <React.Fragment>
       {subscription}
-      <div className="text-center mt-4 text-gray-500">
-        <button onClick={() => history.goBack()}>Go back</button>
-      </div>
+      <GoBack />
     </React.Fragment>
   )
 }

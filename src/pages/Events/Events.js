@@ -5,6 +5,7 @@ import EventsList from './../../components/Event/EventsList'
 import eventService from './../../services/events'
 import userService from './../../services/users'
 import Search from '../../components/UI/Search'
+import SearchDate from '../../components/UI/SearchDate'
 
 const Events = () => {
   const [events, setEvents] = useState([])
@@ -101,6 +102,9 @@ const Events = () => {
         <Search
           value={searchResult}
           searchHandleChange={searchHandleChange}
+          placeholder="Search by event name or location"
+        />
+        <SearchDate
           date={dateSearchResult}
           searchDateHandleChange={searchDateHandleChange}
         />

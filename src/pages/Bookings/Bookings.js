@@ -1,12 +1,12 @@
 import React, { useState, useEffect, useContext } from 'react'
 import { GlobalContext } from './../../context/Context'
-import { Link, useHistory } from 'react-router-dom'
+import { Link } from 'react-router-dom'
 import userService from './../../services/users'
+import GoBack from './../../components/UI/GoBack'
 
 const bookings = () => {
   const { user, setUser } = useContext(GlobalContext)
   const [error, setError] = useState('')
-  let history = useHistory()
 
   useEffect(() => {
     let isActive = true
@@ -50,9 +50,7 @@ const bookings = () => {
   return (
     <div>
       {myBookings}
-      <div className="text-center mt-4 text-gray-500">
-        <button onClick={() => history.push('/')}>Go back</button>
-      </div>
+      <GoBack />
     </div>
   )
 }

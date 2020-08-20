@@ -4,6 +4,7 @@ import Events from './pages/Events/Events'
 import Bookings from './pages/Bookings/Bookings'
 import BookingDelete from './components/Booking/BookingDelete'
 import Account from './pages/Account/Account'
+import UserAccount from './pages/Account/UserAccount'
 import Login from './pages/Login/Login'
 import Signup from './pages/Login/Signup'
 import PasswordReset from './pages/Login/PasswordReset'
@@ -32,6 +33,7 @@ const App = () => {
           <Route path="/bookings" exact component={Bookings} />
           <Route path="/bookings/:id" exact component={BookingDelete} />
           <Route path="/my-account/:id" exact component={Account} />
+          <Route path="/users/:id" exact component={UserAccount} />
           <Route path="/login" exact component={Login} />
           <Route path="/signup" exact component={Signup} />
           <Route path="/password-reset" exact component={PasswordReset} />
