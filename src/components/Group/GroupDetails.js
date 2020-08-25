@@ -59,8 +59,8 @@ const groupDetails = ({ match }) => {
     )
   }
 
-  let groupData = (
-    <div>
+  let groupEvents = (
+    <React.Fragment>
       {oneGroup.events.length > 0 && (
         <ul>
           Events:
@@ -71,6 +71,11 @@ const groupDetails = ({ match }) => {
           ))}
         </ul>
       )}
+    </React.Fragment>
+  )
+
+  let groupMembers = (
+    <React.Fragment>
       {oneGroup.members.length > 0 && (
         <ul>
           Members:
@@ -88,8 +93,22 @@ const groupDetails = ({ match }) => {
           ))}
         </ul>
       )}
-    </div>
+    </React.Fragment>
   )
+
+  if (!error && !user) {
+    group = (
+      <div>
+        <h2>{oneGroup.name} details</h2>
+        <p>Info: {oneGroup.description}</p>
+        <p>
+          Organizer:
+          {oneGroup.creator.name}
+        </p>
+        {groupEvents}
+      </div>
+    )
+  }
 
   if (!error && oneGroup && user && user.name !== oneGroup.creator.name) {
     const loggedUser = window.localStorage.getItem('loggedUser')
@@ -116,7 +135,8 @@ const groupDetails = ({ match }) => {
           Organizer:
           {oneGroup.creator.name}
         </p>
-        {groupData}
+        {groupEvents}
+        {groupMembers}
         {!oneGroup.members.map(member => member.id).includes(user.id) ? (
           <button
             className="bg-green-400 hover:bg-green-500 text-white font-semibold py-2 px-4 rounded inline-flex items-center"
@@ -172,7 +192,8 @@ const groupDetails = ({ match }) => {
 
     group = (
       <div>
-        {groupData}
+        {groupEvents}
+        {groupMembers}
         <div className="w-full max-w-sm container mt-20 mx-auto">
           <form onSubmit={onSubmit}>
             <div className="w-full mb-5">

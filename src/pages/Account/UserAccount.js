@@ -32,9 +32,14 @@ const UserAccount = ({ match }) => {
       <React.Fragment>
         <p>{userData.name}</p>
         <p>{userData.description}</p>
-        <button className="bg-green-400 hover:bg-green-500 text-white font-semibold py-2 px-4 rounded inline-flex items-center">
+        <a
+          href={`mailto:${userData.email}`}
+          target="_blank"
+          className="cursor-pointer bg-green-400 hover:bg-green-500 text-white
+          font-semibold py-2 px-4 rounded inline-flex items-center"
+        >
           Send message
-        </button>
+        </a>
       </React.Fragment>
     )
   }

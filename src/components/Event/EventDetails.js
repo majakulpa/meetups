@@ -94,15 +94,29 @@ const EventDetails = ({ match }) => {
           ))}
         </ul>
       )}
+    </div>
+  )
+
+  let eventAttendees = (
+    <React.Fragment>
       {oneEvent.attendees.length > 0 && (
         <ul>
           Attendees ({oneEvent.attendees.length}):
           {oneEvent.attendees.map(attendee => (
-            <li key={attendee.id}>{attendee.name}</li>
+            <Link
+              key={attendee.id}
+              to={
+                user && user.id === attendee.id
+                  ? `/my-account/${attendee.id}`
+                  : `/users/${attendee.id}`
+              }
+            >
+              <li>{attendee.name}</li>
+            </Link>
           ))}
         </ul>
       )}
-    </div>
+    </React.Fragment>
   )
 
   if (!error && oneEvent && !user) {
@@ -129,6 +143,7 @@ const EventDetails = ({ match }) => {
     event = (
       <div>
         {eventData}
+        {eventAttendees}
         {!oneEvent.attendees.map(attendee => attendee.id).includes(user.id) ? (
           <button
             className="bg-green-400 hover:bg-green-500 text-white font-semibold py-2 px-4 rounded inline-flex items-center"
