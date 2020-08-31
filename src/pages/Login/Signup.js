@@ -13,13 +13,22 @@ const Signup = () => {
     email: '',
     description: ''
   })
+  const [profileImage, setProfileImage] = useState(null)
 
   let history = useHistory()
 
+  const fileSelectedHandler = e => {
+    setProfileImage({ profileImage: e.target.files[0] })
+  }
+
   const handleSignup = async e => {
     e.preventDefault()
+
     try {
-      await usersService.createUser({ ...newUser })
+      await usersService.createUser({
+        ...newUser,
+        ...profileImage
+      })
 
       let username = newUser.username
       let password = newUser.password
@@ -140,6 +149,20 @@ const Signup = () => {
             onChange={e => handleOnChange('description', e.target.value)}
             type="text"
             placeholder="Enter description"
+          />
+        </div>
+        <div>
+          <label
+            className="block text-gray-700 text-sm font-bold mb-2"
+            htmlFor="profileImage"
+          >
+            Profile Image:
+          </label>
+          <input
+            type="file"
+            className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:text-gray-600 focus:shadow-outline"
+            value={newUser.profileImage}
+            onChange={fileSelectedHandler}
           />
         </div>
         <div className="mt-6 flex items-center justify-between">

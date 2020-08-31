@@ -138,6 +138,12 @@ const account = ({ match }) => {
               placeholder="Enter description"
             />
           </div>
+          <img
+            alt="Profile image"
+            src={user.profileImage}
+            width="200px"
+            height="auto"
+          />
           <div className="flex items-center justify-between">
             <button className="block mt-5 bg-green-400 w-full hover:bg-green-500 text-white font-bold py-2 px-4 rounded focus:text-gray-600 focus:shadow-outline">
               Edit
