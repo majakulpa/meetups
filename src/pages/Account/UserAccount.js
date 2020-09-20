@@ -30,7 +30,7 @@ const UserAccount = ({ match }) => {
   if (!error) {
     oneUser = (
       <React.Fragment>
-        <p>{userData.name}</p>
+        <p className="capitalize">{userData.name}</p>
         <p>{userData.description}</p>
         <a
           href={`mailto:${userData.email}`}

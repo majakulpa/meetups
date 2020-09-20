@@ -95,7 +95,10 @@ const groups = () => {
           </Link>
         </div>
       )}
-      {allGroups}
+      <div className="flex flex-wrap justify-center w-full p-6">
+        {' '}
+        {allGroups}
+      </div>
       <GoBack />
     </div>
   )

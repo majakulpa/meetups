@@ -6,7 +6,8 @@ import Swal from 'sweetalert2'
 const CreateGroup = () => {
   const [newGroup, setNewGroup] = useState({
     name: '',
-    description: ''
+    description: '',
+    mainImage: ''
   })
   let history = useHistory()
 
@@ -71,6 +72,21 @@ const CreateGroup = () => {
             value={newGroup.description}
             onChange={e => handleOnChange('description', e.target.value)}
             placeholder="Event description"
+          />
+        </div>
+        <div>
+          <label
+            className="block text-gray-700 text-sm font-bold mb-2"
+            htmlFor="description"
+          >
+            Main Image URL:
+          </label>
+          <input
+            className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:text-gray-600 focus:shadow-outline"
+            value={newGroup.mainImage}
+            onChange={e => handleOnChange('mainImage', e.target.value)}
+            type="text"
+            placeholder="Enter description"
           />
         </div>
         <div className="flex items-center justify-between">

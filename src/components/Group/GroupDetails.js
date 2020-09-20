@@ -12,6 +12,7 @@ const groupDetails = ({ match }) => {
     id: null,
     name: '',
     description: '',
+    mainImage: '',
     members: [],
     events: [],
     creator: {}
@@ -100,6 +101,16 @@ const groupDetails = ({ match }) => {
     group = (
       <div>
         <h2>{oneGroup.name} details</h2>
+        {!oneGroup.mainImage ? (
+          <div></div>
+        ) : (
+          <img
+            alt="Group main image"
+            src={oneGroup.mainImage}
+            width="200px"
+            height="auto"
+          />
+        )}
         <p>Info: {oneGroup.description}</p>
         <p>
           Organizer:
@@ -130,6 +141,16 @@ const groupDetails = ({ match }) => {
     group = (
       <div>
         <h2>{oneGroup.name} details</h2>
+        {!oneGroup.mainImage ? (
+          <div></div>
+        ) : (
+          <img
+            alt="Group main image"
+            src={oneGroup.mainImage}
+            width="200px"
+            height="auto"
+          />
+        )}
         <p>Info: {oneGroup.description}</p>
         <p>
           Organizer:
@@ -192,6 +213,16 @@ const groupDetails = ({ match }) => {
 
     group = (
       <div>
+        {!oneGroup.mainImage ? (
+          <div></div>
+        ) : (
+          <img
+            alt="Group main image"
+            src={oneGroup.mainImage}
+            width="200px"
+            height="auto"
+          />
+        )}
         {groupEvents}
         {groupMembers}
         <div className="w-full max-w-sm container mt-20 mx-auto">

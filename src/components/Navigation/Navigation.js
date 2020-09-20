@@ -41,7 +41,7 @@ const navigation = () => {
               <li className="mr-6">
                 <NavLink to="/bookings">My bookings</NavLink>
               </li>
-              <li className="mr-6">
+              <li className="mr-6 capitalize">
                 <NavLink to={`/my-account/${user.id}`}>Hi {user.name}!</NavLink>
               </li>
               <li>
