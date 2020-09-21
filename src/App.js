@@ -24,7 +24,7 @@ const App = () => {
   return (
     <GlobalContext.Provider value={providerValue}>
       <Navigation />
-      <main className="main">
+      <main className="main min-h-screen bg-gray-100 py-8 px-48">
         <Switch>
           <Route path="/" exact component={Events} />
           <Redirect path="/events" to="/" exact />

@@ -2,6 +2,7 @@ import React, { useContext } from 'react'
 import { GlobalContext } from '../../context/Context'
 import { NavLink, useHistory } from 'react-router-dom'
 import Swal from 'sweetalert2'
+import { HiOutlineLogout, HiOutlineUserCircle } from 'react-icons/hi'
 
 const navigation = () => {
   const { user, setUser } = useContext(GlobalContext)
@@ -20,12 +21,12 @@ const navigation = () => {
   }
 
   return (
-    <header className="flex">
+    <header className="flex border-solid border-b border-gray-400 px-5 py-2 justify-between items-center h-16">
       <div className="mr-6">
         <NavLink to="/">Meetups</NavLink>
       </div>
       <nav>
-        <ul className="flex">
+        <ul className="flex items-center">
           <li className="mr-6">
             <NavLink to="/">Events</NavLink>
           </li>
@@ -41,13 +42,28 @@ const navigation = () => {
               <li className="mr-6">
                 <NavLink to="/bookings">My bookings</NavLink>
               </li>
-              <li className="mr-6 capitalize">
-                <NavLink to={`/my-account/${user.id}`}>Hi {user.name}!</NavLink>
+              <li className="mr-6">
+                {user.profileImage === '' ? (
+                  <NavLink to={`/my-account/${user.id}`}>
+                    <HiOutlineUserCircle className="text-2xl" />
+                  </NavLink>
+                ) : (
+                  <NavLink to={`/my-account/${user.id}`}>
+                    <div
+                      className="h-12 w-12 bg-cover rounded-full bg-center"
+                      style={{
+                        backgroundImage: `url(${user.profileImage}})`
+                      }}
+                      title="Profile Image"
+                    ></div>
+                  </NavLink>
+                )}
               </li>
               <li>
-                <p className="text-2xl cursor-pointer" onClick={handleLogout}>
-                  &#9758;
-                </p>
+                <HiOutlineLogout
+                  className="text-2xl cursor-pointer"
+                  onClick={handleLogout}
+                />
               </li>
             </React.Fragment>
           )}

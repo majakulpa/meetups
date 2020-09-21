@@ -94,7 +94,7 @@ const Events = () => {
 
   return (
     <div className="container mx-auto">
-      <h1 className="text-center text-3xl mt-20 text-base leading-8 text-black font-bold tracking-wide uppercase">
+      <h1 className="text-center text-3xl text-base leading-8 text-black font-bold tracking-wide uppercase">
         Events
       </h1>
       <div>Search:</div>
