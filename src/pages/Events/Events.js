@@ -6,6 +6,7 @@ import eventService from './../../services/events'
 import userService from './../../services/users'
 import Search from '../../components/UI/Search'
 import SearchDate from '../../components/UI/SearchDate'
+import { HiPlus } from 'react-icons/hi'
 
 const Events = () => {
   const [events, setEvents] = useState([])
@@ -93,55 +94,59 @@ const Events = () => {
   }
 
   return (
-    <div className="container mx-auto">
-      <h1 className="text-center text-3xl text-base leading-8 text-black font-bold tracking-wide uppercase">
-        Events
-      </h1>
-      <div>Search:</div>
-      <div className="flex items-center">
+    <React.Fragment>
+      <div className="flex justify-between sm:p-1 md:p-2 lg:px-48 lg:py-5 xl:px-64">
         <Search
           value={searchResult}
           searchHandleChange={searchHandleChange}
           placeholder="Search by event name or location"
+          handleClearSearch={handleClearSearch}
         />
-        <SearchDate
-          date={dateSearchResult}
-          searchDateHandleChange={searchDateHandleChange}
-        />
-        <button
-          onClick={handleClearSearch}
-          className="bg-gray-500 hover:bg-gray-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
-        >
-          Clear
-        </button>
+        {user && (
+          <div className="">
+            <Link to="/create-event">
+              <button
+                className="block bg-purple-600 float-right hover:bg-purple-800 text-white tracking-wide flex
+                capitalize py-2 px-4 rounded focus:bg-purple-800 focus:outline-none focus:shadow-outline"
+              >
+                <HiPlus className="mt-1 mr-1 font-bold" />
+                <span>Create Event</span>
+              </button>
+            </Link>
+          </div>
+        )}
       </div>
-      <div>
-        <button
-          onClick={() => setShowAllEvents(!showAllEvents)}
-          className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
-        >
-          Show {showAllEvents ? 'free events' : 'all events'}
-        </button>
-      </div>
-      {user && (
-        <div className="flex-grow text-right px-4 py-2 m-2">
-          <Link to="/create-event">
-            <button className="bg-green-400 hover:bg-green-500 text-white font-semibold py-2 px-4 rounded inline-flex items-center">
-              <span className="pl-2">Create Event</span>
-            </button>
-          </Link>
+      <div
+        className="flex flex-wrap justify-center w-full bg-gray-100
+       sm:p-1 md:p-2 lg:px-48 lg:py-8 xl:px-64 border-t border-gray-300 min-h-screen"
+      >
+        <div className="w-2/3">
+          <ul>
+            <EventsList
+              events={
+                searchResult.length < 1 && dateSearchResult.length < 1
+                  ? eventsToShow
+                  : searchDisplay
+              }
+            />
+          </ul>
         </div>
-      )}
-      <ul>
-        <EventsList
-          events={
-            searchResult.length < 1 && dateSearchResult.length < 1
-              ? eventsToShow
-              : searchDisplay
-          }
-        />
-      </ul>
-    </div>
+        <div className="ml-5">
+          <button
+            onClick={() => setShowAllEvents(!showAllEvents)}
+            className="bg-gray-500 hover:bg-gray-600 text-white w-full capitalize
+            py-2 px-4 rounded focus:outline-none mb-5"
+          >
+            {showAllEvents ? 'free events' : 'all events'}
+          </button>
+          <SearchDate
+            date={dateSearchResult}
+            searchDateHandleChange={searchDateHandleChange}
+            handleClearSearch={handleClearSearch}
+          />
+        </div>
+      </div>
+    </React.Fragment>
   )
 }
 

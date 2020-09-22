@@ -79,7 +79,7 @@ const account = ({ match }) => {
     }
 
     userDetails = (
-      <div className="w-auto flex justify-center border-solid border border-gray-400 rounded bg-white">
+      <div className="w-auto flex justify-center border-solid border border-gray-30 rounded bg-white text-gray-600">
         <div className="w-1/3 m-5">
           <div
             className="w-full h-40 bg-cover bg-center"
@@ -102,7 +102,7 @@ const account = ({ match }) => {
                   <li
                     className={`${
                       event.date <= todayDate ? 'text-gray-400' : ''
-                    } border-solid border-b border-gray-400 hover:bg-gray-100 py-2 px-4 flex items-center justify-between`}
+                    } border-solid border-b border-gray-300 hover:bg-gray-100 py-2 px-4 flex items-center justify-between`}
                   >
                     <div className="flex flex-col">
                       <span>{event.title}</span>
@@ -126,7 +126,7 @@ const account = ({ match }) => {
               )}
               {user.createdGroups.map(group => (
                 <Link key={group.id} to={`/groups/${group.id}`}>
-                  <li className="border-solid border-b border-gray-400 hover:bg-gray-100 py-2 px-4 flex items-center justify-between">
+                  <li className="border-solid border-b border-gray-300 hover:bg-gray-100 py-2 px-4 flex items-center justify-between">
                     {group.name} <HiOutlineEye className="text-xl" />
                   </li>
                 </Link>
@@ -142,7 +142,7 @@ const account = ({ match }) => {
               )}
               {user.groups.map(group => (
                 <Link key={group.id} to={`/groups/${group.id}`}>
-                  <li className="border-solid border-b border-gray-400 hover:bg-gray-100 py-2 px-4 flex items-center justify-between">
+                  <li className="border-solid border-b border-gray-300 hover:bg-gray-100 py-2 px-4 flex items-center justify-between">
                     {group.name} <HiOutlineEye className="text-xl" />
                   </li>
                 </Link>
@@ -263,8 +263,8 @@ const account = ({ match }) => {
             </Editable>
           </div>
           <button
-            className="block mt-6 bg-purple-600 float-right hover:bg-purple-800 text-white tracking-wider
-               uppercase py-2 px-10 rounded-full focus:bg-purple-800 focus:shadow-outline"
+            className="block mt-6 bg-purple-600 float-right hover:bg-purple-800 text-white tracking-wide
+            capitalize py-2 px-6 rounded focus:bg-purple-800 focus:outline-none focus:shadow-outline"
           >
             Save
           </button>
@@ -274,7 +274,10 @@ const account = ({ match }) => {
   }
 
   return (
-    <div className="flex flex-col justify-center">
+    <div
+      className="flex flex-col justify-center w-full bg-gray-100
+    sm:p-1 md:p-2 lg:px-48 lg:py-8 xl:px-64"
+    >
       {userDetails}
       <GoBack />
     </div>

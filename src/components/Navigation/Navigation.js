@@ -21,8 +21,8 @@ const navigation = () => {
   }
 
   return (
-    <header className="flex border-solid border-b border-gray-400 px-5 py-2 justify-between items-center h-16">
-      <div className="mr-6">
+    <header className="flex border-solid border-b border-gray-300 px-5 py-2 justify-between items-center h-16">
+      <div className="mr-6 text-purple-600 font-bold text-2xl italic">
         <NavLink to="/">Meetups</NavLink>
       </div>
       <nav>

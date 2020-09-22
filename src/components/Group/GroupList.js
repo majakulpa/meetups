@@ -5,8 +5,12 @@ const groupDetails = ({ groups }) => {
   return (
     <React.Fragment>
       {groups.map(group => (
-        <Link key={group.id} to={`groups/${group.id}`} className=" w-1/3">
-          <div className="rounded overflow-hidden p-4">
+        <Link
+          key={group.id}
+          to={`groups/${group.id}`}
+          className="w-1/2 sm:w-full md:w-1/2 lg:w-1/3 xl:w-1/4"
+        >
+          <div className="rounded border-solid border border-gray-300 bg-white overflow-hidden m-2">
             {!group.mainImage ? (
               <div className="bg-gray-400 h-48"></div>
             ) : (
@@ -17,15 +21,17 @@ const groupDetails = ({ groups }) => {
                 }}
               ></div>
             )}
-            <div className="capitalize ont-bold text-xl mb-2">
-              Title: {group.name}
+            <div className="p-3">
+              <h3 className="capitalize ont-bold text-l font-bold">
+                {group.name}
+              </h3>
+              <p className="text-gray-600 text-sm">
+                Creator: {group.creator.name}
+              </p>
+              <p className="text-gray-600 text-xs">
+                {group.members.length} members
+              </p>
             </div>
-            <p className="text-gray-700 text-base">
-              Creator: {group.creator.name}
-            </p>
-            <p className="text-gray-700 text-base">
-              {group.members.length} members
-            </p>
           </div>
         </Link>
       ))}
