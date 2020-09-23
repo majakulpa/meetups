@@ -22,9 +22,7 @@ const groupDetails = ({ groups }) => {
               ></div>
             )}
             <div className="p-3">
-              <h3 className="capitalize ont-bold text-l font-bold">
-                {group.name}
-              </h3>
+              <h3 className="capitalize text-l font-medium">{group.name}</h3>
               <p className="text-gray-600 text-sm">
                 Creator: {group.creator.name}
               </p>

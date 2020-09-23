@@ -11,7 +11,7 @@ const EventsList = ({ events }) => {
             flex justify-between"
           >
             <div>
-              <h3 className="capitalize ont-bold text-l font-bold">
+              <h3 className="capitalize ont-bold text-l font-medium">
                 {event.title}
               </h3>
               <p className="text-sm">
@@ -19,9 +19,9 @@ const EventsList = ({ events }) => {
               </p>
               <p className="text-xs">Going: {event.attendees.length}</p>
             </div>
-            <div className="text-right text-sm">
+            <div className="text-sm">
               <p>
-                {new Date(event.date).toDateString()},
+                {new Date(event.date).toDateString()},{' '}
                 {new Date(event.date).toLocaleTimeString('en-US')}
               </p>
               <p className="capitalize">{event.place}</p>

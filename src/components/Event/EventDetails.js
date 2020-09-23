@@ -6,6 +6,7 @@ import { useHistory, Link } from 'react-router-dom'
 import Swal from 'sweetalert2'
 import SelectGroups from './../UI/SelectGroups'
 import GoBack from './../UI/GoBack'
+import { HiPlus, HiOutlineTrash } from 'react-icons/hi'
 
 const EventDetails = ({ match }) => {
   const { user, setUser } = useContext(GlobalContext)
@@ -71,21 +72,38 @@ const EventDetails = ({ match }) => {
     )
   }
 
-  let eventData = (
-    <div>
-      <h2>{oneEvent.title} details</h2>
-      <p>Info: {oneEvent.description}</p>
-      <p>Location: {oneEvent.place}</p>
-      <p>Price: {oneEvent.price === 0 ? 'Free' : '$' + oneEvent.price}</p>
-      <p>
-        When: {new Date(oneEvent.date).toDateString()},{' '}
+  let eventHeading = (
+    <React.Fragment>
+      <p className="text-sm">
+        {new Date(oneEvent.date).toDateString()},{' '}
         {new Date(oneEvent.date).toLocaleTimeString('en-US')}
       </p>
+
+      <h2 className="capitalize text-3xl font-bold mb-3">{oneEvent.title}</h2>
+      <div className="flex">
+        <div
+          className="h-12 w-12 bg-cover rounded-full bg-center"
+          style={{
+            backgroundImage: `url(${oneEvent.user.profileImage}})`
+          }}
+          title="Profile Image"
+        ></div>
+        <div className="ml-3">
+          <p className="text-sm">Hosted by</p>
+          <p className="font-bold">{oneEvent.user.name}</p>
+        </div>
+      </div>
+    </React.Fragment>
+  )
+
+  let eventData = (
+    <div>
+      <p>{oneEvent.description}</p>
+      <p className="text-sm">{oneEvent.place}</p>
+      <p>Price: {oneEvent.price === 0 ? 'Free' : '$' + oneEvent.price}</p>
+
       <p>Max capacity: {oneEvent.capacity}</p>
-      <p>
-        Organizer:
-        {oneEvent.user.name}
-      </p>
+
       {oneEvent.groups.length > 0 && (
         <ul>
           Group:
@@ -101,7 +119,9 @@ const EventDetails = ({ match }) => {
     <React.Fragment>
       {oneEvent.attendees.length > 0 && (
         <ul>
-          Attendees ({oneEvent.attendees.length}):
+          <span className="font-bold text-lg">
+            Attendees ({oneEvent.attendees.length})
+          </span>
           {oneEvent.attendees.map(attendee => (
             <Link
               key={attendee.id}
@@ -141,31 +161,43 @@ const EventDetails = ({ match }) => {
     }
 
     event = (
-      <div>
+      <div className="rounded border-solid border border-gray-300 bg-white p-5">
+        <div className="flex justify-between mb-5">
+          <div>{eventHeading}</div>
+          <div>
+            {!oneEvent.attendees
+              .map(attendee => attendee.id)
+              .includes(user.id) ? (
+              <button
+                className="block bg-purple-600 float-right hover:bg-purple-800 text-white tracking-wide flex
+                capitalize py-2 px-4 rounded focus:bg-purple-800 focus:outline-none focus:shadow-outline"
+              >
+                <HiPlus className="mt-1 mr-1 font-bold" />
+                <span>Book Event</span>
+              </button>
+            ) : (
+              <div>
+                {user.bookedEvents.map(booking => (
+                  <div key={booking.id}>
+                    {booking.event.id === oneEvent.id && (
+                      <Link to={`/bookings/${booking.id}`}>
+                        <button
+                          className="block bg-gray-500 float-right hover:bg-gray-600 text-white tracking-wide flex
+                capitalize py-2 px-4 rounded focus:bg-purple-800 focus:outline-none focus:shadow-outline"
+                        >
+                          <HiOutlineTrash className="mt-1 mr-1 font-bold" />
+                          <span>Cancel Booking</span>
+                        </button>
+                      </Link>
+                    )}
+                  </div>
+                ))}
+              </div>
+            )}
+          </div>
+        </div>
         {eventData}
         {eventAttendees}
-        {!oneEvent.attendees.map(attendee => attendee.id).includes(user.id) ? (
-          <button
-            className="bg-green-400 hover:bg-green-500 text-white font-semibold py-2 px-4 rounded inline-flex items-center"
-            onClick={handleBookEvent}
-          >
-            <span className="pl-2">Book Event</span>
-          </button>
-        ) : (
-          <div>
-            {user.bookedEvents.map(booking => (
-              <div key={booking.id}>
-                {booking.event.id === oneEvent.id && (
-                  <Link to={`/bookings/${booking.id}`}>
-                    <button className="bg-green-400 hover:bg-green-500 text-white font-semibold py-2 px-4 rounded inline-flex items-center">
-                      <span className="pl-2">Delete booking</span>
-                    </button>
-                  </Link>
-                )}
-              </div>
-            ))}
-          </div>
-        )}
       </div>
     )
   }
@@ -385,7 +417,10 @@ const EventDetails = ({ match }) => {
   }
 
   return (
-    <div>
+    <div
+      className="justify-center w-full bg-gray-100
+    sm:p-1 md:p-2 lg:px-48 lg:py-8 xl:px-64 border-t border-gray-300 min-h-screen"
+    >
       {event}
       <GoBack />
     </div>
