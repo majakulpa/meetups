@@ -19,7 +19,7 @@ const EventsList = ({ events }) => {
               </p>
               <p className="text-xs">Going: {event.attendees.length}</p>
             </div>
-            <div className="text-sm">
+            <div className="text-sm text-right">
               <p>
                 {new Date(event.date).toDateString()},{' '}
                 {new Date(event.date).toLocaleTimeString('en-US')}

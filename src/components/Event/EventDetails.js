@@ -97,44 +97,67 @@ const EventDetails = ({ match }) => {
   )
 
   let eventData = (
-    <div>
-      <p>{oneEvent.description}</p>
-      <p className="text-sm">{oneEvent.place}</p>
-      <p>Price: {oneEvent.price === 0 ? 'Free' : '$' + oneEvent.price}</p>
-
-      <p>Max capacity: {oneEvent.capacity}</p>
-
+    <React.Fragment>
+      <p className="mb-5">{oneEvent.description}</p>
+      <div className="flex justify-between">
+        <div>
+          <p className="font-bold text-lg">{oneEvent.place}</p>
+          <p className="font-medium text-lg">
+            Price: {oneEvent.price === 0 ? 'Free' : '$' + oneEvent.price}
+          </p>
+        </div>
+        <div className="text-right">
+          <p className="font-medium text-lg">
+            {oneEvent.capacity - oneEvent.attendees.length} spots left!
+          </p>
+          <p>Max capacity: {oneEvent.capacity}</p>
+        </div>
+      </div>
       {oneEvent.groups.length > 0 && (
-        <ul>
-          Group:
+        <div className="mt-5 mb-8">
           {oneEvent.groups.map(group => (
-            <li key={group.id}>{group.name}</li>
+            <span
+              key={group.id}
+              className="bg-purple-400 text-white text-sm py-1 px-3 rounded-full mx-1"
+            >
+              {group.name}
+            </span>
           ))}
-        </ul>
+        </div>
       )}
-    </div>
+    </React.Fragment>
   )
 
   let eventAttendees = (
     <React.Fragment>
       {oneEvent.attendees.length > 0 && (
-        <ul>
+        <React.Fragment>
           <span className="font-bold text-lg">
             Attendees ({oneEvent.attendees.length})
           </span>
-          {oneEvent.attendees.map(attendee => (
-            <Link
-              key={attendee.id}
-              to={
-                user && user.id === attendee.id
-                  ? `/my-account/${attendee.id}`
-                  : `/users/${attendee.id}`
-              }
-            >
-              <li>{attendee.name}</li>
-            </Link>
-          ))}
-        </ul>
+          <div className="flex flex-wrap justify-center lg:justify-start">
+            {oneEvent.attendees.map(attendee => (
+              <Link
+                className="flex flex-col items-center w-48 bg-gray-100 rounded p-3 m-3 hover:shadow"
+                key={attendee.id}
+                to={
+                  user && user.id === attendee.id
+                    ? `/my-account/${attendee.id}`
+                    : `/users/${attendee.id}`
+                }
+              >
+                <div
+                  className="h-16 w-16 bg-cover rounded-full bg-center"
+                  style={{
+                    backgroundImage: `url(${attendee.profileImage}})`
+                  }}
+                  title="Profile Image"
+                ></div>
+                <div className="text-sm font-medium m-3">{attendee.name}</div>
+              </Link>
+            ))}
+          </div>
+        </React.Fragment>
       )}
     </React.Fragment>
   )
@@ -167,10 +190,24 @@ const EventDetails = ({ match }) => {
           <div>
             {!oneEvent.attendees
               .map(attendee => attendee.id)
-              .includes(user.id) ? (
+              .includes(user.id) &&
+            oneEvent.capacity - oneEvent.attendees.length > 0 ? (
               <button
                 className="block bg-purple-600 float-right hover:bg-purple-800 text-white tracking-wide flex
                 capitalize py-2 px-4 rounded focus:bg-purple-800 focus:outline-none focus:shadow-outline"
+                onClick={handleBookEvent}
+              >
+                <HiPlus className="mt-1 mr-1 font-bold" />
+                <span>Book Event</span>
+              </button>
+            ) : !oneEvent.attendees
+                .map(attendee => attendee.id)
+                .includes(user.id) &&
+              oneEvent.capacity - oneEvent.attendees.length <= 0 ? (
+              <button
+                disabled
+                className="block bg-purple-600 float-right text-white tracking-wide flex
+              capitalize py-2 px-4 rounded opacity-50 cursor-not-allowed"
               >
                 <HiPlus className="mt-1 mr-1 font-bold" />
                 <span>Book Event</span>
