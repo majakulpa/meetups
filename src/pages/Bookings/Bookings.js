@@ -61,10 +61,12 @@ const bookings = () => {
   return (
     <div
       className="justify-center w-full bg-gray-100
-       sm:p-1 md:p-2 lg:px-48 lg:py-8 xl:px-64 border-t border-gray-300 min-h-screen"
+       border-t border-gray-300 min-h-screen"
     >
-      {myBookings}
       <GoBack />
+      <div className="justify-center sm:p-1 md:p-2 lg:px-48 lg:py-5 xl:px-64">
+        {myBookings}
+      </div>
     </div>
   )
 }

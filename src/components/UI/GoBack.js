@@ -6,8 +6,11 @@ const goBack = () => {
   let history = useHistory()
 
   return (
-    <div className="flex justify-center mt-4 text-gray-500">
-      <button onClick={() => history.goBack()} className="flex">
+    <div className="text-gray-600 pt-3 pl-3">
+      <button
+        onClick={() => history.goBack()}
+        className="flex hover:text-gray-800 hover:underline focus:outline-none"
+      >
         <HiArrowLeft className="mt-1 mr-1" /> <span>Go back</span>
       </button>
     </div>

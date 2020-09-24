@@ -274,12 +274,11 @@ const account = ({ match }) => {
   }
 
   return (
-    <div
-      className="flex flex-col justify-center w-full bg-gray-100
-    sm:p-1 md:p-2 lg:px-48 lg:py-8 xl:px-64"
-    >
-      {userDetails}
+    <div className="flex flex-col justify-center w-full bg-gray-100">
       <GoBack />
+      <div className="justify-center sm:p-1 md:p-2 lg:px-48 lg:py-5 xl:px-64">
+        {userDetails}
+      </div>
     </div>
   )
 }

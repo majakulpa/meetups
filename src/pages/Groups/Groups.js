@@ -97,12 +97,11 @@ const groups = () => {
           </div>
         )}
       </div>
-      <div
-        className="flex flex-wrap justify-center w-full bg-gray-100
-       sm:p-1 md:p-2 lg:px-48 lg:py-8 xl:px-64 border-t border-gray-300"
-      >
-        {allGroups}
+      <div className="-full bg-gray-100 border-t border-gray-300">
         <GoBack />
+        <div className="flex flex-wrap justify-center sm:p-1 md:p-2 lg:px-48 lg:py-5 xl:px-64">
+          {allGroups}
+        </div>
       </div>
     </div>
   )

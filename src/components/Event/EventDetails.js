@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useContext } from 'react'
+import React, { useState, useEffect, useContext, useRef } from 'react'
 import { GlobalContext } from '../../context/Context'
 import eventService from './../../services/events'
 import userService from './../../services/users'
@@ -6,9 +6,11 @@ import { useHistory, Link } from 'react-router-dom'
 import Swal from 'sweetalert2'
 import SelectGroups from './../UI/SelectGroups'
 import GoBack from './../UI/GoBack'
+import Editable from './../UI/Editable'
 import { HiPlus, HiOutlineTrash } from 'react-icons/hi'
 
 const EventDetails = ({ match }) => {
+  const inputRef = useRef()
   const { user, setUser } = useContext(GlobalContext)
   const [oneEvent, setOneEvent] = useState({
     id: null,
@@ -163,7 +165,12 @@ const EventDetails = ({ match }) => {
   )
 
   if (!error && oneEvent && !user) {
-    event = eventData
+    event = (
+      <div className="rounded border-solid border border-gray-300 bg-white p-5">
+        {eventHeading}
+        {eventData}
+      </div>
+    )
   }
 
   if (!error && oneEvent && user && user.name !== oneEvent.user.name) {
@@ -220,7 +227,7 @@ const EventDetails = ({ match }) => {
                       <Link to={`/bookings/${booking.id}`}>
                         <button
                           className="block bg-gray-500 float-right hover:bg-gray-600 text-white tracking-wide flex
-                capitalize py-2 px-4 rounded focus:bg-purple-800 focus:outline-none focus:shadow-outline"
+                capitalize py-2 px-4 rounded focus:bg-gray-800 focus:outline-none focus:shadow-outline"
                         >
                           <HiOutlineTrash className="mt-1 mr-1 font-bold" />
                           <span>Cancel Booking</span>
@@ -297,76 +304,17 @@ const EventDetails = ({ match }) => {
     }
 
     event = (
-      <div>
-        <div className="w-full max-w-sm container mt-20 mx-auto">
-          <form onSubmit={onSubmit}>
-            <div className="w-full mb-5">
-              <label
-                className="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2"
-                htmlFor="title"
-              >
-                Event title:
-              </label>
-              <input
-                className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:text-gray-600 focus:shadow-outline"
-                value={oneEvent.title}
-                onChange={e => handleOnChange('title', e.target.value)}
-                type="text"
-                placeholder="Enter title"
-              />
-            </div>
-            <div className="w-full mb-5">
-              <label
-                className="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2"
-                htmlFor="description"
-              >
-                Event description:
-              </label>
-              <textarea
-                className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:text-gray-600 focus:shadow-outline"
-                value={oneEvent.description}
-                onChange={e => handleOnChange('description', e.target.value)}
-                type="text"
-                placeholder="Enter description"
-              />
-            </div>
-            <div className="w-full  mb-5">
-              <label
-                className="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2"
-                htmlFor="place"
-              >
-                Location:
-              </label>
-              <input
-                className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:text-gray-600 focus:shadow-outline"
-                value={oneEvent.place}
-                onChange={e => handleOnChange('place', e.target.value)}
-                type="text"
-                placeholder="Enter location"
-              />
-            </div>
-            <div className="w-full  mb-5">
-              <label
-                className="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2"
-                htmlFor="price"
-              >
-                Price:
-              </label>
-              <input
-                className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:text-gray-600 focus:shadow-outline"
-                value={oneEvent.price}
-                onChange={e => handleOnChange('price', e.target.value)}
-                type="number"
-                placeholder="Enter price"
-              />
-            </div>
-            <div className="w-full  mb-5">
-              <label
-                className="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2"
-                htmlFor="date"
-              >
-                Date:
-              </label>
+      <div className="rounded border-solid border border-gray-300 bg-white p-5">
+        <form onSubmit={onSubmit}>
+          <div>
+            <Editable
+              text={`${new Date(oneEvent.date).toDateString()}, 
+              ${new Date(oneEvent.date).toLocaleTimeString('en-US')}`}
+              placeholder="Edit event date"
+              type="input"
+              childRef={inputRef}
+              className="text-sm"
+            >
               <input
                 className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:text-gray-600 focus:shadow-outline"
                 value={new Date(oneEvent.date)
@@ -382,42 +330,131 @@ const EventDetails = ({ match }) => {
                   .slice(0, 16)
                   .join('')}
                 placeholder="Enter date"
+                ref={inputRef}
               />
-            </div>
-            <div className="w-full  mb-5">
+            </Editable>
+          </div>
+          <div className="mb-5">
+            <Editable
+              text={oneEvent.title}
+              placeholder="Edit event title"
+              type="input"
+              childRef={inputRef}
+              className="capitalize text-3xl font-bold"
+            >
+              <input
+                className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:text-gray-600 focus:shadow-outline"
+                value={oneEvent.title}
+                onChange={e => handleOnChange('title', e.target.value)}
+                type="text"
+                placeholder="Enter title"
+                ref={inputRef}
+              />
+            </Editable>
+          </div>
+          <div className="mb-5">
+            <Editable
+              text={oneEvent.description}
+              placeholder="Edit event description"
+              type="textarea"
+              childRef={inputRef}
+            >
+              <textarea
+                className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:text-gray-600 focus:shadow-outline"
+                value={oneEvent.description}
+                onChange={e => handleOnChange('description', e.target.value)}
+                type="text"
+                rows="10"
+                placeholder="Enter description"
+                ref={inputRef}
+              />
+            </Editable>
+          </div>
+          <div className="flex justify-between">
+            <div className="w-1/2 pr-4">
               <label
-                className="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2"
+                className="block uppercase tracking-wide text-gray-700 text-xs font-bold mt-2"
+                htmlFor="location"
+              >
+                Location:
+              </label>
+              <Editable
+                text={oneEvent.place}
+                placeholder="Enter location"
+                type="input"
+                childRef={inputRef}
+                className="font-bold text-lg"
+              >
+                <input
+                  className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:text-gray-600 focus:shadow-outline"
+                  value={oneEvent.place}
+                  onChange={e => handleOnChange('place', e.target.value)}
+                  type="text"
+                  placeholder="Enter location"
+                  ref={inputRef}
+                />
+              </Editable>
+              <label
+                className="block uppercase tracking-wide text-gray-700 text-xs font-bold mt-2"
+                htmlFor="price"
+              >
+                Price:
+              </label>
+              <Editable
+                text={`$${oneEvent.price}`}
+                placeholder="Enter price"
+                type="input"
+                childRef={inputRef}
+                className="font-medium text-lg"
+              >
+                <input
+                  className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:text-gray-600 focus:shadow-outline"
+                  value={oneEvent.price}
+                  onChange={e => handleOnChange('price', e.target.value)}
+                  type="number"
+                  placeholder="Enter price"
+                  ref={inputRef}
+                />
+              </Editable>
+            </div>
+            <div className="w-1/2 pl-4">
+              <label
+                className="block uppercase tracking-wide text-gray-700 text-xs font-bold mt-2"
                 htmlFor="capacity"
               >
                 Max capacity:
               </label>
-              <input
-                className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:text-gray-600 focus:shadow-outline"
-                value={oneEvent.capacity}
-                onChange={e => handleOnChange('capacity', e.target.value)}
-                type="number"
+              <Editable
+                text={oneEvent.capacity}
                 placeholder="Enter capacity"
-              />
-            </div>
-            <div className="w-full mb-5">
-              <label
-                className="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2"
-                htmlFor="selectedGroups"
+                type="input"
+                childRef={inputRef}
+                className="font-medium text-lg"
               >
-                Groups:
-              </label>
-              <SelectGroups
-                onChange={handleSelectOnChange}
-                defaultValue={currentGroups}
-              />
+                <input
+                  className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:text-gray-600 focus:shadow-outline"
+                  value={oneEvent.capacity}
+                  onChange={e => handleOnChange('capacity', e.target.value)}
+                  type="number"
+                  placeholder="Enter capacity"
+                  ref={inputRef}
+                />
+              </Editable>
             </div>
-            <div className="flex items-center justify-between">
-              <button className="block mt-5 bg-green-400 w-full hover:bg-green-500 text-white font-bold py-2 px-4 rounded focus:text-gray-600 focus:shadow-outline">
-                Edit Event
-              </button>
-            </div>
-          </form>
-          <div className="flex items-center justify-between">
+          </div>
+          <div className="w-full my-8">
+            <label
+              className="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2"
+              htmlFor="selectedGroups"
+            >
+              Groups:
+            </label>
+            <SelectGroups
+              onChange={handleSelectOnChange}
+              defaultValue={currentGroups}
+            />
+          </div>
+          <div className="flex justify-between">
             <button
               onClick={e =>
                 Swal.fire({
@@ -443,23 +480,31 @@ const EventDetails = ({ match }) => {
                   }
                 })
               }
-              className="block mt-5 bg-red-400 w-full hover:bg-red-500 text-white font-bold py-2 px-4 rounded focus:text-gray-600 focus:shadow-outline"
+              className="block bg-gray-500 float-right hover:bg-gray-600 text-white tracking-wide flex
+                capitalize py-2 px-4 rounded focus:bg-purple-800 focus:outline-none focus:shadow-outline"
             >
-              Delete Event
+              <HiOutlineTrash className="mt-1 mr-1 font-bold" />
+              <span>Delete Event</span>
+            </button>
+            <button
+              className="block bg-purple-600 float-right hover:bg-purple-800 text-white tracking-wide
+           capitalize py-2 px-6 rounded focus:bg-purple-800 focus:outline-none focus:shadow-outline"
+            >
+              Save
             </button>
           </div>
-        </div>
+        </form>
+        <div className="mt-8">{eventAttendees}</div>
       </div>
     )
   }
 
   return (
-    <div
-      className="justify-center w-full bg-gray-100
-    sm:p-1 md:p-2 lg:px-48 lg:py-8 xl:px-64 border-t border-gray-300 min-h-screen"
-    >
-      {event}
+    <div className=" w-full bg-gray-100 min-h-screen">
       <GoBack />
+      <div className="justify-center sm:p-1 md:p-2 lg:px-48 lg:py-5 xl:px-64">
+        {event}
+      </div>
     </div>
   )
 }
