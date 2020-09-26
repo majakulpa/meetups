@@ -2,6 +2,8 @@ import React, { useState, useEffect } from 'react'
 import groupService from '../../services/groups'
 import Select from 'react-select'
 
+//https://react-select.com/
+
 const SelectGroups = ({ value, onChange, defaultValue }) => {
   const [allGroups, setAllGroups] = useState([])
 

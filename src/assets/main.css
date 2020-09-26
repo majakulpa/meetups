@@ -69298,3 +69298,7 @@ video {
     transition-delay: 1000ms;
   }
 }
+
+#header-1-menu {
+  display: none;
+}

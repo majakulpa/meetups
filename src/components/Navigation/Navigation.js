@@ -3,6 +3,13 @@ import { GlobalContext } from '../../context/Context'
 import { NavLink, useHistory } from 'react-router-dom'
 import Swal from 'sweetalert2'
 import { HiOutlineLogout, HiOutlineUserCircle } from 'react-icons/hi'
+import {
+  NavBrand,
+  Header,
+  NavToggle,
+  NavItem,
+  NavMenu
+} from 'tailwind-react-ui'
 
 const navigation = () => {
   const { user, setUser } = useContext(GlobalContext)
@@ -21,8 +28,12 @@ const navigation = () => {
   }
 
   return (
-    <nav className="flex border-solid border-b border-gray-200 px-5 py-4 justify-between items-center h-20">
-      <div className="mr-6 text-purple-600 text-2xl">
+    <Header
+      bg="white"
+      text="gray-700"
+      className="border-solid border-b border-gray-200"
+    >
+      <NavBrand className="mr-6 text-purple-600 text-2xl">
         <NavLink to="/">
           <img
             src={process.env.PUBLIC_URL + '/assets/Meetups.png'}
@@ -31,53 +42,51 @@ const navigation = () => {
             height="auto"
           />
         </NavLink>
-      </div>
-
-      <div>
-        <ul className="flex items-center">
-          <li className="mr-6">
-            <NavLink to="/">Events</NavLink>
-          </li>
-          <li className="mr-6">
-            <NavLink to="/groups">Groups</NavLink>
-          </li>
-          {!user ? (
-            <li className="mr-6">
-              <NavLink to="/login">Login</NavLink>
-            </li>
-          ) : (
-            <React.Fragment>
-              <li className="mr-6">
-                <NavLink to="/bookings">My bookings</NavLink>
-              </li>
-              <li className="mr-6">
-                {user.profileImage === '' ? (
-                  <NavLink to={`/my-account/${user.id}`}>
-                    <HiOutlineUserCircle className="text-2xl" />
-                  </NavLink>
-                ) : (
-                  <NavLink to={`/my-account/${user.id}`}>
-                    <div
-                      className="h-12 w-12 bg-cover rounded-full bg-center"
-                      style={{
-                        backgroundImage: `url(${user.profileImage}})`
-                      }}
-                      title="Profile Image"
-                    ></div>
-                  </NavLink>
-                )}
-              </li>
-              <li>
-                <HiOutlineLogout
-                  className="text-2xl cursor-pointer"
-                  onClick={handleLogout}
-                />
-              </li>
-            </React.Fragment>
-          )}
-        </ul>
-      </div>
-    </nav>
+      </NavBrand>
+      <NavToggle className="text-white hover:bg-purple-600 focus:bg-purple-600" />
+      <NavMenu>
+        <NavItem className="hover:bg-purple-600 focus:bg-purple-600">
+          <NavLink to="/">Events</NavLink>
+        </NavItem>
+        <NavItem className="hover:bg-purple-600 focus:bg-purple-600">
+          <NavLink to="/groups">Groups</NavLink>
+        </NavItem>
+        {!user ? (
+          <NavItem className="hover:bg-purple-600 focus:bg-purple-600">
+            <NavLink to="/login">Login</NavLink>
+          </NavItem>
+        ) : (
+          <React.Fragment>
+            <NavItem className="hover:bg-purple-600 hover:text-white focus:text-white focus:bg-purple-600">
+              <NavLink to="/bookings">My bookings</NavLink>
+            </NavItem>
+            <NavItem>
+              {user.profileImage === '' ? (
+                <NavLink to={`/my-account/${user.id}`}>
+                  <HiOutlineUserCircle className="text-2xl" />
+                </NavLink>
+              ) : (
+                <NavLink to={`/my-account/${user.id}`}>
+                  <div
+                    className="h-12 w-12 bg-cover rounded-full bg-center"
+                    style={{
+                      backgroundImage: `url(${user.profileImage}})`
+                    }}
+                    title="Profile Image"
+                  ></div>
+                </NavLink>
+              )}
+            </NavItem>
+            <NavItem>
+              <HiOutlineLogout
+                className="text-2xl cursor-pointer"
+                onClick={handleLogout}
+              />
+            </NavItem>
+          </React.Fragment>
+        )}
+      </NavMenu>
+    </Header>
   )
 }
 
