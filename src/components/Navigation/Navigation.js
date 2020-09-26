@@ -21,11 +21,19 @@ const navigation = () => {
   }
 
   return (
-    <header className="flex border-solid border-b border-gray-300 px-5 py-2 justify-between items-center h-16">
-      <div className="mr-6 text-purple-600 font-bold text-2xl italic">
-        <NavLink to="/">Meetups</NavLink>
+    <nav className="flex border-solid border-b border-gray-200 px-5 py-4 justify-between items-center h-20">
+      <div className="mr-6 text-purple-600 text-2xl">
+        <NavLink to="/">
+          <img
+            src={process.env.PUBLIC_URL + '/assets/Meetups.png'}
+            alt="meetups logo"
+            width="120"
+            height="auto"
+          />
+        </NavLink>
       </div>
-      <nav>
+
+      <div>
         <ul className="flex items-center">
           <li className="mr-6">
             <NavLink to="/">Events</NavLink>
@@ -68,8 +76,8 @@ const navigation = () => {
             </React.Fragment>
           )}
         </ul>
-      </nav>
-    </header>
+      </div>
+    </nav>
   )
 }
 

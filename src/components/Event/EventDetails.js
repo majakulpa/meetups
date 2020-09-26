@@ -140,7 +140,7 @@ const EventDetails = ({ match }) => {
           <div className="flex flex-wrap justify-center lg:justify-start">
             {oneEvent.attendees.map(attendee => (
               <Link
-                className="flex flex-col items-center w-48 bg-gray-100 rounded p-3 m-3 hover:shadow"
+                className="flex flex-col items-center w-48 bg-gray-100 rounded p-3 m-3 hover:bg-gray-200 hover:shadow"
                 key={attendee.id}
                 to={
                   user && user.id === attendee.id
@@ -166,7 +166,7 @@ const EventDetails = ({ match }) => {
 
   if (!error && oneEvent && !user) {
     event = (
-      <div className="rounded border-solid border border-gray-300 bg-white p-5">
+      <div className="rounded border-solid border border-gray-200 bg-white p-5">
         {eventHeading}
         {eventData}
       </div>
@@ -191,7 +191,7 @@ const EventDetails = ({ match }) => {
     }
 
     event = (
-      <div className="rounded border-solid border border-gray-300 bg-white p-5">
+      <div className="rounded border-solid border border-gray-200 bg-white p-5">
         <div className="flex justify-between mb-5">
           <div>{eventHeading}</div>
           <div>
@@ -304,7 +304,7 @@ const EventDetails = ({ match }) => {
     }
 
     event = (
-      <div className="rounded border-solid border border-gray-300 bg-white p-5">
+      <div className="rounded border-solid border border-gray-200 bg-white p-5">
         <form onSubmit={onSubmit}>
           <div>
             <Editable
@@ -316,7 +316,8 @@ const EventDetails = ({ match }) => {
               className="text-sm"
             >
               <input
-                className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:text-gray-600 focus:shadow-outline"
+                className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 
+                leading-tight focus:text-gray-600 focus:shadow-outline"
                 value={new Date(oneEvent.date)
                   .toISOString()
                   .split('')
@@ -343,7 +344,8 @@ const EventDetails = ({ match }) => {
               className="capitalize text-3xl font-bold"
             >
               <input
-                className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:text-gray-600 focus:shadow-outline"
+                className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 
+                leading-tight focus:text-gray-600 focus:shadow-outline"
                 value={oneEvent.title}
                 onChange={e => handleOnChange('title', e.target.value)}
                 type="text"
@@ -360,7 +362,8 @@ const EventDetails = ({ match }) => {
               childRef={inputRef}
             >
               <textarea
-                className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:text-gray-600 focus:shadow-outline"
+                className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 
+                leading-tight focus:text-gray-600 focus:shadow-outline"
                 value={oneEvent.description}
                 onChange={e => handleOnChange('description', e.target.value)}
                 type="text"
@@ -386,7 +389,8 @@ const EventDetails = ({ match }) => {
                 className="font-bold text-lg"
               >
                 <input
-                  className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:text-gray-600 focus:shadow-outline"
+                  className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 
+                  leading-tight focus:text-gray-600 focus:shadow-outline"
                   value={oneEvent.place}
                   onChange={e => handleOnChange('place', e.target.value)}
                   type="text"
@@ -408,7 +412,8 @@ const EventDetails = ({ match }) => {
                 className="font-medium text-lg"
               >
                 <input
-                  className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:text-gray-600 focus:shadow-outline"
+                  className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 
+                  leading-tight focus:text-gray-600 focus:shadow-outline"
                   value={oneEvent.price}
                   onChange={e => handleOnChange('price', e.target.value)}
                   type="number"
@@ -432,7 +437,8 @@ const EventDetails = ({ match }) => {
                 className="font-medium text-lg"
               >
                 <input
-                  className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:text-gray-600 focus:shadow-outline"
+                  className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 
+                  leading-tight focus:text-gray-600 focus:shadow-outline"
                   value={oneEvent.capacity}
                   onChange={e => handleOnChange('capacity', e.target.value)}
                   type="number"

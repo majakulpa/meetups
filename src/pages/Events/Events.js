@@ -118,32 +118,34 @@ const Events = () => {
       </div>
       <div
         className="flex flex-wrap justify-center w-full bg-gray-100
-       sm:p-1 md:p-2 lg:px-48 lg:py-8 xl:px-64 border-t border-gray-300 min-h-screen"
+       sm:p-1 md:p-2 lg:px-48 lg:py-8 xl:px-64 border-t border-gray-200 min-h-screen"
       >
-        <div className="w-2/3">
-          <ul>
-            <EventsList
-              events={
-                searchResult.length < 1 && dateSearchResult.length < 1
-                  ? eventsToShow
-                  : searchDisplay
-              }
-            />
-          </ul>
-        </div>
-        <div className="ml-5">
-          <button
-            onClick={() => setShowAllEvents(!showAllEvents)}
-            className="bg-gray-500 hover:bg-gray-600 text-white w-full capitalize
+        <div className="w-full flex rounded border-solid border border-gray-200 bg-white overflow-hidden mb-3 p-3">
+          <div className="w-2/3">
+            <ul className="font-normal">
+              <EventsList
+                events={
+                  searchResult.length < 1 && dateSearchResult.length < 1
+                    ? eventsToShow
+                    : searchDisplay
+                }
+              />
+            </ul>
+          </div>
+          <div className="ml-5">
+            <button
+              onClick={() => setShowAllEvents(!showAllEvents)}
+              className="bg-gray-500 hover:bg-gray-600 text-white w-full capitalize
             py-2 px-4 rounded focus:outline-none mb-5"
-          >
-            {showAllEvents ? 'free events' : 'all events'}
-          </button>
-          <SearchDate
-            date={dateSearchResult}
-            searchDateHandleChange={searchDateHandleChange}
-            handleClearSearch={handleClearSearch}
-          />
+            >
+              {showAllEvents ? 'free events' : 'all events'}
+            </button>
+            <SearchDate
+              date={dateSearchResult}
+              searchDateHandleChange={searchDateHandleChange}
+              handleClearSearch={handleClearSearch}
+            />
+          </div>
         </div>
       </div>
     </React.Fragment>

@@ -79,7 +79,7 @@ const account = ({ match }) => {
     }
 
     userDetails = (
-      <div className="w-auto flex justify-center border-solid border border-gray-30 rounded bg-white text-gray-600">
+      <div className="w-auto flex justify-center border-solid border border-gray-200 rounded bg-white text-gray-600">
         <div className="w-1/3 m-5">
           <div
             className="w-full h-40 bg-cover bg-center"
@@ -126,7 +126,7 @@ const account = ({ match }) => {
               )}
               {user.createdGroups.map(group => (
                 <Link key={group.id} to={`/groups/${group.id}`}>
-                  <li className="border-solid border-b border-gray-300 hover:bg-gray-100 py-2 px-4 flex items-center justify-between">
+                  <li className="border-solid border-b border-gray-200 hover:bg-gray-100 py-2 px-4 flex items-center justify-between">
                     {group.name} <HiOutlineEye className="text-xl" />
                   </li>
                 </Link>
@@ -166,7 +166,8 @@ const account = ({ match }) => {
               childRef={inputRef}
             >
               <input
-                className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:text-gray-600 focus:shadow-outline"
+                className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 
+                leading-tight focus:text-gray-600 focus:shadow-outline"
                 value={user.username}
                 onChange={e => handleOnChange('username', e.target.value)}
                 type="text"
@@ -189,7 +190,8 @@ const account = ({ match }) => {
               childRef={inputRef}
             >
               <input
-                className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:text-gray-600 focus:shadow-outline"
+                className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 
+                leading-tight focus:text-gray-600 focus:shadow-outline"
                 value={user.name}
                 onChange={e => handleOnChange('name', e.target.value)}
                 type="text"
@@ -212,7 +214,8 @@ const account = ({ match }) => {
               childRef={inputRef}
             >
               <input
-                className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:text-gray-600 focus:shadow-outline"
+                className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 
+                leading-tight focus:text-gray-600 focus:shadow-outline"
                 value={user.email}
                 onChange={e => handleOnChange('email', e.target.value)}
                 type="email"
@@ -235,12 +238,14 @@ const account = ({ match }) => {
               childRef={inputRef}
             >
               <textarea
-                className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:text-gray-600 focus:shadow-outline"
+                className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 
+                leading-tight focus:text-gray-600 focus:shadow-outline"
                 value={user.description}
                 onChange={e => handleOnChange('description', e.target.value)}
                 type="text"
                 placeholder="Enter description"
                 ref={inputRef}
+                rows="10"
               />
             </Editable>
           </div>
@@ -253,7 +258,8 @@ const account = ({ match }) => {
             </label>
             <Editable placeholder="Image URL" type="input" childRef={inputRef}>
               <input
-                className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:text-gray-600 focus:shadow-outline"
+                className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 
+                leading-tight focus:text-gray-600 focus:shadow-outline"
                 value={user.profileImage}
                 onChange={e => handleOnChange('profileImage', e.target.value)}
                 type="text"

@@ -7,7 +7,7 @@ const EventsList = ({ events }) => {
       {events.map(event => (
         <Link key={event.id} to={`events/${event.id}`}>
           <li
-            className="rounded border-solid border border-gray-300 bg-white overflow-hidden mb-3 p-3
+            className="rounded bg-gray-100 hover:bg-gray-200 hover:shadow overflow-hidden my-2 p-3
             flex justify-between"
           >
             <div>
