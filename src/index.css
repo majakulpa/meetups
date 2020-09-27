@@ -1,12 +1,9 @@
-body {
-  box-sizing: border-box;
-  padding: 0;
-  margin: 0;
-  font-family: sans-serif;
-  color: var(--dark-color);
+nav h2 {
+  display: none;
 }
 
-:root {
-  --dark-color: #333;
-  --red-color: #f53f60;
+@media (max-width: 1023px) {
+  nav {
+    align-items: flex-end !important;
+  }
 }

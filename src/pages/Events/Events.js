@@ -6,6 +6,7 @@ import eventService from './../../services/events'
 import userService from './../../services/users'
 import Search from '../../components/UI/Search'
 import SearchDate from '../../components/UI/SearchDate'
+import Footer from '../../components/UI/Footer'
 import { HiPlus } from 'react-icons/hi'
 
 const Events = () => {
@@ -95,6 +96,20 @@ const Events = () => {
 
   return (
     <React.Fragment>
+      <div
+        className="text-white text-center py-20 bg-cover bg-center bg-fixed"
+        style={{
+          backgroundImage: `linear-gradient(
+                  to bottom,
+                  rgba(0,0,0, 0.5),
+                  rgba(0,0,0, 0.7)
+                ), url(${process.env.PUBLIC_URL +
+                  '/assets/group-of-people.jpeg'})`
+        }}
+      >
+        <h1 className="text-4xl font-medium">Find your next event</h1>
+        <p className="uppercase text-sm">Make new friends. Have fun.</p>
+      </div>
       <div className="flex justify-between sm:p-1 md:p-2 lg:px-48 lg:py-5 xl:px-64">
         <Search
           value={searchResult}
@@ -148,6 +163,7 @@ const Events = () => {
           </div>
         </div>
       </div>
+      <Footer />
     </React.Fragment>
   )
 }

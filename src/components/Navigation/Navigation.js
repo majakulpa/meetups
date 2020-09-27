@@ -44,45 +44,55 @@ const navigation = () => {
         </NavLink>
       </NavBrand>
       <NavToggle className="text-white hover:bg-purple-600 focus:bg-purple-600" />
-      <NavMenu>
-        <NavItem className="hover:bg-purple-600 focus:bg-purple-600">
-          <NavLink to="/">Events</NavLink>
-        </NavItem>
-        <NavItem className="hover:bg-purple-600 focus:bg-purple-600">
-          <NavLink to="/groups">Groups</NavLink>
-        </NavItem>
+      <NavMenu className="flex flex-col lg:flex-row">
+        <NavLink
+          to="/"
+          className="hover:bg-purple-600 hover:text-white rounded py-2 px-4"
+        >
+          <span>Events</span>
+        </NavLink>
+        <NavLink
+          to="/groups"
+          className="hover:bg-purple-600 hover:text-white rounded py-2 px-4"
+        >
+          <span>Groups</span>
+        </NavLink>
         {!user ? (
-          <NavItem className="hover:bg-purple-600 focus:bg-purple-600">
-            <NavLink to="/login">Login</NavLink>
-          </NavItem>
+          <NavLink
+            to="/login"
+            className="hover:bg-purple-600 hover:text-white rounded py-2 px-4"
+          >
+            <span>Login</span>
+          </NavLink>
         ) : (
           <React.Fragment>
-            <NavItem className="hover:bg-purple-600 hover:text-white focus:text-white focus:bg-purple-600">
-              <NavLink to="/bookings">My bookings</NavLink>
-            </NavItem>
-            <NavItem>
-              {user.profileImage === '' ? (
-                <NavLink to={`/my-account/${user.id}`}>
-                  <HiOutlineUserCircle className="text-2xl" />
-                </NavLink>
-              ) : (
-                <NavLink to={`/my-account/${user.id}`}>
-                  <div
-                    className="h-12 w-12 bg-cover rounded-full bg-center"
-                    style={{
-                      backgroundImage: `url(${user.profileImage}})`
-                    }}
-                    title="Profile Image"
-                  ></div>
-                </NavLink>
-              )}
-            </NavItem>
-            <NavItem>
-              <HiOutlineLogout
-                className="text-2xl cursor-pointer"
-                onClick={handleLogout}
-              />
-            </NavItem>
+            <NavLink
+              to="/bookings"
+              className="hover:bg-purple-600 hover:text-white rounded py-2 px-4"
+            >
+              <span>My bookings</span>
+            </NavLink>
+
+            {user.profileImage === '' ? (
+              <NavLink to={`/my-account/${user.id}`}>
+                <HiOutlineUserCircle className="text-2xl" />
+              </NavLink>
+            ) : (
+              <NavLink to={`/my-account/${user.id}`}>
+                <div
+                  className="h-12 w-12 bg-cover rounded-full bg-center my-2 mx-4"
+                  style={{
+                    backgroundImage: `url(${user.profileImage}})`
+                  }}
+                  title="Profile Image"
+                ></div>
+              </NavLink>
+            )}
+
+            <HiOutlineLogout
+              className="text-2xl cursor-pointer my-2 mx-4"
+              onClick={handleLogout}
+            />
           </React.Fragment>
         )}
       </NavMenu>
