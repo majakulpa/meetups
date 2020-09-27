@@ -6,6 +6,7 @@ import userService from './../../services/users'
 import GroupList from './../../components/Group/GroupList'
 import Search from './../../components/UI/Search'
 import GoBack from './../../components/UI/GoBack'
+import Footer from './../../components/UI/Footer'
 import { HiPlus } from 'react-icons/hi'
 
 const groups = () => {
@@ -73,37 +74,40 @@ const groups = () => {
   }
 
   return (
-    <div className="groups">
-      <div className="flex justify-between sm:p-1 md:p-2 lg:px-48 lg:py-5 xl:px-64">
-        <div className="flex">
-          <Search
-            value={searchResult}
-            searchHandleChange={searchHandleChange}
-            placeholder="Search by group name"
-            handleClearSearch={handleClearSearch}
-          />
-        </div>
-        {user && (
-          <div className="">
-            <Link to="/create-group">
-              <button
-                className="block bg-purple-600 float-right hover:bg-purple-800 text-white tracking-wide flex
-                capitalize py-2 px-4 rounded focus:bg-purple-800 focus:outline-none focus:shadow-outline"
-              >
-                <HiPlus className="mt-1 mr-1 font-bold" />
-                <span>Create group</span>
-              </button>
-            </Link>
+    <React.Fragment>
+      <div className="groups sp-screen">
+        <div className="flex justify-between sm:p-1 md:p-2 lg:px-48 lg:py-5 xl:px-64">
+          <div className="flex">
+            <Search
+              value={searchResult}
+              searchHandleChange={searchHandleChange}
+              placeholder="Search by group name"
+              handleClearSearch={handleClearSearch}
+            />
           </div>
-        )}
-      </div>
-      <div className="-full bg-gray-100 border-t border-gray-200">
-        <GoBack />
-        <div className="flex flex-wrap justify-center sm:p-1 md:p-2 lg:px-48 lg:py-5 xl:px-64">
-          {allGroups}
+          {user && (
+            <div className="">
+              <Link to="/create-group">
+                <button
+                  className="block bg-purple-600 float-right hover:bg-purple-800 text-white tracking-wide flex
+                capitalize py-2 px-4 rounded focus:bg-purple-800 focus:outline-none focus:shadow-outline"
+                >
+                  <HiPlus className="mt-1 mr-1 font-bold" />
+                  <span>Create group</span>
+                </button>
+              </Link>
+            </div>
+          )}
+        </div>
+        <div className="bg-gray-100 border-t border-gray-200">
+          <GoBack />
+          <div className="flex flex-wrap justify-center sm:p-1 md:p-2 lg:px-48 lg:pt-5 lg:pb-16 xl:px-64">
+            {allGroups}
+          </div>
         </div>
       </div>
-    </div>
+      <Footer />
+    </React.Fragment>
   )
 }
 

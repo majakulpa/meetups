@@ -7,6 +7,7 @@ import Swal from 'sweetalert2'
 import SelectGroups from './../UI/SelectGroups'
 import GoBack from './../UI/GoBack'
 import Editable from './../UI/Editable'
+import Footer from './../UI/Footer'
 import { HiPlus, HiOutlineTrash } from 'react-icons/hi'
 
 const EventDetails = ({ match }) => {
@@ -506,12 +507,15 @@ const EventDetails = ({ match }) => {
   }
 
   return (
-    <div className=" w-full bg-gray-100 min-h-screen">
-      <GoBack />
-      <div className="justify-center sm:p-1 md:p-2 lg:px-48 lg:py-5 xl:px-64">
-        {event}
+    <React.Fragment>
+      <div className="w-full bg-gray-100 sp-screen">
+        <GoBack />
+        <div className="justify-center sm:p-1 md:p-2 lg:px-48 lg:pt-5 lg:pb-16 xl:px-64">
+          {event}
+        </div>
       </div>
-    </div>
+      <Footer />
+    </React.Fragment>
   )
 }
 

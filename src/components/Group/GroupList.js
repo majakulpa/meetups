@@ -10,7 +10,10 @@ const groupDetails = ({ groups }) => {
           to={`groups/${group.id}`}
           className="w-1/2 sm:w-full md:w-1/2 lg:w-1/3 xl:w-1/4"
         >
-          <div className="rounded border-solid border border-gray-300 bg-white overflow-hidden m-2">
+          <div
+            className="rounded border-solid border border-gray-300 
+          bg-white overflow-hidden m-2 hover:shadow"
+          >
             {!group.mainImage ? (
               <div className="bg-gray-400 h-48"></div>
             ) : (

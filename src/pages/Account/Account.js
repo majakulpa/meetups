@@ -5,6 +5,7 @@ import { Link, useHistory } from 'react-router-dom'
 import Swal from 'sweetalert2'
 import GoBack from './../../components/UI/GoBack'
 import Editable from './../../components/UI/Editable'
+import Footer from './../../components/UI/Footer'
 import { HiOutlineEye } from 'react-icons/hi'
 
 const account = ({ match }) => {
@@ -135,7 +136,7 @@ const account = ({ match }) => {
             <ul className="mt-4">
               {user.groups.length > 0 ? (
                 <span className="block uppercase tracking-wide text-gray-700 text-xs font-bold">
-                  Joined Groups:
+                  Member in:
                 </span>
               ) : (
                 ''
@@ -280,11 +281,12 @@ const account = ({ match }) => {
   }
 
   return (
-    <div className="flex flex-col justify-center w-full bg-gray-100">
+    <div className="flex flex-col justify-center w-full bg-gray-100 sp-screen">
       <GoBack />
-      <div className="justify-center sm:p-1 md:p-2 lg:px-48 lg:py-5 xl:px-64">
+      <div className="justify-center sm:p-1 md:p-2 lg:px-48 lg:pt-5 lg:pb-16 xl:px-64">
         {userDetails}
       </div>
+      <Footer />
     </div>
   )
 }

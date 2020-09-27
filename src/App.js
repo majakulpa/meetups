@@ -25,8 +25,8 @@ const App = () => {
     <GlobalContext.Provider value={providerValue}>
       <Navigation />
       <main
-        className="main min-h-screen text-gray-700 font-light 
-       "
+        className="main sp-screen text-gray-700 font-light
+        flex flex-col justify-between"
       >
         <Switch>
           <Route path="/" exact component={Events} />

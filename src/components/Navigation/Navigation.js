@@ -3,13 +3,7 @@ import { GlobalContext } from '../../context/Context'
 import { NavLink, useHistory } from 'react-router-dom'
 import Swal from 'sweetalert2'
 import { HiOutlineLogout, HiOutlineUserCircle } from 'react-icons/hi'
-import {
-  NavBrand,
-  Header,
-  NavToggle,
-  NavItem,
-  NavMenu
-} from 'tailwind-react-ui'
+import { NavBrand, Header, NavToggle, NavMenu } from 'tailwind-react-ui'
 
 const navigation = () => {
   const { user, setUser } = useContext(GlobalContext)
