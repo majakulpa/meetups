@@ -1,12 +1,13 @@
 import React, { useState, useEffect, useContext, useRef } from 'react'
 import { GlobalContext } from './../../context/Context'
 import userService from './../../services/users'
-import { Link, useHistory } from 'react-router-dom'
+import { useHistory } from 'react-router-dom'
 import Swal from 'sweetalert2'
 import GoBack from './../../components/UI/GoBack'
 import Editable from './../../components/UI/Editable'
 import Footer from './../../components/UI/Footer'
-import { HiOutlineEye } from 'react-icons/hi'
+import GroupList from '../../components/UI/GroupList'
+import EventList from '../../components/UI/EventList'
 
 const account = ({ match }) => {
   const inputRef = useRef()
@@ -26,12 +27,6 @@ const account = ({ match }) => {
         setError(error)
       })
   }, [])
-
-  const todayDate = new Date()
-    .toISOString()
-    .split('')
-    .slice(0, 16)
-    .join('')
 
   let groups
   if (selectedGroups !== null && selectedGroups.length > 0) {
@@ -54,7 +49,7 @@ const account = ({ match }) => {
       icon: 'success',
       title: 'Your data has been edited!',
       showConfirmButton: false,
-      timer: 1500
+      timer: 1000
     })
   }
 
@@ -90,65 +85,9 @@ const account = ({ match }) => {
             title="Profile Image"
           ></div>
           <div className="m-1 mt-5">
-            <ul className="mt-4">
-              {userEvents.length > 0 ? (
-                <span className="block uppercase tracking-wide text-gray-700 text-xs font-bold">
-                  Created Events:
-                </span>
-              ) : (
-                ''
-              )}
-              {userEvents.map(event => (
-                <Link key={event.id} to={`/events/${event.id}`}>
-                  <li
-                    className={`${
-                      event.date <= todayDate ? 'text-gray-400' : ''
-                    } border-solid border-b border-gray-300 hover:bg-gray-100 py-2 px-4 flex items-center justify-between`}
-                  >
-                    <div className="flex flex-col">
-                      <span>{event.title}</span>
-                      <span className="text-xs text-gray-500">
-                        {new Date(event.date).toDateString()}
-                      </span>
-                    </div>
-
-                    <HiOutlineEye className="text-xl" />
-                  </li>
-                </Link>
-              ))}
-            </ul>
-            <ul className="mt-4">
-              {user.createdGroups.length > 0 ? (
-                <span className="block uppercase tracking-wide text-gray-700 text-xs font-bold">
-                  Created Groups:
-                </span>
-              ) : (
-                ''
-              )}
-              {user.createdGroups.map(group => (
-                <Link key={group.id} to={`/groups/${group.id}`}>
-                  <li className="border-solid border-b border-gray-200 hover:bg-gray-100 py-2 px-4 flex items-center justify-between">
-                    {group.name} <HiOutlineEye className="text-xl" />
-                  </li>
-                </Link>
-              ))}
-            </ul>
-            <ul className="mt-4">
-              {user.groups.length > 0 ? (
-                <span className="block uppercase tracking-wide text-gray-700 text-xs font-bold">
-                  Member in:
-                </span>
-              ) : (
-                ''
-              )}
-              {user.groups.map(group => (
-                <Link key={group.id} to={`/groups/${group.id}`}>
-                  <li className="border-solid border-b border-gray-300 hover:bg-gray-100 py-2 px-4 flex items-center justify-between">
-                    {group.name} <HiOutlineEye className="text-xl" />
-                  </li>
-                </Link>
-              ))}
-            </ul>
+            <EventList events={userEvents} />
+            <GroupList groups={user.createdGroups} />
+            <GroupList groups={user.groups} />
           </div>
         </div>
 

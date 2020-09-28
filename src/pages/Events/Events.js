@@ -1,13 +1,12 @@
 import React, { useState, useEffect, useContext } from 'react'
 import { GlobalContext } from '../../context/Context'
-import { Link } from 'react-router-dom'
-import EventsList from './../../components/Event/EventsList'
 import eventService from './../../services/events'
 import userService from './../../services/users'
-import Search from '../../components/UI/Search'
 import SearchDate from '../../components/UI/SearchDate'
 import Footer from '../../components/UI/Footer'
-import { HiPlus } from 'react-icons/hi'
+import EventCards from '../../components/UI/EventCards'
+import BigHeader from '../../components/UI/BigHeader'
+import SearchHeader from '../../components/UI/SearchHeader'
 
 const Events = () => {
   const [events, setEvents] = useState([])
@@ -97,41 +96,16 @@ const Events = () => {
   return (
     <React.Fragment>
       <div className="sp-screen">
-        <div
-          className="text-white text-center py-20 bg-cover bg-center bg-fixed"
-          style={{
-            backgroundImage: `linear-gradient(
-                  to bottom,
-                  rgba(0,0,0, 0.5),
-                  rgba(0,0,0, 0.7)
-                ), url(${process.env.PUBLIC_URL +
-                  '/assets/group-of-people.jpeg'})`
-          }}
-        >
-          <h1 className="text-4xl font-medium">Find your next event</h1>
-          <p className="uppercase text-sm">Make new friends. Have fun.</p>
-        </div>
-        <div className="flex justify-between sm:p-1 md:p-2 lg:px-48 lg:py-5 xl:px-64">
-          <Search
-            value={searchResult}
-            searchHandleChange={searchHandleChange}
-            placeholder="Search by event name or location"
-            handleClearSearch={handleClearSearch}
-          />
-          {user && (
-            <div className="">
-              <Link to="/create-event">
-                <button
-                  className="block bg-purple-600 float-right hover:bg-purple-800 text-white tracking-wide flex
-                capitalize py-2 px-4 rounded focus:bg-purple-800 focus:outline-none focus:shadow-outline"
-                >
-                  <HiPlus className="mt-1 mr-1 font-bold" />
-                  <span>Create Event</span>
-                </button>
-              </Link>
-            </div>
-          )}
-        </div>
+        <BigHeader />
+        <SearchHeader
+          value={searchResult}
+          searchHandleChange={searchHandleChange}
+          placeholder="Search by event name or location"
+          handleClearSearch={handleClearSearch}
+          user={user}
+          link="/create-event"
+          create="Create Event"
+        />
         <div
           className="flex flex-wrap justify-center w-full bg-gray-100
        sm:p-1 md:p-2 lg:px-48 lg:py-8 xl:px-64 border-t border-gray-200"
@@ -139,7 +113,7 @@ const Events = () => {
           <div className="w-full flex rounded border-solid border border-gray-200 bg-white overflow-hidden mb-3 p-3">
             <div className="w-2/3">
               <ul className="font-normal">
-                <EventsList
+                <EventCards
                   events={
                     searchResult.length < 1 && dateSearchResult.length < 1
                       ? eventsToShow

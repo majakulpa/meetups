@@ -2,12 +2,16 @@ import React, { useState, useEffect, useContext, useRef } from 'react'
 import { GlobalContext } from '../../context/Context'
 import eventService from './../../services/events'
 import userService from './../../services/users'
-import { useHistory, Link } from 'react-router-dom'
+import { useHistory } from 'react-router-dom'
 import Swal from 'sweetalert2'
 import SelectGroups from './../UI/SelectGroups'
 import GoBack from './../UI/GoBack'
 import Editable from './../UI/Editable'
 import Footer from './../UI/Footer'
+import UserList from '../UI/UserList'
+import AvatarCard from '../UI/AvatarCard'
+import CancelButton from '../UI/CancelButton'
+import PlusButton from '../UI/PlusButton'
 import { HiPlus, HiOutlineTrash } from 'react-icons/hi'
 
 const EventDetails = ({ match }) => {
@@ -83,19 +87,11 @@ const EventDetails = ({ match }) => {
       </p>
 
       <h2 className="capitalize text-3xl font-bold mb-3">{oneEvent.title}</h2>
-      <div className="flex">
-        <div
-          className="h-12 w-12 bg-cover rounded-full bg-center"
-          style={{
-            backgroundImage: `url(${oneEvent.user.profileImage}})`
-          }}
-          title="Profile Image"
-        ></div>
-        <div className="ml-3">
-          <p className="text-sm">Hosted by</p>
-          <p className="font-bold">{oneEvent.user.name}</p>
-        </div>
-      </div>
+      <AvatarCard
+        image={oneEvent.user.profileImage}
+        name={oneEvent.user.name}
+        text="Hosted by"
+      />
     </React.Fragment>
   )
 
@@ -131,39 +127,7 @@ const EventDetails = ({ match }) => {
     </React.Fragment>
   )
 
-  let eventAttendees = (
-    <React.Fragment>
-      {oneEvent.attendees.length > 0 && (
-        <React.Fragment>
-          <span className="font-bold text-lg">
-            Attendees ({oneEvent.attendees.length})
-          </span>
-          <div className="flex flex-wrap justify-center lg:justify-start">
-            {oneEvent.attendees.map(attendee => (
-              <Link
-                className="flex flex-col items-center w-48 bg-gray-100 rounded p-3 m-3 hover:bg-gray-200 hover:shadow"
-                key={attendee.id}
-                to={
-                  user && user.id === attendee.id
-                    ? `/my-account/${attendee.id}`
-                    : `/users/${attendee.id}`
-                }
-              >
-                <div
-                  className="h-16 w-16 bg-cover rounded-full bg-center"
-                  style={{
-                    backgroundImage: `url(${attendee.profileImage}})`
-                  }}
-                  title="Profile Image"
-                ></div>
-                <div className="text-sm font-medium m-3">{attendee.name}</div>
-              </Link>
-            ))}
-          </div>
-        </React.Fragment>
-      )}
-    </React.Fragment>
-  )
+  let eventAttendees = <UserList usersArr={oneEvent.attendees} user={user} />
 
   if (!error && oneEvent && !user) {
     event = (
@@ -187,7 +151,7 @@ const EventDetails = ({ match }) => {
         icon: 'success',
         title: `${oneEvent.title} has been booked!`,
         showConfirmButton: false,
-        timer: 1500
+        timer: 1000
       })
     }
 
@@ -200,14 +164,7 @@ const EventDetails = ({ match }) => {
               .map(attendee => attendee.id)
               .includes(user.id) &&
             oneEvent.capacity - oneEvent.attendees.length > 0 ? (
-              <button
-                className="block bg-purple-600 float-right hover:bg-purple-800 text-white tracking-wide flex
-                capitalize py-2 px-4 rounded focus:bg-purple-800 focus:outline-none focus:shadow-outline"
-                onClick={handleBookEvent}
-              >
-                <HiPlus className="mt-1 mr-1 font-bold" />
-                <span>Book Event</span>
-              </button>
+              <PlusButton click={handleBookEvent} text="Book Event" />
             ) : !oneEvent.attendees
                 .map(attendee => attendee.id)
                 .includes(user.id) &&
@@ -224,16 +181,13 @@ const EventDetails = ({ match }) => {
               <div>
                 {user.bookedEvents.map(booking => (
                   <div key={booking.id}>
-                    {booking.event.id === oneEvent.id && (
-                      <Link to={`/bookings/${booking.id}`}>
-                        <button
-                          className="block bg-gray-500 float-right hover:bg-gray-600 text-white tracking-wide flex
-                capitalize py-2 px-4 rounded focus:bg-gray-800 focus:outline-none focus:shadow-outline"
-                        >
-                          <HiOutlineTrash className="mt-1 mr-1 font-bold" />
-                          <span>Cancel Booking</span>
-                        </button>
-                      </Link>
+                    {booking.event.id === id && (
+                      <CancelButton
+                        id={booking.id}
+                        preLink="bookings"
+                        afterLink=""
+                        text="Cancel Booking"
+                      />
                     )}
                   </div>
                 ))}

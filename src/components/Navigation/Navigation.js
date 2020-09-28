@@ -4,6 +4,7 @@ import { NavLink, useHistory } from 'react-router-dom'
 import Swal from 'sweetalert2'
 import { HiOutlineLogout, HiOutlineUserCircle } from 'react-icons/hi'
 import { NavBrand, Header, NavToggle, NavMenu } from 'tailwind-react-ui'
+import Avatar from './../UI/Avatar'
 
 const navigation = () => {
   const { user, setUser } = useContext(GlobalContext)
@@ -72,14 +73,8 @@ const navigation = () => {
                 <HiOutlineUserCircle className="text-2xl" />
               </NavLink>
             ) : (
-              <NavLink to={`/my-account/${user.id}`}>
-                <div
-                  className="h-12 w-12 bg-cover rounded-full bg-center my-2 mx-4"
-                  style={{
-                    backgroundImage: `url(${user.profileImage}})`
-                  }}
-                  title="Profile Image"
-                ></div>
+              <NavLink to={`/my-account/${user.id}`} className="mx-4 my-2">
+                <Avatar image={user.profileImage} />
               </NavLink>
             )}
 

@@ -2,8 +2,8 @@ import React, { useState, useEffect } from 'react'
 import userService from './../../services/users'
 import GoBack from './../../components/UI/GoBack'
 import Footer from './../../components/UI/Footer'
-import { Link, useHistory } from 'react-router-dom'
-import { HiOutlineMail, HiOutlineEye } from 'react-icons/hi'
+import { HiOutlineMail } from 'react-icons/hi'
+import GroupList from './../../components/UI/GroupList'
 
 const UserAccount = ({ match }) => {
   const [userData, setUserData] = useState('')
@@ -58,42 +58,8 @@ const UserAccount = ({ match }) => {
           </a>
         </div>
         <p>{userData.description}</p>
-        <ul className="mt-4">
-          {userData.createdGroups && userData.createdGroups.length > 0 ? (
-            <span className="block uppercase tracking-wide text-gray-700 text-xs font-bold">
-              Created Groups:
-            </span>
-          ) : (
-            ''
-          )}
-          {userData.createdGroups
-            ? userData.createdGroups.map(group => (
-                <Link key={group.id} to={`/groups/${group.id}`}>
-                  <li className="border-solid border-b border-gray-200 hover:bg-gray-100 py-2 px-4 flex items-center justify-between">
-                    {group.name} <HiOutlineEye className="text-xl" />
-                  </li>
-                </Link>
-              ))
-            : ''}
-        </ul>
-        <ul className="mt-4">
-          {userData.groups && userData.groups.length > 0 ? (
-            <span className="block uppercase tracking-wide text-gray-700 text-xs font-bold">
-              Member in:
-            </span>
-          ) : (
-            ''
-          )}
-          {userData.groups
-            ? userData.groups.map(group => (
-                <Link key={group.id} to={`/groups/${group.id}`}>
-                  <li className="border-solid border-b border-gray-300 hover:bg-gray-100 py-2 px-4 flex items-center justify-between">
-                    {group.name} <HiOutlineEye className="text-xl" />
-                  </li>
-                </Link>
-              ))
-            : ''}
-        </ul>
+        <GroupList groups={userData.createdGroups} />
+        <GroupList groups={userData.groups} />
       </div>
     )
   }

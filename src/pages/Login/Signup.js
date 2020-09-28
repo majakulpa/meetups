@@ -5,6 +5,7 @@ import loginService from './../../services/login'
 import eventService from './../../services/events'
 import Footer from './../../components/UI/Footer'
 import Swal from 'sweetalert2'
+import { HiOutlineEye, HiOutlineEyeOff } from 'react-icons/hi'
 
 const Signup = () => {
   const [newUser, setNewUser] = useState({
@@ -15,16 +16,21 @@ const Signup = () => {
     description: '',
     profileImage: ''
   })
-
-  const [newConfirmPass, setConfirmPass] = useState('')
+  const [passwordShown, setPasswordShown] = useState(false)
 
   let history = useHistory()
+
+  const togglePasswordVisiblity = () => {
+    setPasswordShown(passwordShown ? false : true)
+  }
 
   const handleSignup = async e => {
     e.preventDefault()
 
     try {
-      await usersService.createUser({ ...newUser })
+      if (newUser.password.length >= 6) {
+        await usersService.createUser({ ...newUser })
+      }
 
       let username = newUser.username
       let password = newUser.password
@@ -46,7 +52,7 @@ const Signup = () => {
         icon: 'success',
         title: `Welcome ${loggedUser.name}!`,
         showConfirmButton: false,
-        timer: 1500
+        timer: 1000
       })
       history.push('/')
     } catch (exception) {
@@ -127,34 +133,33 @@ const Signup = () => {
             >
               Password
             </label>
-            <input
-              type="password"
-              name="password"
-              value={newUser.password}
-              onChange={e => handleOnChange('password', e.target.value)}
-              id="password"
-              autoComplete="off"
-              className="appearance-none border rounded w-full py-2 px-3 text-gray-700 
+            <div className="relative">
+              <input
+                type={passwordShown ? 'text' : 'password'}
+                name="password"
+                value={newUser.password}
+                onChange={e => handleOnChange('password', e.target.value)}
+                id="password"
+                autoComplete="off"
+                className="appearance-none border rounded w-full py-2 px-3 text-gray-700 
               leading-tight focus:outline-none focus:shadow-outline"
-            />
+              />
+              {newUser.password.length > 0 && newUser.password.length < 6 ? (
+                <span className="text-red-600 text-sm font-medium">
+                  Password must have at least 6 characters
+                </span>
+              ) : (
+                ''
+              )}
+              <div
+                className="absolute cursor-pointer inset-y-0 right-0 pr-4 mt-2 text-xl"
+                onClick={togglePasswordVisiblity}
+              >
+                {passwordShown ? <HiOutlineEyeOff /> : <HiOutlineEye />}
+              </div>
+            </div>
           </div>
-          <div className="my-4">
-            <label
-              className="block text-sm font-medium mb-2"
-              htmlFor="password"
-            >
-              Confirm Password
-            </label>
-            <input
-              type="password"
-              name="confirm-password"
-              value={newConfirmPass}
-              id="confirm-password"
-              autoComplete="off"
-              className="appearance-none border rounded w-full py-2 px-3 text-gray-700 
-              leading-tight focus:outline-none focus:shadow-outline"
-            />
-          </div>
+
           <div className="my-4">
             <label
               className="block text-sm font-medium mb-2"
