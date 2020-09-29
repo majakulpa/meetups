@@ -1,22 +1,19 @@
-import React, { useState, useEffect, useContext, useRef } from 'react'
+import React, { useState, useEffect, useContext } from 'react'
 import { GlobalContext } from '../../context/Context'
 import groupService from './../../services/groups'
 import userService from './../../services/users'
 import { useHistory } from 'react-router-dom'
 import Swal from 'sweetalert2'
-import GoBack from './../UI/GoBack'
-import Editable from './../UI/Editable'
-import Footer from './../UI/Footer'
+import EditGroup from './EditGroup'
 import UserList from '../UI/UserList'
-import EventCards from '../UI/EventCards'
-import GroupMainImg from './../UI/GroupMainImg'
+import EventCards from '../Event/EventCards'
+import GroupMainImg from './GroupMainImg'
 import AvatarCard from './../UI/AvatarCard'
 import CancelButton from './../UI/CancelButton'
 import PlusButton from './../UI/PlusButton'
-import { HiOutlineTrash } from 'react-icons/hi'
+import Layout from './../UI/Layout'
 
 const groupDetails = ({ match }) => {
-  const inputRef = useRef()
   const { user, setUser } = useContext(GlobalContext)
   const [oneGroup, setOneGroup] = useState({
     id: null,
@@ -29,6 +26,11 @@ const groupDetails = ({ match }) => {
   })
   const [error, setError] = useState('')
   let history = useHistory()
+
+  const routeChange = () => {
+    let path = '/login'
+    history.push(path)
+  }
 
   const id = match.params.id
 
@@ -72,19 +74,28 @@ const groupDetails = ({ match }) => {
 
   let groupEvents = <EventCards events={oneGroup.events} />
 
-  let groupMembers = <UserList usersArr={oneGroup.members} user={user} />
+  let groupMembers = (
+    <UserList usersArr={oneGroup.members} user={user} text="Members" />
+  )
 
   if (!error && !user) {
     group = (
-      <div className="rounded border-solid border border-gray-200 bg-white">
+      <div className="rounded border-solid border border-gray-200 bg-white p-5">
         <GroupMainImg image={oneGroup.mainImage} name={oneGroup.name} />
-        <AvatarCard
-          image={oneGroup.creator.profileImage}
-          name={oneGroup.creator.name}
-          text="Created by"
-        />
-        <p>{oneGroup.description}</p>
-        <div className="mt-5">{groupEvents}</div>
+        <div className="pt-5">
+          <div className="flex justify-between mb-4">
+            <AvatarCard
+              image={oneGroup.creator.profileImage}
+              name={oneGroup.creator.name}
+              text="Created by"
+            />
+            <div>
+              <PlusButton click={routeChange} text="Login to join" />
+            </div>
+          </div>
+          <p>{oneGroup.description}</p>
+          <div className="mt-5">{groupEvents}</div>
+        </div>
       </div>
     )
   }
@@ -107,9 +118,9 @@ const groupDetails = ({ match }) => {
     }
 
     group = (
-      <div className="rounded border-solid border border-gray-200 bg-white">
+      <div className="rounded border-solid border border-gray-200 bg-white p-5">
         <GroupMainImg image={oneGroup.mainImage} name={oneGroup.name} />
-        <div className="p-5">
+        <div className="pt-5">
           <div className="flex justify-between mb-4">
             <AvatarCard
               image={oneGroup.creator.profileImage}
@@ -118,7 +129,11 @@ const groupDetails = ({ match }) => {
             />
             {!oneGroup.members.map(member => member.id).includes(user.id) ? (
               <div>
-                <PlusButton click={handleJoinGroup} text="Join Group" />
+                <PlusButton
+                  click={handleJoinGroup}
+                  text="Join Group"
+                  plus={true}
+                />
               </div>
             ) : (
               <div>
@@ -175,137 +190,14 @@ const groupDetails = ({ match }) => {
     }
 
     group = (
-      <div className="rounded border-solid border border-gray-200 bg-white">
-        <form onSubmit={onSubmit}>
-          {!oneGroup.mainImage ? (
-            <div className="w-full h-40 bg-gray-800">
-              <Editable
-                text={oneGroup.name}
-                placeholder="Edit group name"
-                type="input"
-                childRef={inputRef}
-                className="capitalize text-white text-5xl font-medium p-3"
-              >
-                <input
-                  className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 
-                leading-tight focus:text-gray-600 focus:shadow-outline"
-                  value={oneGroup.name}
-                  onChange={e => handleOnChange('name', e.target.value)}
-                  type="text"
-                  placeholder="Enter name"
-                  ref={inputRef}
-                />
-              </Editable>
-            </div>
-          ) : (
-            <div
-              className="w-full h-40 bg-cover bg-center flex flex-col justify-end"
-              style={{
-                backgroundImage: `linear-gradient(
-                to bottom,
-                rgba(0,0,0, 0),
-                rgba(0,0,0, 100)
-              ), url(${oneGroup.mainImage}})`
-              }}
-              title="Group main image"
-            >
-              <Editable
-                text={oneGroup.name}
-                placeholder="Edit group name"
-                type="input"
-                childRef={inputRef}
-                className="capitalize text-white text-5xl font-medium p-3"
-              >
-                <input
-                  className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 
-                leading-tight focus:text-gray-600 focus:shadow-outline"
-                  value={oneGroup.name}
-                  onChange={e => handleOnChange('name', e.target.value)}
-                  type="text"
-                  placeholder="Enter name"
-                  ref={inputRef}
-                />
-              </Editable>
-            </div>
-          )}
-
-          <div className="mb-4 p-5">
-            <Editable
-              text={oneGroup.description}
-              placeholder="Edit group description"
-              type="textarea"
-              childRef={inputRef}
-            >
-              <textarea
-                className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 
-                leading-tight focus:text-gray-600 focus:shadow-outline"
-                value={oneGroup.description}
-                onChange={e => handleOnChange('description', e.target.value)}
-                type="text"
-                placeholder="Enter description"
-                rows="10"
-                ref={inputRef}
-              />
-            </Editable>
-            <Editable
-              text="Edit profile image URL"
-              placeholder="Edit profile image URL"
-              type="mainImage"
-              childRef={inputRef}
-              className="font-medium mt-5"
-            >
-              <input
-                className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 
-                leading-tight focus:text-gray-600 focus:shadow-outline"
-                value={oneGroup.mainImage}
-                onChange={e => handleOnChange('mainImage', e.target.value)}
-                type="text"
-                placeholder="Enter profile image URL"
-                ref={inputRef}
-              />
-            </Editable>
-            <div className="mt-5 flex justify-between">
-              <button
-                onClick={e =>
-                  Swal.fire({
-                    title: 'Are you sure?',
-                    text: 'This event will be deleted permanently.',
-                    icon: 'warning',
-                    showCancelButton: true,
-                    confirmButtonColor: '#3085d6',
-                    cancelButtonColor: '#d33',
-                    confirmButtonText: 'Yes, delete it!',
-                    reverseButtons: true
-                  }).then(result => {
-                    if (result.value) {
-                      e.persist()
-                      handleDeleteGroup(e)
-                      Swal.fire(
-                        'Deleted!',
-                        'Your group has been deleted.',
-                        'success'
-                      )
-                    } else if (result.dismiss === Swal.DismissReason.cancel) {
-                      Swal.fire('Cancelled', 'Your group is safe :)', 'error')
-                    }
-                  })
-                }
-                className="block bg-gray-500 float-right hover:bg-gray-600 text-white tracking-wide flex
-                capitalize py-2 px-4 rounded focus:bg-purple-800 focus:outline-none focus:shadow-outlines"
-              >
-                <HiOutlineTrash className="mt-1 mr-1 font-bold" />
-                <span>Delete Group</span>
-              </button>
-              <button
-                className="block bg-purple-600 float-right hover:bg-purple-800 text-white tracking-wide
-       capitalize py-2 px-6 rounded focus:bg-purple-800 focus:outline-none focus:shadow-outline"
-              >
-                Save
-              </button>
-            </div>
-          </div>
-        </form>
-        <div className="px-5 pb-5">
+      <div className="rounded border-solid border border-gray-200 bg-white p-5 pb-10">
+        <EditGroup
+          handleOnChange={handleOnChange}
+          handleDeleteGroup={handleDeleteGroup}
+          onSubmit={onSubmit}
+          oneGroup={oneGroup}
+        />
+        <div className="pt-5 flex flex-col w-full">
           <div className="mt-5">{groupEvents}</div>
           <div className="mt-6">{groupMembers}</div>
         </div>
@@ -313,17 +205,7 @@ const groupDetails = ({ match }) => {
     )
   }
 
-  return (
-    <React.Fragment>
-      <div className="w-full bg-gray-100 sp-screen">
-        <GoBack />
-        <div className="justify-center sm:p-1 md:p-2 lg:px-48 lg:pt-5 lg:pb-16 xl:px-64">
-          {group}
-        </div>
-      </div>
-      <Footer />
-    </React.Fragment>
-  )
+  return <Layout content={group} />
 }
 
 export default groupDetails

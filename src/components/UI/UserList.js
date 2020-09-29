@@ -1,12 +1,14 @@
 import React from 'react'
 import { Link } from 'react-router-dom'
 
-const userList = ({ usersArr, user }) => {
+const userList = ({ usersArr, user, text }) => {
   return (
     <React.Fragment>
       {usersArr.length > 0 && (
         <React.Fragment>
-          <span className="font-bold text-lg">Members ({usersArr.length})</span>
+          <span className="font-bold text-lg">
+            {text} ({usersArr.length})
+          </span>
           <div className="flex flex-wrap justify-center lg:justify-start">
             {usersArr.map(attendee => (
               <Link

@@ -2,12 +2,12 @@ import React from 'react'
 import { Link } from 'react-router-dom'
 import { HiOutlineEye } from 'react-icons/hi'
 
-const groupItem = ({ groups }) => {
+const groupItem = ({ groups, text }) => {
   return (
     <ul className="mt-4">
       {groups && groups.length > 0 ? (
         <span className="block uppercase tracking-wide text-gray-700 text-xs font-bold">
-          Member in:
+          {text}
         </span>
       ) : (
         ''

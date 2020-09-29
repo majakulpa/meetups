@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react'
 import userService from './../../services/users'
-import GoBack from './../../components/UI/GoBack'
-import Footer from './../../components/UI/Footer'
+import Layout from './../../components/UI/Layout'
+import Avatar from './../../components/UI/Avatar'
 import { HiOutlineMail } from 'react-icons/hi'
 import GroupList from './../../components/UI/GroupList'
 
@@ -38,13 +38,7 @@ const UserAccount = ({ match }) => {
       >
         <div className="flex justify-between items-center mb-5">
           <div className="flex items-center">
-            <div
-              className="h-12 w-12 bg-cover rounded-full bg-center"
-              style={{
-                backgroundImage: `url(${userData.profileImage}})`
-              }}
-              title="Profile Image"
-            ></div>
+            <Avatar image={userData.profileImage} />
             <p className="font-bold ml-3">{userData.name}</p>
           </div>
           <a
@@ -58,26 +52,13 @@ const UserAccount = ({ match }) => {
           </a>
         </div>
         <p>{userData.description}</p>
-        <GroupList groups={userData.createdGroups} />
-        <GroupList groups={userData.groups} />
+        <GroupList groups={userData.createdGroups} text="Created groups:" />
+        <GroupList groups={userData.groups} text="Member in:" />
       </div>
     )
   }
 
-  return (
-    <React.Fragment>
-      <div
-        className="justify-center w-full bg-gray-100
-       border-t border-gray-200 sp-screen"
-      >
-        <GoBack />
-        <div className="justify-center sm:p-1 md:p-2 lg:px-48 lg:pt-5 lg:pb-16 xl:px-64">
-          {oneUser}
-        </div>
-      </div>
-      <Footer />
-    </React.Fragment>
-  )
+  return <Layout content={oneUser} />
 }
 
 export default UserAccount

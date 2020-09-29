@@ -4,7 +4,7 @@ import eventService from './../../services/events'
 import userService from './../../services/users'
 import SearchDate from '../../components/UI/SearchDate'
 import Footer from '../../components/UI/Footer'
-import EventCards from '../../components/UI/EventCards'
+import EventCards from '../../components/Event/EventCards'
 import BigHeader from '../../components/UI/BigHeader'
 import SearchHeader from '../../components/UI/SearchHeader'
 

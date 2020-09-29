@@ -23,7 +23,7 @@ const searchHeader = ({
       {user && (
         <div className="">
           <Link to={link}>
-            <PlusButton text={create} />
+            <PlusButton text={create} plus={true} />
           </Link>
         </div>
       )}

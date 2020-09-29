@@ -4,7 +4,8 @@ import groupService from '../../services/groups'
 import userService from '../../services/users'
 import { useHistory } from 'react-router-dom'
 import Swal from 'sweetalert2'
-import GoBack from './../UI/GoBack'
+import Leave from './../UI/Leave'
+import Layout from './../UI/Layout'
 
 const GroupUnsubscribe = ({ match }) => {
   const { user, setUser } = useContext(GlobalContext)
@@ -54,30 +55,23 @@ const GroupUnsubscribe = ({ match }) => {
         icon: 'success',
         title: `You left ${oneSubscription.name}!`,
         showConfirmButton: false,
-        timer: 1500
+        timer: 1000
       })
       history.goBack()
     }
 
     subscription = (
-      <div>
-        <p>Are you sure that you want to leave {oneSubscription.name}</p>
-        <button
-          className="bg-green-400 hover:bg-green-500 text-white font-semibold py-2 px-4 rounded inline-flex items-center"
-          onClick={handleDeleteSubscription}
-        >
-          Yes, leave this group
-        </button>
-      </div>
+      <Leave
+        question="Are you sure that you want to leave"
+        textOne={oneSubscription.name}
+        click={() => history.goBack()}
+        handleDelete={handleDeleteSubscription}
+        confirm="Leave Group"
+      />
     )
   }
 
-  return (
-    <React.Fragment>
-      {subscription}
-      <GoBack />
-    </React.Fragment>
-  )
+  return <Layout content={subscription} />
 }
 
 export default GroupUnsubscribe
