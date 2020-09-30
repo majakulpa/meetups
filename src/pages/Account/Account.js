@@ -46,7 +46,7 @@ const account = ({ match }) => {
   const handleOnChange = (eventKey, value) =>
     setUser({ ...user, [eventKey]: value })
 
-  let userDetails = <p>Loading...</p>
+  let userDetails = <div class="loader"></div>
 
   if (error) {
     userDetails = (
@@ -65,8 +65,11 @@ const account = ({ match }) => {
     }
 
     userDetails = (
-      <div className="w-auto flex justify-center border-solid border border-gray-200 rounded bg-white text-gray-600">
-        <div className="w-1/3 m-5">
+      <div
+        className="w-auto flex justify-center border-solid p-2 sm:p-3 md:p-5
+       border border-gray-200 rounded bg-white text-gray-600 flex-col sm:flex-row"
+      >
+        <div className="w-full md:w-1/3 pr-5">
           <div
             className="w-full h-40 bg-cover bg-center"
             style={{
@@ -81,7 +84,7 @@ const account = ({ match }) => {
           </div>
         </div>
 
-        <form onSubmit={onSubmit} className="w-2/3 p-5">
+        <form onSubmit={onSubmit} className="w-full mt-5 sm:mt-0 md:w-2/3">
           <div className="mb-5">
             <label
               className="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-1"

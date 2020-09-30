@@ -2,11 +2,7 @@ import React, { useState, useEffect, useContext } from 'react'
 import { GlobalContext } from '../../context/Context'
 import eventService from './../../services/events'
 import userService from './../../services/users'
-import SearchDate from '../../components/UI/SearchDate'
-import Footer from '../../components/UI/Footer'
-import EventCards from '../../components/Event/EventCards'
-import BigHeader from '../../components/UI/BigHeader'
-import SearchHeader from '../../components/UI/SearchHeader'
+import EventsContent from './EventsContent'
 
 const Events = () => {
   const [events, setEvents] = useState([])
@@ -94,53 +90,20 @@ const Events = () => {
   }
 
   return (
-    <React.Fragment>
-      <div className="sp-screen">
-        <BigHeader />
-        <SearchHeader
-          value={searchResult}
-          searchHandleChange={searchHandleChange}
-          placeholder="Search by event name or location"
-          handleClearSearch={handleClearSearch}
-          user={user}
-          link="/create-event"
-          create="Create Event"
-        />
-        <div
-          className="flex flex-wrap justify-center w-full bg-gray-100
-       sm:p-1 md:p-2 lg:px-48 lg:py-8 xl:px-64 border-t border-gray-200"
-        >
-          <div className="w-full flex rounded border-solid border border-gray-200 bg-white overflow-hidden mb-3 p-3">
-            <div className="w-2/3">
-              <ul className="font-normal">
-                <EventCards
-                  events={
-                    searchResult.length < 1 && dateSearchResult.length < 1
-                      ? eventsToShow
-                      : searchDisplay
-                  }
-                />
-              </ul>
-            </div>
-            <div className="ml-5">
-              <button
-                onClick={() => setShowAllEvents(!showAllEvents)}
-                className="bg-gray-500 hover:bg-gray-600 text-white w-full capitalize
-            py-2 px-4 rounded focus:outline-none mb-5"
-              >
-                {showAllEvents ? 'free events' : 'all events'}
-              </button>
-              <SearchDate
-                date={dateSearchResult}
-                searchDateHandleChange={searchDateHandleChange}
-                handleClearSearch={handleClearSearch}
-              />
-            </div>
-          </div>
-        </div>
-      </div>
-      <Footer />
-    </React.Fragment>
+    <EventsContent
+      searchResult={searchResult}
+      searchHandleChange={searchHandleChange}
+      handleClearSearch={handleClearSearch}
+      user={user}
+      click={() => setShowAllEvents(!showAllEvents)}
+      showAllEvents={showAllEvents}
+      searchDateHandleChange={searchDateHandleChange}
+      events={
+        searchResult.length < 1 && dateSearchResult.length < 1
+          ? eventsToShow
+          : searchDisplay
+      }
+    />
   )
 }
 

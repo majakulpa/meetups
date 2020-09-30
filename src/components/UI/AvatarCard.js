@@ -6,7 +6,7 @@ const avatarCard = ({ image, name, text }) => {
     <div className="flex">
       <Avatar image={image} />
       <div className="ml-3">
-        <p className="text-sm">{text}</p>
+        <p className="text-xs sm:text-sm">{text}</p>
         <p className="font-bold">{name}</p>
       </div>
     </div>

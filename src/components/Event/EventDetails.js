@@ -66,7 +66,7 @@ const EventDetails = ({ match }) => {
     }
   }, [])
 
-  let event = <p>Loading...</p>
+  let event = <div class="loader"></div>
   if (error) {
     event = (
       <p>
@@ -77,12 +77,14 @@ const EventDetails = ({ match }) => {
 
   let eventHeading = (
     <React.Fragment>
-      <p className="text-sm">
-        {new Date(oneEvent.date).toDateString()},{' '}
-        {new Date(oneEvent.date).toLocaleTimeString('en-US')}
+      <p className="text-xs sm:text-sm flex flex-col sm:flex-row">
+        <span>{new Date(oneEvent.date).toDateString()},</span>{' '}
+        <span>{new Date(oneEvent.date).toLocaleTimeString('en-US')}</span>
       </p>
 
-      <h2 className="capitalize text-3xl font-bold mb-3">{oneEvent.title}</h2>
+      <h2 className="capitalize text-xl md:text-3xl font-bold mb-3">
+        {oneEvent.title}
+      </h2>
       <AvatarCard
         image={oneEvent.user.profileImage}
         name={oneEvent.user.name}
@@ -96,24 +98,24 @@ const EventDetails = ({ match }) => {
       <p className="mb-5">{oneEvent.description}</p>
       <div className="flex justify-between">
         <div>
-          <p className="font-bold text-lg">{oneEvent.place}</p>
-          <p className="font-medium text-lg">
+          <p className="font-bold sm:text-lg">{oneEvent.place}</p>
+          <p className="font-medium sm:text-lg">
             Price: {oneEvent.price === 0 ? 'Free' : '$' + oneEvent.price}
           </p>
         </div>
         <div className="text-right">
-          <p className="font-medium text-lg">
+          <p className="font-medium sm:text-lg">
             {oneEvent.capacity - oneEvent.attendees.length} spots left!
           </p>
           <p>Max capacity: {oneEvent.capacity}</p>
         </div>
       </div>
       {oneEvent.groups.length > 0 && (
-        <div className="mt-5 mb-8">
+        <div className="mt-5 mb-8 flex flex-wrap">
           {oneEvent.groups.map(group => (
             <span
               key={group.id}
-              className="bg-purple-400 text-white text-sm py-1 px-3 rounded-full mx-1"
+              className="bg-purple-400 text-white text-sm py-1 px-3 rounded-full m-1"
             >
               {group.name}
             </span>
@@ -129,7 +131,7 @@ const EventDetails = ({ match }) => {
 
   if (!error && oneEvent && !user) {
     event = (
-      <div className="rounded border-solid border border-gray-200 bg-white p-5">
+      <div className="rounded border-solid border border-gray-200 bg-white p-2 sm:p-3 md:p-5">
         {eventHeading}
         {eventData}
       </div>
@@ -154,7 +156,7 @@ const EventDetails = ({ match }) => {
     }
 
     event = (
-      <div className="rounded border-solid border border-gray-200 bg-white p-5">
+      <div className="rounded border-solid border border-gray-200 bg-white p-2 sm:p-3 md:p-5">
         <div className="flex justify-between mb-5">
           <div>{eventHeading}</div>
           <div>
@@ -254,7 +256,7 @@ const EventDetails = ({ match }) => {
     }
 
     event = (
-      <div className="rounded border-solid border border-gray-200 bg-white p-5 pb-16">
+      <div className="rounded border-solid border border-gray-200 bg-white p-2 sm:p-3 md:p-5 pb-16">
         <EditEvent
           onSubmit={onSubmit}
           oneEvent={oneEvent}

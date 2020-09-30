@@ -42,7 +42,7 @@ const editEvent = ({
         <div className="mb-5">
           <EditInput
             editText={oneEvent.title}
-            editClass="capitalize text-3xl font-bold"
+            editClass="capitalize text-xl md:text-3xl font-bold"
             value={oneEvent.title}
             inputRef={inputRef}
             placeholder="Event title"
@@ -69,7 +69,7 @@ const editEvent = ({
             </label>
             <EditInput
               editText={oneEvent.place}
-              editClass="font-bold text-lg"
+              editClass="font-bold sm:text-lg"
               value={oneEvent.place}
               inputRef={inputRef}
               placeholder="Event location"
@@ -84,7 +84,7 @@ const editEvent = ({
             </label>
             <EditInput
               editText={`$${oneEvent.price}`}
-              editClass="font-medium text-lg"
+              editClass="font-medium sm:text-lg"
               value={oneEvent.price}
               inputRef={inputRef}
               placeholder="Event price"
@@ -102,7 +102,7 @@ const editEvent = ({
             </label>
             <EditInput
               editText={oneEvent.capacity}
-              editClass="font-medium text-lg"
+              editClass="font-medium sm:text-lg"
               value={oneEvent.capacity}
               inputRef={inputRef}
               placeholder="Event max capacity"

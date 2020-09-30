@@ -21,7 +21,7 @@ const UserAccount = ({ match }) => {
       })
   }, [])
 
-  let oneUser = <p>Loading...</p>
+  let oneUser = <div class="loader"></div>
   if (error) {
     oneUser = (
       <p>
@@ -34,21 +34,23 @@ const UserAccount = ({ match }) => {
     oneUser = (
       <div
         className="rounded border-solid border 
-      border-gray-200 bg-white overflow-hidden p-5 pb-10"
+      border-gray-200 bg-white overflow-hidden p-2 sm:p-3 md:p-5"
       >
         <div className="flex justify-between items-center mb-5">
           <div className="flex items-center">
             <Avatar image={userData.profileImage} />
-            <p className="font-bold ml-3">{userData.name}</p>
+            <p className="font-bold ml-3 text-sm sm:text-base text-wrap">
+              {userData.name}
+            </p>
           </div>
           <a
             href={`mailto:${userData.email}`}
             target="_blank"
             className="block bg-purple-600 float-right hover:bg-purple-800 text-white tracking-wide flex items-center
-          capitalize py-2 px-4 rounded focus:bg-purple-800 focus:outline-none focus:shadow-outlines"
+          capitalize py-2 px-4 rounded-full sm:rounded focus:bg-purple-800 focus:outline-none focus:shadow-outline"
           >
-            <HiOutlineMail className="mr-2 font-bold" />
-            <span>Send email</span>
+            <HiOutlineMail className="sm:mr-2 font-bold" />
+            <span className="hidden sm:block">Send email</span>
           </a>
         </div>
         <p>{userData.description}</p>

@@ -8,9 +8,9 @@ const plusButton = ({ click, text, plus }) => {
         capitalize py-2 px-4 rounded focus:bg-purple-800 focus:outline-none focus:shadow-outline"
       onClick={click}
     >
-      {plus ? <HiPlus className="mt-1 mr-1 font-bold" /> : ''}
+      {plus ? <HiPlus className="hidden sm:block mt-1 mr-1 font-bold" /> : ''}
 
-      <span>{text}</span>
+      <span className="text-xs sm:text-base">{text}</span>
     </button>
   )
 }

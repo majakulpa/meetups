@@ -13,7 +13,7 @@ const searchHeader = ({
   create
 }) => {
   return (
-    <div className="flex justify-between sm:p-1 md:p-2 lg:px-48 lg:py-5 xl:px-64">
+    <div className="flex justify-between p-2 lg:px-48 lg:py-5 xl:px-64">
       <Search
         value={value}
         searchHandleChange={searchHandleChange}
@@ -21,7 +21,7 @@ const searchHeader = ({
         handleClearSearch={handleClearSearch}
       />
       {user && (
-        <div className="">
+        <div className="create-event">
           <Link to={link}>
             <PlusButton text={create} plus={true} />
           </Link>

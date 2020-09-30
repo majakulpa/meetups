@@ -18,10 +18,11 @@ const leave = ({
           '{textOne} {textTwo} {textThree}'
         </span>
       </div>
-      <div className="flex justify-end mt-5">
+      <div className="flex justify-center mt-5">
         <button
           className="block bg-purple-600 float-right hover:bg-purple-800 text-white tracking-wide
-       capitalize py-2 px-6 rounded focus:bg-purple-800 focus:outline-none focus:shadow-outline mr-3"
+       capitalize py-2 px-6 rounded focus:bg-purple-800 focus:outline-none focus:shadow-outline mr-3
+       text-xs sm:text-base"
           onClick={click}
         >
           No, go back
@@ -31,8 +32,8 @@ const leave = ({
             capitalize py-2 px-4 rounded focus:bg-gray-800 focus:outline-none focus:shadow-outline"
           onClick={handleDelete}
         >
-          <HiOutlineTrash className="mt-1 mr-1" />
-          <span>{confirm}</span>
+          <HiOutlineTrash className="hidden sm:block mt-1 mr-1" />
+          <span className="text-xs sm:text-base">{confirm}</span>
         </button>
       </div>
     </div>

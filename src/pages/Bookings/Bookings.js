@@ -15,18 +15,23 @@ const bookings = () => {
     if (loggedUser) {
       const loggedUserJSON = JSON.parse(loggedUser)
       const loggedUserId = loggedUserJSON.userId
-      userService.getOneUser(loggedUserId).then(data => {
-        if (isActive) {
-          setUser(data)
-        }
-      })
+      userService
+        .getOneUser(loggedUserId)
+        .then(data => {
+          if (isActive) {
+            setUser(data)
+          }
+        })
+        .catch(error => {
+          setError(error)
+        })
     }
     return () => {
       isActive = false
     }
   }, [])
 
-  let myBookings = <p>Loading...</p>
+  let myBookings = <div class="loader"></div>
 
   if (error) {
     myBookings = <p>Something went wrong</p>

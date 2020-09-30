@@ -9,8 +9,8 @@ const cancelButton = ({ preLink, afterLink, text, id }) => {
         className="block bg-gray-500 float-right hover:bg-gray-600 text-white tracking-wide flex
         capitalize py-2 px-4 rounded focus:bg-gray-800 focus:outline-none focus:shadow-outline"
       >
-        <HiOutlineTrash className="mt-1 mr-1 font-bold" />
-        <span>{text}</span>
+        <HiOutlineTrash className="hidden sm:block mt-1 mr-1 font-bold" />
+        <span className="text-xs sm:text-base">{text}</span>
       </button>
     </Link>
   )

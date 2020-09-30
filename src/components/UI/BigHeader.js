@@ -3,7 +3,7 @@ import React from 'react'
 const bigHeader = () => {
   return (
     <div
-      className="text-white text-center py-20 bg-cover bg-center bg-fixed"
+      className="text-white text-center hidden md:block md:py-10 lg:py-20 bg-cover bg-center bg-fixed"
       style={{
         backgroundImage: `linear-gradient(
                 to bottom,
@@ -13,8 +13,10 @@ const bigHeader = () => {
                 '/assets/group-of-people.jpeg'})`
       }}
     >
-      <h1 className="text-4xl font-medium">Find your next event</h1>
-      <p className="uppercase text-sm">Make new friends. Have fun.</p>
+      <h1 className="md:text-4xl font-medium">Find your next event</h1>
+      <p className="uppercase text-xs md:text-sm">
+        Make new friends. Have fun.
+      </p>
     </div>
   )
 }

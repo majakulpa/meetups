@@ -63,7 +63,7 @@ const groupDetails = ({ match }) => {
     }
   }, [])
 
-  let group = <p>Loading...</p>
+  let group = <div class="loader"></div>
   if (error) {
     group = (
       <p>
@@ -80,7 +80,7 @@ const groupDetails = ({ match }) => {
 
   if (!error && !user) {
     group = (
-      <div className="rounded border-solid border border-gray-200 bg-white p-5">
+      <div className="rounded border-solid border border-gray-200 bg-white p-2 sm:p-3 md:p-5">
         <GroupMainImg image={oneGroup.mainImage} name={oneGroup.name} />
         <div className="pt-5">
           <div className="flex justify-between mb-4">
@@ -118,7 +118,7 @@ const groupDetails = ({ match }) => {
     }
 
     group = (
-      <div className="rounded border-solid border border-gray-200 bg-white p-5">
+      <div className="rounded border-solid border border-gray-200 bg-white p-2 sm:p-3 md:p-5">
         <GroupMainImg image={oneGroup.mainImage} name={oneGroup.name} />
         <div className="pt-5">
           <div className="flex justify-between mb-4">
@@ -190,7 +190,7 @@ const groupDetails = ({ match }) => {
     }
 
     group = (
-      <div className="rounded border-solid border border-gray-200 bg-white p-5 pb-10">
+      <div className="rounded border-solid border border-gray-200 bg-white p-2 sm:p-3 md:p-5 pb-10">
         <EditGroup
           handleOnChange={handleOnChange}
           handleDeleteGroup={handleDeleteGroup}

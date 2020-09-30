@@ -16,10 +16,10 @@ const editGroup = ({
     <React.Fragment>
       <form onSubmit={onSubmit}>
         {!oneGroup.mainImage ? (
-          <div className="w-full h-40 bg-gray-800">
+          <div className="w-full h-24 md:h-40 bg-gray-800">
             <EditInput
               editText={oneGroup.name}
-              editClass="capitalize text-white text-5xl font-medium p-3"
+              editClass="capitalize text-white text-2xl md:text-3xl lg:text-5xl font-medium p-3"
               value={oneGroup.name}
               inputRef={inputRef}
               placeholder="Group name"
@@ -29,7 +29,7 @@ const editGroup = ({
           </div>
         ) : (
           <div
-            className="w-full h-40 bg-cover bg-center flex flex-col justify-end"
+            className="w-full h-24 md:h-40 bg-cover bg-center flex flex-col justify-end"
             style={{
               backgroundImage: `linear-gradient(
                 to bottom,
@@ -41,7 +41,7 @@ const editGroup = ({
           >
             <EditInput
               editText={oneGroup.name}
-              editClass="capitalize text-white text-5xl font-medium p-3"
+              editClass="capitalize text-white text-2xl md:text-3xl lg:text-5xl font-medium p-3"
               value={oneGroup.name}
               inputRef={inputRef}
               placeholder="Group name"

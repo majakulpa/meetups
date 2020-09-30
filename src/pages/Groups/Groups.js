@@ -20,9 +20,14 @@ const groups = () => {
     if (loggedUser) {
       const loggedUserJSON = JSON.parse(loggedUser)
       const loggedUserId = loggedUserJSON.userId
-      userService.getOneUser(loggedUserId).then(data => {
-        setUser(data)
-      })
+      userService
+        .getOneUser(loggedUserId)
+        .then(data => {
+          setUser(data)
+        })
+        .catch(error => {
+          setError(error)
+        })
     }
   }, [])
 
@@ -59,7 +64,7 @@ const groups = () => {
     setSearchResult('')
   }
 
-  let allGroups = <p>Loading...</p>
+  let allGroups = <div class="loader"></div>
 
   if (error) {
     allGroups = <p>Something went wrong</p>

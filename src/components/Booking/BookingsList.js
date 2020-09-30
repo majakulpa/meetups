@@ -15,7 +15,7 @@ const bookingsList = ({ events }) => {
           <Link key={booking.id} to={`/events/${booking.event.id}`}>
             <li
               className="rounded bg-gray-100 hover:bg-gray-200 hover:shadow overflow-hidden my-2 p-3
-      flex justify-between"
+      flex justify-between flex-col sm:flex-row"
             >
               <h3 className="capitalize ont-bold text-l font-medium">
                 {booking.event.title}

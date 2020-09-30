@@ -38,7 +38,7 @@ const GroupUnsubscribe = ({ match }) => {
       })
   }, [])
 
-  let subscription = <p>Loading...</p>
+  let subscription = <div class="loader"></div>
   if (error) {
     subscription = (
       <p>

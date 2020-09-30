@@ -12,7 +12,8 @@ const userList = ({ usersArr, user, text }) => {
           <div className="flex flex-wrap justify-center lg:justify-start">
             {usersArr.map(attendee => (
               <Link
-                className="flex flex-col items-center w-48 bg-gray-100 rounded p-3 m-3 hover:bg-gray-200 hover:shadow"
+                className="flex flex-col items-center w-32 md:w-48 bg-gray-100 rounded 
+                p-2 md:p-3 m-1 md:m-3 hover:bg-gray-200 hover:shadow"
                 key={attendee.id}
                 to={
                   user && user.id === attendee.id
