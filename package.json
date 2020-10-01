@@ -12,7 +12,6 @@
     "react-scripts": "1.1.4",
     "react-select": "^3.1.0",
     "sweetalert2": "^9.17.1",
-    "tailwind-react-ui": "^0.8.1",
     "tailwindcss": "^1.4.6"
   },
   "scripts": {

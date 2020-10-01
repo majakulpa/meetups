@@ -10,7 +10,7 @@ const layout = ({ content }) => {
          border-t border-gray-200 sp-screen"
       >
         <GoBack />
-        <div className="justify-center p-2 lg:px-48 lg:pt-5 lg:pb-16 xl:px-64">
+        <div className="justify-center p-2 pb-10 lg:px-48 lg:pt-5 lg:pb-16 xl:px-64">
           {content}
         </div>
       </div>

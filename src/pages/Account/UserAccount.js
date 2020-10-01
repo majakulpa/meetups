@@ -21,7 +21,7 @@ const UserAccount = ({ match }) => {
       })
   }, [])
 
-  let oneUser = <div class="loader"></div>
+  let oneUser = <div className="loader"></div>
   if (error) {
     oneUser = (
       <p>

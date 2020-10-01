@@ -63,7 +63,7 @@ const groupDetails = ({ match }) => {
     }
   }, [])
 
-  let group = <div class="loader"></div>
+  let group = <div className="loader"></div>
   if (error) {
     group = (
       <p>

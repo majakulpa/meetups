@@ -46,7 +46,7 @@ const account = ({ match }) => {
   const handleOnChange = (eventKey, value) =>
     setUser({ ...user, [eventKey]: value })
 
-  let userDetails = <div class="loader"></div>
+  let userDetails = <div className="loader"></div>
 
   if (error) {
     userDetails = (

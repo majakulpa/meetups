@@ -30,7 +30,7 @@ const eventsContent = ({
           create="Create Event"
         />
         <div
-          className="flex flex-wrap justify-center w-full bg-gray-100
+          className="flex flex-wrap justify-center w-full bg-gray-100 pb-10
          sm:p-1 md:p-2 lg:px-48 lg:py-8 xl:px-64 border-t border-gray-200"
         >
           <div

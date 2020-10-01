@@ -64,7 +64,7 @@ const groups = () => {
     setSearchResult('')
   }
 
-  let allGroups = <div class="loader"></div>
+  let allGroups = <div className="loader"></div>
 
   if (error) {
     allGroups = <p>Something went wrong</p>
@@ -90,7 +90,7 @@ const groups = () => {
         />
         <div className="bg-gray-100 border-t border-gray-200">
           <GoBack />
-          <div className="flex flex-wrap sm:p-1 md:p-2 lg:px-48 lg:pt-5 lg:pb-16 xl:px-64">
+          <div className="flex flex-wrap sm:p-1 md:p-2 pb-10 lg:px-48 lg:pt-5 lg:pb-16 xl:px-64">
             {allGroups}
           </div>
         </div>

@@ -31,7 +31,7 @@ const bookings = () => {
     }
   }, [])
 
-  let myBookings = <div class="loader"></div>
+  let myBookings = <div className="loader"></div>
 
   if (error) {
     myBookings = <p>Something went wrong</p>

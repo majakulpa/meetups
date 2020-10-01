@@ -66,7 +66,7 @@ const EventDetails = ({ match }) => {
     }
   }, [])
 
-  let event = <div class="loader"></div>
+  let event = <div className="loader"></div>
   if (error) {
     event = (
       <p>

@@ -73,6 +73,12 @@ nav h2 {
   }
 }
 
+@media (min-width: 1024px) {
+  #menu {
+    display: block !important;
+  }
+}
+
 @media (max-width: 450px) {
   .create-event button {
     height: 42px;

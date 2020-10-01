@@ -24,7 +24,7 @@ const eventItem = ({ events }) => {
               <li
                 className={`${
                   event.date <= todayDate ? 'text-gray-400' : ''
-                } border-solid border-b border-gray-300 hover:bg-gray-100 py-2 px-4 flex items-center justify-between`}
+                } border-solid border-b border-gray-200 hover:bg-gray-100 py-2 px-4 flex items-center justify-between`}
               >
                 <div className="flex flex-col">
                   <span>{event.title}</span>

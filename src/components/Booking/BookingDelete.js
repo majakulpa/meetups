@@ -38,7 +38,7 @@ const Booking = ({ match }) => {
       })
   }, [])
 
-  let booking = <div class="loader"></div>
+  let booking = <div className="loader"></div>
   if (error) {
     booking = (
       <p>
