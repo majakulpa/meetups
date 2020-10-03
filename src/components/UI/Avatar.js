@@ -8,6 +8,7 @@ const avatar = ({ image }) => {
         backgroundImage: `url(${image}})`
       }}
       title="Profile Image"
+      id="profileImg"
     ></div>
   )
 }

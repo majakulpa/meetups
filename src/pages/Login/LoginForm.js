@@ -69,6 +69,7 @@ const loginForm = ({
               w-full hover:bg-purple-800 text-white font-bold py-2 px-4 
               rounded rounded focus:outline-none focus:shadow-outline mb-5"
             type="submit"
+            id="loginButton"
           >
             Login
           </button>
@@ -76,6 +77,7 @@ const loginForm = ({
           <Link
             to="/signup"
             className="text-purple-600 hover:text-pruple-800 hover:underline pb-1 text-sm font-bold"
+            id="goToSignup"
           >
             Don't have an account? Signup
           </Link>

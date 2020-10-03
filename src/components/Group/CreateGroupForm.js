@@ -25,6 +25,7 @@ const createGroupForm = ({ addGroup, newGroup, handleOnChange }) => {
                 onChange={e => handleOnChange('name', e.target.value)}
                 type="text"
                 placeholder="Group name"
+                id="groupName"
               />
             </div>
             <div className="w-full mb-5">
@@ -40,6 +41,7 @@ const createGroupForm = ({ addGroup, newGroup, handleOnChange }) => {
                 value={newGroup.description}
                 onChange={e => handleOnChange('description', e.target.value)}
                 placeholder="Event description"
+                id="groupDescription"
               />
             </div>
             <div>
@@ -62,6 +64,7 @@ const createGroupForm = ({ addGroup, newGroup, handleOnChange }) => {
               <button
                 className="mt-5 bg-purple-600 w-full hover:bg-purple-800 text-white font-bold py-2 px-4 
               rounded focus:outline-none focus:shadow-outline"
+                id="createGroup"
               >
                 Create Group
               </button>

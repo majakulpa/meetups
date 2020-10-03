@@ -56,6 +56,7 @@ const navigation = () => {
         className="text-white bg-purple-600 lg:hidden
         focus:bg-purple-600 text-5xl p-1 rounded pointer-cursor "
         onClick={closeMenu}
+        id="toggleMenu"
       />
 
       <div
@@ -78,7 +79,7 @@ const navigation = () => {
             className="hover:bg-purple-600 hover:text-white rounded py-2 px-4"
             onClick={closeMenu}
           >
-            <span>Groups</span>
+            <span id="groupsLink">Groups</span>
           </NavLink>
           {!user ? (
             <NavLink
@@ -95,7 +96,7 @@ const navigation = () => {
                 className="hover:bg-purple-600 hover:text-white rounded py-2 px-4"
                 onClick={closeMenu}
               >
-                <span>My bookings</span>
+                <span id="bookings">My bookings</span>
               </NavLink>
 
               {user.profileImage === '' ? (

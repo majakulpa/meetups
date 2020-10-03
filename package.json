@@ -22,7 +22,8 @@
     "eject": "react-scripts eject",
     "server": "json-server -p3000 --watch db.json",
     "build:css": "postcss src/assets/tailwind.css -o src/assets/main.css",
-    "watch:css": "postcss src/assets/tailwind.css -o src/assets/main.css"
+    "watch:css": "postcss src/assets/tailwind.css -o src/assets/main.css",
+    "cypress:open": "cypress open"
   },
   "eslintConfig": {
     "extends": "react-app"
@@ -44,6 +45,7 @@
     "@testing-library/jest-dom": "^4.2.4",
     "@testing-library/react": "^9.5.0",
     "autoprefixer": "^9.8.4",
+    "cypress": "^5.3.0",
     "json-server": "^0.16.1",
     "postcss-cli": "^7.1.1",
     "react-test-render": "^1.1.2"

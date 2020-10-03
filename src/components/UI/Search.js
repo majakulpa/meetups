@@ -18,6 +18,7 @@ const Search = ({
           value={value}
           onChange={searchHandleChange}
           placeholder={placeholder}
+          id="search"
         />
         <div className="absolute inset-y-0 left-0 pl-2 flex items-center">
           <HiOutlineSearch />

@@ -260,7 +260,7 @@ const EventDetails = ({ match }) => {
         <EditEvent
           onSubmit={onSubmit}
           oneEvent={oneEvent}
-          handleDeleteEven={handleDeleteEvent}
+          handleDeleteEvent={handleDeleteEvent}
           handleSelectOnChange={handleSelectOnChange}
           handleOnChange={handleOnChange}
           currentGroups={currentGroups}

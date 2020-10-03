@@ -32,6 +32,7 @@ const createEventForm = ({
                 onChange={e => handleOnChange('title', e.target.value)}
                 type="text"
                 placeholder="Event title"
+                id="title"
               />
             </div>
             <div className="w-full mb-5">
@@ -48,6 +49,7 @@ const createEventForm = ({
                 onChange={e => handleOnChange('description', e.target.value)}
                 placeholder="Event description"
                 rows="4"
+                id="description"
               />
             </div>
             <div className="w-full  mb-5">
@@ -64,6 +66,7 @@ const createEventForm = ({
                 onChange={e => handleOnChange('place', e.target.value)}
                 type="text"
                 placeholder="Enter place"
+                id="place"
               />
             </div>
             <div className="w-full  mb-5">
@@ -85,6 +88,7 @@ const createEventForm = ({
                   .slice(0, 16)
                   .join('')}
                 placeholder="Event price"
+                id="dateTime"
               />
             </div>
             <div className="w-full  mb-5">
@@ -102,6 +106,7 @@ const createEventForm = ({
                 type="number"
                 step="0.01"
                 placeholder="Event price"
+                id="price"
               />
             </div>
             <div className="w-full mb-5">
@@ -118,6 +123,7 @@ const createEventForm = ({
                 onChange={e => handleOnChange('capacity', e.target.value)}
                 type="number"
                 placeholder="Event Capacity"
+                id="capacity"
               />
             </div>
             <div className="w-full mb-5">
@@ -136,6 +142,7 @@ const createEventForm = ({
               <button
                 className="mt-5 bg-purple-600 w-full hover:bg-purple-800 text-white font-bold py-2 px-4 
               rounded focus:shadow-outline"
+                id="createEvent"
               >
                 Create Event
               </button>

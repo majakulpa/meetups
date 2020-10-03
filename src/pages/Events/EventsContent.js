@@ -50,6 +50,7 @@ const eventsContent = ({
                 onClick={click}
                 className="bg-gray-500 hover:bg-gray-600 text-white md:w-full capitalize
               py-2 px-4 rounded focus:outline-none md:mb-5"
+                id="freeEvents"
               >
                 {showAllEvents ? 'free events' : 'all events'}
               </button>
