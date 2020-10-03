@@ -1,0 +1,34 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`if matches snapshot 1`] = `
+<button
+  className="block bg-gray-500 float-right hover:bg-gray-600 text-white tracking-wide flex capitalize py-2 px-4 rounded focus:bg-gray-600 focus:outline-none focus:shadow-outline"
+  onClick={[Function]}
+>
+  <svg
+    className="hidden sm:block mt-1 mr-1 font-bold"
+    fill="none"
+    height="1em"
+    stroke="currentColor"
+    strokeWidth="0"
+    style={
+      Object {
+        "color": undefined,
+      }
+    }
+    viewBox="0 0 24 24"
+    width="1em"
+    xmlns="http://www.w3.org/2000/svg"
+  >
+    <path
+      d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"
+      strokeLinecap="round"
+      strokeLinejoin="round"
+      strokeWidth="2"
+    />
+  </svg>
+  <span
+    className="text-xs sm:text-base"
+  />
+</button>
+`;

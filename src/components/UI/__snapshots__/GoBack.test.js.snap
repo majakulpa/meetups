@@ -1,0 +1,38 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`if matches snapshot 1`] = `
+<div
+  className="text-gray-600 pt-3 pl-3"
+>
+  <button
+    className="flex hover:text-gray-800 hover:underline focus:outline-none"
+    onClick={[Function]}
+  >
+    <svg
+      className="mt-1 mr-1"
+      fill="currentColor"
+      height="1em"
+      stroke="currentColor"
+      strokeWidth="0"
+      style={
+        Object {
+          "color": undefined,
+        }
+      }
+      viewBox="0 0 20 20"
+      width="1em"
+      xmlns="http://www.w3.org/2000/svg"
+    >
+      <path
+        clipRule="evenodd"
+        d="M9.707 16.707a1 1 0 01-1.414 0l-6-6a1 1 0 010-1.414l6-6a1 1 0 011.414 1.414L5.414 9H17a1 1 0 110 2H5.414l4.293 4.293a1 1 0 010 1.414z"
+        fillRule="evenodd"
+      />
+    </svg>
+     
+    <span>
+      Go back
+    </span>
+  </button>
+</div>
+`;

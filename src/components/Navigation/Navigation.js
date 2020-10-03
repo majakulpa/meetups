@@ -40,7 +40,7 @@ const navigation = () => {
   return (
     <header
       className="lg:px-16 px-6 bg-white border-solid border-b border-gray-200  
-    flex flex-wrap justify-between lg:py-3 py-2"
+    flex flex-wrap justify-between lg:py-3 py-2 navigation"
     >
       <NavLink to="/">
         <img

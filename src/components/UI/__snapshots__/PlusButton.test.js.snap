@@ -1,0 +1,13 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`if matches snapshot 1`] = `
+<button
+  className="block bg-purple-600 float-right hover:bg-purple-800 text-white tracking-wide flex capitalize py-2 px-4 rounded focus:bg-purple-800 focus:outline-none focus:shadow-outline"
+  onClick={undefined}
+>
+  
+  <span
+    className="text-xs sm:text-base"
+  />
+</button>
+`;

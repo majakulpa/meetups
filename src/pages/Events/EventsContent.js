@@ -18,7 +18,7 @@ const eventsContent = ({
 }) => {
   return (
     <React.Fragment>
-      <div className="sp-screen">
+      <div className="sp-screen" data-testid="eventContent">
         <BigHeader />
         <SearchHeader
           value={searchResult}

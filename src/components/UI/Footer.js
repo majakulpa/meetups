@@ -12,7 +12,10 @@ const Footer = () => {
   const { user } = useContext(GlobalContext)
 
   return (
-    <div className="bg-gray-700 text-white p-8 flex flex-col justify-between items-center align-center lg:flex-row">
+    <div
+      className="bg-gray-700 text-white p-8 flex flex-col justify-between items-center align-center lg:flex-row"
+      data-testid="footer"
+    >
       <div className="flex items-center flex-col md:flex-row">
         <NavLink to="/" className="py-2 px-4">
           <img
