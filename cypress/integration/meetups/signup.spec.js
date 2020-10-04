@@ -13,17 +13,36 @@ context('Signup', function() {
   })
 
   it('password myst be at least 6 characters', function() {
-    cy.get('#password').type('test')
+    cy.get('#passwordSignup').type('test')
 
     cy.contains('Password must have at least 6 characters')
   })
 
   it('user cannot signup with incomplete data', function() {
-    cy.get('#username').type('test')
-    cy.get('#name').type('test@test.com')
-    cy.get('#password').type('test123454')
+    cy.get('#usernameSignup').type('test')
+    cy.get('#nameSignup').type('test@test.com')
+    cy.get('#passwordSignup').type('test123454')
     cy.get('#signupButton').click()
 
-    cy.contains('Oops...')
+    cy.contains('Please fill all the required fields')
+  })
+
+  it('user cannot signup if username already exists', function() {
+    cy.get('#usernameSignup').type('tom')
+    cy.get('#nameSignup').type('test@test.com')
+    cy.get('#passwordSignup').type('test123454')
+    cy.get('#signupButton').click()
+
+    cy.contains('This username is already taken')
+  })
+
+  it('user cannot signup if email is already in use', function() {
+    cy.get('#usernameSignup').type('test')
+    cy.get('#nameSignup').type('test@test.com')
+    cy.get('#passwordSignup').type('test123454')
+    cy.get('#emailSignup').type('anna@example.com')
+    cy.get('#signupButton').click()
+
+    cy.contains('This email is already in use')
   })
 })

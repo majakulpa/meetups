@@ -54,12 +54,27 @@ const Signup = () => {
         timer: 1000
       })
       history.push('/')
-    } catch (exception) {
-      Swal.fire({
-        icon: 'error',
-        title: 'Oops...',
-        text: 'Incorrect data'
-      })
+    } catch (error) {
+      const dataError = JSON.stringify(error.response.data)
+      if (dataError.includes('expected `username` to be unique')) {
+        Swal.fire({
+          icon: 'error',
+          title: 'Oops...',
+          text: 'This username is already taken'
+        })
+      } else if (dataError.includes('expected `email` to be unique')) {
+        Swal.fire({
+          icon: 'error',
+          title: 'Oops...',
+          text: 'This email is already in use'
+        })
+      } else {
+        Swal.fire({
+          icon: 'error',
+          title: 'Oops...',
+          text: 'Please fill all the required fields'
+        })
+      }
     }
   }
 

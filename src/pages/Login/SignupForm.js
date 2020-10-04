@@ -26,14 +26,14 @@ const signupForm = ({
               className="block text-sm font-medium mb-2"
               htmlFor="username"
             >
-              Username
+              Username*
             </label>
             <input
               type="text"
               value={newUser.username}
               onChange={e => handleOnChange('username', e.target.value)}
               name="username"
-              id="username"
+              id="usernameSignup"
               autoComplete="off"
               className="appearance-none border rounded w-full py-2 px-3 text-gray-700 
                 leading-tight focus:outline-none focus:shadow-outline"
@@ -41,14 +41,14 @@ const signupForm = ({
           </div>
           <div className="my-4">
             <label className="block text-sm font-medium mb-2" htmlFor="name">
-              Name
+              Name*
             </label>
             <input
               type="text"
               name="name"
               value={newUser.name}
               onChange={e => handleOnChange('name', e.target.value)}
-              id="name"
+              id="nameSignup"
               autoComplete="off"
               className="appearance-none border rounded w-full py-2 px-3 text-gray-700 
                 leading-tight focus:outline-none focus:shadow-outline"
@@ -56,14 +56,14 @@ const signupForm = ({
           </div>
           <div className="my-4">
             <label className="block text-sm font-medium mb-2" htmlFor="email">
-              Email
+              Email*
             </label>
             <input
               type="email"
               value={newUser.email}
               onChange={e => handleOnChange('email', e.target.value)}
               name="email"
-              id="email"
+              id="emailSignup"
               autoComplete="off"
               className="appearance-none border rounded w-full py-2 px-3 text-gray-700 
                 leading-tight focus:outline-none focus:shadow-outline"
@@ -74,7 +74,7 @@ const signupForm = ({
               className="block text-sm font-medium mb-2"
               htmlFor="password"
             >
-              Password
+              Password*
             </label>
             <div className="relative">
               <input
@@ -82,7 +82,7 @@ const signupForm = ({
                 name="password"
                 value={newUser.password}
                 onChange={e => handleOnChange('password', e.target.value)}
-                id="password"
+                id="passwordSignup"
                 autoComplete="off"
                 className="appearance-none border rounded w-full py-2 px-3 text-gray-700 
                 leading-tight focus:outline-none focus:shadow-outline"
@@ -117,7 +117,7 @@ const signupForm = ({
               onChange={e => handleOnChange('description', e.target.value)}
               type="text"
               placeholder="Enter description"
-              id="about"
+              id="descriptionSignup"
             />
           </div>
           <div className="my-4">
