@@ -1,4 +1,4 @@
-import React, { useContext } from 'react'
+import React, { useContext, useState } from 'react'
 import { GlobalContext } from '../../context/Context'
 import { NavLink, useHistory } from 'react-router-dom'
 import Swal from 'sweetalert2'
@@ -11,17 +11,11 @@ import Avatar from './../UI/Avatar'
 
 const navigation = () => {
   const { user, setUser } = useContext(GlobalContext)
+  const [opened, setOpened] = useState(false)
   let history = useHistory()
 
   const closeMenu = () => {
-    if (window.innerWidth <= 1023) {
-      let linksEl = document.querySelector('#menu')
-      if (linksEl.style.display === 'block') {
-        linksEl.style.display = 'none'
-      } else {
-        linksEl.style.display = 'block'
-      }
-    }
+    setOpened(!opened)
   }
 
   const handleLogout = () => {
@@ -60,7 +54,9 @@ const navigation = () => {
       />
 
       <div
-        className="hidden lg:flex lg:items-center lg:w-auto w-full"
+        className={`${
+          opened ? 'block' : 'hidden'
+        } lg:flex lg:items-center lg:w-auto w-full`}
         id="menu"
       >
         <nav
