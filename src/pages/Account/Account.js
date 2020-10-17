@@ -1,14 +1,14 @@
-import React, { useState, useEffect, useContext, useRef } from 'react'
+import React, { useState, useEffect, useContext, useRef, Suspense } from 'react'
 import { GlobalContext } from './../../context/Context'
 import userService from './../../services/users'
 import { useHistory } from 'react-router-dom'
 import Swal from 'sweetalert2'
 import EditInput from './../../components/UI/EditInput'
 import EditTextarea from './../../components/UI/EditTextarea'
-import GroupList from '../../components/UI/GroupList'
-import EventList from '../../components/UI/EventList'
 import PlusButton from '../../components/UI/PlusButton'
 import Layout from '../../components/UI/Layout'
+const GroupList = React.lazy(() => import('../../components/UI/GroupList'))
+const EventList = React.lazy(() => import('../../components/UI/EventList'))
 
 const account = ({ match }) => {
   const inputRef = useRef()
@@ -174,7 +174,11 @@ const account = ({ match }) => {
     )
   }
 
-  return <Layout content={userDetails} />
+  return (
+    <Suspense fallback={<div className="loader"></div>}>
+      <Layout content={userDetails} />
+    </Suspense>
+  )
 }
 
 export default account

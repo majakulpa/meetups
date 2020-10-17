@@ -1,11 +1,11 @@
-import React, { useState, useEffect, useContext } from 'react'
+import React, { useState, useEffect, useContext, Suspense } from 'react'
 import { GlobalContext } from './../../context/Context'
 import groupService from './../../services/groups'
 import userService from './../../services/users'
-import GroupList from './../../components/Group/GroupList'
 import GoBack from './../../components/UI/GoBack'
 import Footer from './../../components/UI/Footer'
 import SearchHeader from './../../components/UI/SearchHeader'
+const GroupList = React.lazy(() => import('./../../components/Group/GroupList'))
 
 const groups = () => {
   const [groups, setGroups] = useState([])
@@ -72,7 +72,9 @@ const groups = () => {
 
   if (groups) {
     allGroups = (
-      <GroupList groups={searchResult.length < 1 ? groups : searchDisplay} />
+      <Suspense fallback={<div className="loader"></div>}>
+        <GroupList groups={searchResult.length < 1 ? groups : searchDisplay} />
+      </Suspense>
     )
   }
 
@@ -85,7 +87,7 @@ const groups = () => {
           placeholder="Search by group name"
           handleClearSearch={handleClearSearch}
           user={user}
-          link="/create-group"
+          link="/meetups/create-group"
           create="Create Group"
         />
         <div className="bg-gray-100 border-t border-gray-200">

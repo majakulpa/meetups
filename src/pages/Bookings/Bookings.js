@@ -1,8 +1,10 @@
-import React, { useState, useEffect, useContext } from 'react'
+import React, { useState, useEffect, useContext, Suspense } from 'react'
 import { GlobalContext } from './../../context/Context'
 import userService from './../../services/users'
 import Layout from './../../components/UI/Layout'
-import BookingsList from './../../components/Booking/BookingsList'
+const BookingsList = React.lazy(() =>
+  import('./../../components/Booking/BookingsList')
+)
 
 const bookings = () => {
   const { user, setUser } = useContext(GlobalContext)
@@ -38,7 +40,11 @@ const bookings = () => {
   }
 
   if (user) {
-    myBookings = <BookingsList events={user.bookedEvents} />
+    myBookings = (
+      <Suspense fallback={<div className="loader"></div>}>
+        <BookingsList events={user.bookedEvents} />
+      </Suspense>
+    )
   }
 
   return <Layout content={myBookings} />

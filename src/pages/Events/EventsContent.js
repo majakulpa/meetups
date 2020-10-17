@@ -26,7 +26,7 @@ const eventsContent = ({
           placeholder="Search by event name or location"
           handleClearSearch={handleClearSearch}
           user={user}
-          link="/create-event"
+          link="/meetups/create-event"
           create="Create Event"
         />
         <div

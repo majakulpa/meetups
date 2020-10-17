@@ -1,9 +1,9 @@
-import React, { useState, useEffect } from 'react'
+import React, { useState, useEffect, Suspense } from 'react'
 import userService from './../../services/users'
 import Layout from './../../components/UI/Layout'
 import Avatar from './../../components/UI/Avatar'
 import { HiOutlineMail } from 'react-icons/hi'
-import GroupList from './../../components/UI/GroupList'
+const GroupList = React.lazy(() => import('../../components/UI/GroupList'))
 
 const UserAccount = ({ match }) => {
   const [userData, setUserData] = useState('')
@@ -60,7 +60,11 @@ const UserAccount = ({ match }) => {
     )
   }
 
-  return <Layout content={oneUser} />
+  return (
+    <Suspense fallback={<div className="loader"></div>}>
+      <Layout content={oneUser} />
+    </Suspense>
+  )
 }
 
 export default UserAccount

@@ -58,7 +58,7 @@ const loginForm = ({
                   leading-tight focus:outline-none focus:shadow-outline"
             />
             <Link
-              to="/password-reset"
+              to="/meetups/password-reset"
               className="text-purple-600 hover:text-pruple-800 hover:underline text-sm font-bold"
             >
               Forgot password?
@@ -75,7 +75,7 @@ const loginForm = ({
           </button>
 
           <Link
-            to="/signup"
+            to="/meetups/signup"
             className="text-purple-600 hover:text-pruple-800 hover:underline pb-1 text-sm font-bold"
             id="goToSignup"
           >

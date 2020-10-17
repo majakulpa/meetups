@@ -1,10 +1,10 @@
-import React, { useState } from 'react'
+import React, { useState, Suspense } from 'react'
 import { useHistory } from 'react-router-dom'
 import usersService from './../../services/users'
 import loginService from './../../services/login'
 import eventService from './../../services/events'
-import SignupForm from './SignupForm'
 import Swal from 'sweetalert2'
+const SignupForm = React.lazy(() => import('./SignupForm'))
 
 const Signup = () => {
   const [newUser, setNewUser] = useState({
@@ -53,7 +53,7 @@ const Signup = () => {
         showConfirmButton: false,
         timer: 1000
       })
-      history.push('/')
+      history.push('/meetups/')
     } catch (error) {
       const dataError = JSON.stringify(error.response.data)
       if (dataError.includes('expected `username` to be unique')) {
@@ -82,13 +82,15 @@ const Signup = () => {
     setNewUser({ ...newUser, [eventKey]: value })
 
   return (
-    <SignupForm
-      handleSignup={handleSignup}
-      newUser={newUser}
-      handleOnChange={handleOnChange}
-      passwordShown={passwordShown}
-      togglePasswordVisiblity={togglePasswordVisiblity}
-    />
+    <Suspense fallback={<div className="loader"></div>}>
+      <SignupForm
+        handleSignup={handleSignup}
+        newUser={newUser}
+        handleOnChange={handleOnChange}
+        passwordShown={passwordShown}
+        togglePasswordVisiblity={togglePasswordVisiblity}
+      />
+    </Suspense>
   )
 }
 

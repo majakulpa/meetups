@@ -147,7 +147,7 @@ const signupForm = ({
             Signup
           </button>
           <Link
-            to="/login"
+            to="/meetups/login"
             className="text-purple-600 hover:text-pruple-800 hover:underline pb-1 text-sm font-bold"
             id="goToLogin"
           >

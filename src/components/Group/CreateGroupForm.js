@@ -70,7 +70,7 @@ const createGroupForm = ({ addGroup, newGroup, handleOnChange }) => {
               </button>
             </div>
             <div className="text-center mt-4 text-gray-500">
-              <Link to="/groups">Cancel</Link>
+              <Link to="/meetups/groups">Cancel</Link>
             </div>
           </form>
         </div>

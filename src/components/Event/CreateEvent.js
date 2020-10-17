@@ -34,7 +34,7 @@ const CreateEvent = () => {
       })
       await eventService.create({ ...newEvent, groups })
       await setNewEvent(newEvent)
-      history.push('/')
+      history.push('/meetups/')
       Swal.fire({
         icon: 'success',
         title: 'Your event has been created!',

@@ -1,8 +1,8 @@
-import React, { useState, useEffect, useContext } from 'react'
+import React, { useState, useEffect, useContext, Suspense } from 'react'
 import { GlobalContext } from '../../context/Context'
 import eventService from './../../services/events'
 import userService from './../../services/users'
-import EventsContent from './EventsContent'
+const EventsContent = React.lazy(() => import('./EventsContent'))
 
 const Events = () => {
   const [events, setEvents] = useState([])
@@ -90,20 +90,22 @@ const Events = () => {
   }
 
   return (
-    <EventsContent
-      searchResult={searchResult}
-      searchHandleChange={searchHandleChange}
-      handleClearSearch={handleClearSearch}
-      user={user}
-      click={() => setShowAllEvents(!showAllEvents)}
-      showAllEvents={showAllEvents}
-      searchDateHandleChange={searchDateHandleChange}
-      events={
-        searchResult.length < 1 && dateSearchResult.length < 1
-          ? eventsToShow
-          : searchDisplay
-      }
-    />
+    <Suspense fallback={<div className="loader"></div>}>
+      <EventsContent
+        searchResult={searchResult}
+        searchHandleChange={searchHandleChange}
+        handleClearSearch={handleClearSearch}
+        user={user}
+        click={() => setShowAllEvents(!showAllEvents)}
+        showAllEvents={showAllEvents}
+        searchDateHandleChange={searchDateHandleChange}
+        events={
+          searchResult.length < 1 && dateSearchResult.length < 1
+            ? eventsToShow
+            : searchDisplay
+        }
+      />
+    </Suspense>
   )
 }
 

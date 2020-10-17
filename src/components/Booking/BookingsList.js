@@ -12,7 +12,7 @@ const bookingsList = ({ events }) => {
           Booked Events:
         </span>
         {events.map(booking => (
-          <Link key={booking.id} to={`/events/${booking.event.id}`}>
+          <Link key={booking.id} to={`/meetups/events/${booking.event.id}`}>
             <li
               className="rounded bg-gray-100 hover:bg-gray-200 hover:shadow overflow-hidden my-2 p-3
       flex justify-between flex-col sm:flex-row"

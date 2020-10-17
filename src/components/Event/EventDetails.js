@@ -1,15 +1,15 @@
-import React, { useState, useEffect, useContext } from 'react'
+import React, { useState, useEffect, useContext, Suspense } from 'react'
 import { GlobalContext } from '../../context/Context'
 import eventService from './../../services/events'
 import userService from './../../services/users'
 import { useHistory } from 'react-router-dom'
 import Swal from 'sweetalert2'
 import EditEvent from './EditEvent'
-import UserList from '../UI/UserList'
 import AvatarCard from '../UI/AvatarCard'
 import CancelButton from '../UI/CancelButton'
 import PlusButton from '../UI/PlusButton'
 import Layout from '../UI/Layout'
+const UserList = React.lazy(() => import('../UI/UserList'))
 
 const EventDetails = ({ match }) => {
   const { user, setUser } = useContext(GlobalContext)
@@ -126,7 +126,9 @@ const EventDetails = ({ match }) => {
   )
 
   let eventAttendees = (
-    <UserList usersArr={oneEvent.attendees} user={user} text="Attendees" />
+    <Suspense fallback={<div className="loader"></div>}>
+      <UserList usersArr={oneEvent.attendees} user={user} text="Attendees" />
+    </Suspense>
   )
 
   if (!error && oneEvent && !user) {
@@ -181,7 +183,7 @@ const EventDetails = ({ match }) => {
                     {booking.event.id === id && (
                       <CancelButton
                         id={booking.id}
-                        preLink="bookings"
+                        preLink="meetups/bookings"
                         afterLink=""
                         text="Cancel Booking"
                       />

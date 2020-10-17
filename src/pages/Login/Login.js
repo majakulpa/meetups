@@ -1,10 +1,9 @@
-import React, { useState } from 'react'
+import React, { useState, Suspense } from 'react'
 import { useHistory } from 'react-router-dom'
-import LoginForm from './LoginForm'
 import loginService from './../../services/login'
 import eventService from './../../services/events'
-
 import Swal from 'sweetalert2'
+const LoginForm = React.lazy(() => import('./LoginForm'))
 
 const Login = () => {
   const [userData, setUserData] = useState(null)
@@ -33,7 +32,7 @@ const Login = () => {
         showConfirmButton: false,
         timer: 1000
       })
-      history.push('/')
+      history.push('/meetups/')
     } catch (exception) {
       Swal.fire({
         icon: 'error',
@@ -44,13 +43,15 @@ const Login = () => {
   }
 
   return (
-    <LoginForm
-      handleLogin={handleLogin}
-      username={username}
-      password={password}
-      onUsername={({ target }) => setUsername(target.value)}
-      onPassword={({ target }) => setPassword(target.value)}
-    />
+    <Suspense fallback={<div className="loader"></div>}>
+      <LoginForm
+        handleLogin={handleLogin}
+        username={username}
+        password={password}
+        onUsername={({ target }) => setUsername(target.value)}
+        onPassword={({ target }) => setPassword(target.value)}
+      />
+    </Suspense>
   )
 }
 

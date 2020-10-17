@@ -1,17 +1,17 @@
-import React, { useState, useEffect, useContext } from 'react'
+import React, { useState, useEffect, useContext, Suspense } from 'react'
 import { GlobalContext } from '../../context/Context'
 import groupService from './../../services/groups'
 import userService from './../../services/users'
 import { useHistory } from 'react-router-dom'
 import Swal from 'sweetalert2'
 import EditGroup from './EditGroup'
-import UserList from '../UI/UserList'
 import EventCards from '../Event/EventCards'
 import GroupMainImg from './GroupMainImg'
 import AvatarCard from './../UI/AvatarCard'
 import CancelButton from './../UI/CancelButton'
 import PlusButton from './../UI/PlusButton'
 import Layout from './../UI/Layout'
+const UserList = React.lazy(() => import('../UI/UserList'))
 
 const groupDetails = ({ match }) => {
   const { user, setUser } = useContext(GlobalContext)
@@ -28,7 +28,7 @@ const groupDetails = ({ match }) => {
   let history = useHistory()
 
   const routeChange = () => {
-    let path = '/login'
+    let path = '/meetups/login'
     history.push(path)
   }
 
@@ -75,7 +75,9 @@ const groupDetails = ({ match }) => {
   let groupEvents = <EventCards events={oneGroup.events} />
 
   let groupMembers = (
-    <UserList usersArr={oneGroup.members} user={user} text="Members" />
+    <Suspense fallback={<div className="loader"></div>}>
+      <UserList usersArr={oneGroup.members} user={user} text="Members" />
+    </Suspense>
   )
 
   if (!error && !user) {
@@ -142,7 +144,7 @@ const groupDetails = ({ match }) => {
                     {group.id === oneGroup.id && (
                       <CancelButton
                         id={group.id}
-                        preLink="groups"
+                        preLink="meetups/groups"
                         afterLink="unsubscribe"
                         text="Leave group"
                       />
