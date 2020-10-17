@@ -2,7 +2,6 @@
   "name": "meetups",
   "version": "0.1.0",
   "private": true,
-  "homepage": "https://github.com/majakulpa/meetups",
   "dependencies": {
     "@testing-library/user-event": "^7.1.2",
     "axios": "^0.19.2",
