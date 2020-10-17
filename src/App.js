@@ -36,8 +36,11 @@ const App = () => {
         flex flex-col justify-between"
         >
           <Switch>
+            <Route exact path="/">
+              <Redirect to="/meetups/" component={Events} />
+            </Route>
             <Route path="/meetups/" exact component={Events} />
-            <Redirect path="/meetups/events" to="/" exact />
+            <Redirect path="/meetups/events" to="/meetups/" exact />
             <Route path="/meetups/events/:id" exact component={EventDetails} />
             <Route path="/meetups/create-event" exact component={CreateEvent} />
             <Route path="/meetups/bookings" exact component={Bookings} />
