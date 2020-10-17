@@ -53,7 +53,7 @@ const Signup = () => {
         showConfirmButton: false,
         timer: 1000
       })
-      history.push('/meetups/')
+      history.push('/')
     } catch (error) {
       const dataError = JSON.stringify(error.response.data)
       if (dataError.includes('expected `username` to be unique')) {

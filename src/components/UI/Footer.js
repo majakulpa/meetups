@@ -17,7 +17,7 @@ const Footer = () => {
       data-testid="footer"
     >
       <div className="flex items-center flex-col md:flex-row">
-        <NavLink to="/meetups/" className="py-2 px-4">
+        <NavLink to="/" className="py-2 px-4">
           <img
             src={process.env.PUBLIC_URL + '/assets/logo-white.png'}
             alt="meetups logo"
@@ -25,14 +25,14 @@ const Footer = () => {
             height="auto"
           />
         </NavLink>
-        <NavLink to="/meetups/" className="hover:underline py-2 px-4">
+        <NavLink to="/" className="hover:underline py-2 px-4">
           <span>Events</span>
         </NavLink>
-        <NavLink to="/meetups/groups" className="hover:underline py-2 px-4">
+        <NavLink to="/groups" className="hover:underline py-2 px-4">
           <span>Groups</span>
         </NavLink>
         {user ? (
-          <NavLink to="/meetups/bookings" className="hover:underline py-2 px-4">
+          <NavLink to="/bookings" className="hover:underline py-2 px-4">
             <span>My bookings</span>
           </NavLink>
         ) : (

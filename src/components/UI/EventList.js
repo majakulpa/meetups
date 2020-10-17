@@ -20,7 +20,7 @@ const eventItem = ({ events }) => {
       )}
       {events
         ? events.map(event => (
-            <Link key={event.id} to={`/meetups/events/${event.id}`}>
+            <Link key={event.id} to={`/events/${event.id}`}>
               <li
                 className={`${
                   event.date <= todayDate ? 'text-gray-400' : ''

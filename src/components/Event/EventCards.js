@@ -10,7 +10,7 @@ const eventCards = ({ events }) => {
             Upcoming events ({events.length})
           </span>
           {events.map(event => (
-            <Link key={event.id} to={`/meetups/events/${event.id}`}>
+            <Link key={event.id} to={`/events/${event.id}`}>
               <li
                 className="rounded bg-gray-100 hover:bg-gray-200 hover:shadow overflow-hidden my-2 p-3
               flex justify-between"

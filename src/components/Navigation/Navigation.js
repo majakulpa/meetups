@@ -22,7 +22,7 @@ const navigation = () => {
     localStorage.clear()
     closeMenu()
     setUser(null)
-    history.push('/meetups/')
+    history.push('/')
     Swal.fire({
       icon: 'info',
       title: `You are logged out!`,
@@ -36,7 +36,7 @@ const navigation = () => {
       className="lg:px-16 px-6 bg-white border-solid border-b border-gray-200  
     flex flex-wrap justify-between lg:py-3 py-2 navigation"
     >
-      <NavLink to="/meetups/">
+      <NavLink to="/">
         <img
           src={process.env.PUBLIC_URL + '/assets/Meetups.png'}
           alt="meetups logo"
@@ -64,14 +64,14 @@ const navigation = () => {
          text-base text-gray-700 pt-4 lg:pt-0"
         >
           <NavLink
-            to="/meetups/"
+            to="/"
             className="hover:bg-purple-600 hover:text-white rounded py-2 px-4"
             onClick={closeMenu}
           >
             <span>Events</span>
           </NavLink>
           <NavLink
-            to="/meetups/groups"
+            to="/groups"
             className="hover:bg-purple-600 hover:text-white rounded py-2 px-4"
             onClick={closeMenu}
           >
@@ -79,7 +79,7 @@ const navigation = () => {
           </NavLink>
           {!user ? (
             <NavLink
-              to="/meetups/login"
+              to="/login"
               className="hover:bg-purple-600 hover:text-white rounded py-2 px-4"
               onClick={closeMenu}
             >
@@ -88,7 +88,7 @@ const navigation = () => {
           ) : (
             <React.Fragment>
               <NavLink
-                to="/meetups/bookings"
+                to="/bookings"
                 className="hover:bg-purple-600 hover:text-white rounded py-2 px-4"
                 onClick={closeMenu}
               >
@@ -96,15 +96,12 @@ const navigation = () => {
               </NavLink>
 
               {user.profileImage === '' ? (
-                <NavLink
-                  to={`/meetups/my-account/${user.id}`}
-                  onClick={closeMenu}
-                >
+                <NavLink to={`/my-account/${user.id}`} onClick={closeMenu}>
                   <HiOutlineUserCircle className="text-2xl" />
                 </NavLink>
               ) : (
                 <NavLink
-                  to={`/meetups/my-account/${user.id}`}
+                  to={`/my-account/${user.id}`}
                   className="mx-4 my-2"
                   onClick={closeMenu}
                 >

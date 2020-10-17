@@ -87,7 +87,7 @@ const groups = () => {
           placeholder="Search by group name"
           handleClearSearch={handleClearSearch}
           user={user}
-          link="/meetups/create-group"
+          link="/create-group"
           create="Create Group"
         />
         <div className="bg-gray-100 border-t border-gray-200">

@@ -148,7 +148,7 @@ const createEventForm = ({
               </button>
             </div>
             <div className="text-center mt-4 text-gray-500">
-              <Link to="/meetups/">Cancel</Link>
+              <Link to="/">Cancel</Link>
             </div>
           </form>
         </div>

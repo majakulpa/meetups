@@ -17,8 +17,8 @@ const userList = ({ usersArr, user, text }) => {
                 key={attendee.id}
                 to={
                   user && user.id === attendee.id
-                    ? `/meetups/my-account/${attendee.id}`
-                    : `/meetups/users/${attendee.id}`
+                    ? `/my-account/${attendee.id}`
+                    : `/users/${attendee.id}`
                 }
               >
                 <div

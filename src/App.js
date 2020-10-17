@@ -36,33 +36,22 @@ const App = () => {
         flex flex-col justify-between"
         >
           <Switch>
-            <Route exact path="/">
-              <Redirect to="/meetups/" component={Events} />
-            </Route>
-            <Route path="/meetups/" exact component={Events} />
-            <Redirect path="/meetups/events" to="/meetups/" exact />
-            <Route path="/meetups/events/:id" exact component={EventDetails} />
-            <Route path="/meetups/create-event" exact component={CreateEvent} />
-            <Route path="/meetups/bookings" exact component={Bookings} />
+            <Route path="/" exact component={Events} />
+            <Redirect path="/events" to="/" exact />
+            <Route path="/events/:id" exact component={EventDetails} />
+            <Route path="/create-event" exact component={CreateEvent} />
+            <Route path="/bookings" exact component={Bookings} />
+            <Route path="/bookings/:id" exact component={BookingDelete} />
+            <Route path="/my-account/:id" exact component={Account} />
+            <Route path="/users/:id" exact component={UserAccount} />
+            <Route path="/login" exact component={Login} />
+            <Route path="/signup" exact component={Signup} />
+            <Route path="/password-reset" exact component={PasswordReset} />
+            <Route path="/groups" exact component={Groups} />
+            <Route path="/groups/:id" exact component={GroupDetails} />
+            <Route path="/create-group" exact component={CreateGroup} />
             <Route
-              path="/meetups/bookings/:id"
-              exact
-              component={BookingDelete}
-            />
-            <Route path="/meetups/my-account/:id" exact component={Account} />
-            <Route path="/meetups/users/:id" exact component={UserAccount} />
-            <Route path="/meetups/login" exact component={Login} />
-            <Route path="/meetups/signup" exact component={Signup} />
-            <Route
-              path="/meetups/password-reset"
-              exact
-              component={PasswordReset}
-            />
-            <Route path="/meetups/groups" exact component={Groups} />
-            <Route path="/meetups/groups/:id" exact component={GroupDetails} />
-            <Route path="/meetups/create-group" exact component={CreateGroup} />
-            <Route
-              path="/meetups/groups/:id/unsubscribe"
+              path="/groups/:id/unsubscribe"
               exact
               component={GroupUnsubscribe}
             />

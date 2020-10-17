@@ -28,7 +28,7 @@ const groupDetails = ({ match }) => {
   let history = useHistory()
 
   const routeChange = () => {
-    let path = '/meetups/login'
+    let path = '/login'
     history.push(path)
   }
 
@@ -144,7 +144,7 @@ const groupDetails = ({ match }) => {
                     {group.id === oneGroup.id && (
                       <CancelButton
                         id={group.id}
-                        preLink="meetups/groups"
+                        preLink="groups"
                         afterLink="unsubscribe"
                         text="Leave group"
                       />

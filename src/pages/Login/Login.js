@@ -32,7 +32,7 @@ const Login = () => {
         showConfirmButton: false,
         timer: 1000
       })
-      history.push('/meetups/')
+      history.push('/')
     } catch (exception) {
       Swal.fire({
         icon: 'error',

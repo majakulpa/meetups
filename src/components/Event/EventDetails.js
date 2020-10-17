@@ -183,7 +183,7 @@ const EventDetails = ({ match }) => {
                     {booking.event.id === id && (
                       <CancelButton
                         id={booking.id}
-                        preLink="meetups/bookings"
+                        preLink="bookings"
                         afterLink=""
                         text="Cancel Booking"
                       />
