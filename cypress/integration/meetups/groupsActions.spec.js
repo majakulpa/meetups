@@ -4,8 +4,7 @@ context('Login', function() {
     cy.get('#username').type('sara')
     cy.get('#password').type('sara')
     cy.get('#loginButton').click()
-    cy.get('#toggleMenu').click()
-    cy.get('#groupsLink').click()
+    cy.visit('http://localhost:3000/groups')
   })
 
   it('logged users can create group', function() {

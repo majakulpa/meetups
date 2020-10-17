@@ -36,12 +36,4 @@ context('Login', function() {
     cy.contains('Cancel Booking').click()
     cy.contains('has been cancelled')
   })
-
-  it('can cancel book event', function() {
-    cy.get('#search').type('beer')
-    cy.contains('Friday Beer').click()
-    cy.contains('Book Event')
-    cy.contains('Book Event').click()
-    cy.contains('has been booked')
-  })
 })

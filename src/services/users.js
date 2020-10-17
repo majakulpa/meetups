@@ -1,6 +1,6 @@
 import axios from 'axios'
 
-const usersUrl = 'http://localhost:3001/api/users'
+const usersUrl = 'https://salty-fjord-10290.herokuapp.com/api/users'
 
 const getAllUsers = () => {
   const req = axios.get(usersUrl)

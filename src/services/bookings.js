@@ -1,6 +1,6 @@
 import axios from 'axios'
 
-const bookingsUrl = 'http://localhost:3001/api/bookings'
+const bookingsUrl = 'https://salty-fjord-10290.herokuapp.com/api/bookings'
 
 let token = null
 

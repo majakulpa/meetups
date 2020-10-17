@@ -1,6 +1,6 @@
 import axios from 'axios'
 
-const eventsUrl = 'http://localhost:3001/api/events'
+const eventsUrl = 'https://salty-fjord-10290.herokuapp.com/api/events'
 
 let token = null
 

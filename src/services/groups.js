@@ -1,6 +1,6 @@
 import axios from 'axios'
 
-const groupsUrl = 'http://localhost:3001/api/groups'
+const groupsUrl = 'https://salty-fjord-10290.herokuapp.com/api/groups'
 
 let token = null
 
