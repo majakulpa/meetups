@@ -1,9 +1,7 @@
 context('Login', function() {
   beforeEach(() => {
-    cy.visit('http://localhost:3000/login')
-    cy.get('#username').type('sara')
-    cy.get('#password').type('sara')
-    cy.get('#loginButton').click()
+      cy.SignIn()
+
   })
 
   it('logged users can create event', function() {
