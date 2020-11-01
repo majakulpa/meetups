@@ -1,7 +1,6 @@
 context('Events', function() {
     beforeEach(() => {
         cy.SignIn()
-  
     })
     
     it('Can create event', function() {
